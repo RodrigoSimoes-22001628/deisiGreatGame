@@ -153,6 +153,22 @@ public class GameManager {
         <NOME DO TERCEIRO MELHOR CLASSIFICADO> <POSIçÃO>
         <...> */
         return null;
+        /*
+        StringBuilder colocacoes = new StringBuilder();
+
+        ArrayList<String> resultados = new ArrayList<>();
+        resultados.add("O GRANDE JOGO DO DEISI" + "\n" + "\n");
+        resultados.add("NR. DE TURNOS" + "\n");
+        resultados.add("" + turnos + "\n"+ "\n");
+        resultados.add("VENCEDOR");
+        if(programmer.position == meta) {
+            resultados.add(programmer.name + "\n" + "\n");
+        } else {
+            resultados.add("RESTANTES");
+            colocacoes.append(programmer.name).append(" ").append(programmer.position).append("\n");
+        }
+         */
+
     }
 
     public JPanel getAuthorsPanel(){
