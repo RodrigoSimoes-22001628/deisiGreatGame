@@ -3,5 +3,5 @@ public enum ProgrammerColor {
     PURPLE,
     BLUE,
     GREEN,
-    BROWN;
+    BROWN
 }

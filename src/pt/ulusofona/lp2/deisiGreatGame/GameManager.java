@@ -78,10 +78,7 @@ public class GameManager {
         }
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
-        if (2 * jogadoresEmJogo.size() > boardSize) {
-            return false;
-        }
-        return true;
+        return 2 * jogadoresEmJogo.size() <= boardSize;
     }
 
     public String getImagePng(int position) {
