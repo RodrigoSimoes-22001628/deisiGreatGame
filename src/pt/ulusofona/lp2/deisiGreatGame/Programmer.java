@@ -7,7 +7,7 @@ public class Programmer {
     int iD;
     ProgrammerColor colorAvatar;
     int posicao = 1; // 1 é a casa de Partida
-    int turnoJogador;
+    int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
 
     public Programmer() {
