@@ -11,6 +11,7 @@ public class Programmer {
     String estado = "Em Jogo";
 
     public Programmer() {
+
     }
 
     int getId(){

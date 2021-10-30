@@ -79,6 +79,9 @@ public class GameManager {
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
         return 2 * jogadoresEmJogo.size() <= boardSize;
+
+        //Para saber o turno basta fazer um collection sort por id e
+        // os jogadores ficam desta forma ordenados por turnos
     }
 
     public String getImagePng(int position) {
@@ -139,6 +142,11 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
+        for (Programmer jogadores : jogadoresEmJogo) {
+            if (jogadores.getPosicao() == tamanhoTabuleiro){
+                return true;
+            }
+        }
         return false;
     }
 
