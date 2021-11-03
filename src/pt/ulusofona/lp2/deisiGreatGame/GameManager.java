@@ -50,8 +50,6 @@ public class GameManager {
                         programador.setColorAvatar(ProgrammerColor.GREEN);
                     }else if (Objects.equals(playerInfo[i][j], "Brown")){
                         programador.setColorAvatar(ProgrammerColor.BROWN);
-                    }else {
-                        return false;
                     }
                 }
             }
@@ -67,7 +65,7 @@ public class GameManager {
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getId));
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
-        if (2 * jogadoresEmJogo.size() <= boardSize){
+        if (2 * jogadoresEmJogo.size() > boardSize){
             return false;
         }
 
@@ -76,7 +74,7 @@ public class GameManager {
         HashSet<ProgrammerColor> coresRepetidas = new HashSet<>();
 
         for(Programmer jogadores : jogadoresEmJogo){
-            if (jogadores.getId() != ' ' ||jogadores.getId() < 1 || !idRepetidos.add(jogadores.getId())) {
+            if (jogadores.getId() < 1 || !idRepetidos.add(jogadores.getId())) {
                 //se o id é repetido ou inferior a 1
                 jogadoresEmJogo.clear();
                 return false;
