@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Programmer {
     String name = "";
     ArrayList<String> languages;
-    int iD;
+    int id;
     ProgrammerColor colorAvatar;
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
@@ -13,21 +13,45 @@ public class Programmer {
     public Programmer() {
 
     }
-
-    int getId(){
-        return iD;
+    // set atribuir um valor
+    // get ir buscar esse valor
+    void setLanguages(ArrayList<String> languages) {
+        this.languages =languages;
+    }
+    public int getId(){
+        return id;
     }
 
-    String getName(){
+    void setID(int id) {
+        this.id = id;
+    }
+
+    public String getName(){
         return name;
     }
 
-    ProgrammerColor getColor(){
+    void setName(String nome) {
+        this.name = nome;
+    }
+
+    public ProgrammerColor getColor(){
         return colorAvatar;
     }
 
-    int getPosicao(){
+    void setColorAvatar(ProgrammerColor color) {
+        this.colorAvatar = color;
+    }
+
+    public int getPosicao(){
         return posicao;
+    }
+
+    void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
+        if (posicao + this.posicao > tamanhoTabuleiro){
+            this.posicao = tamanhoTabuleiro - posicao;
+        }else {
+            this.posicao += posicao;
+        }
     }
 
     @Override
@@ -43,6 +67,6 @@ public class Programmer {
                 texto.append(languages.get(i)).append(";");
             }
         }
-        return iD+" | "+name+" | "+posicao+" | "+texto+" | "+estado;
+        return id +" | "+name+" | "+posicao+" | "+texto+" | "+estado;
     }
 }

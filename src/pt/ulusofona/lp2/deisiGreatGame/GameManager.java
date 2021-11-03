@@ -1,14 +1,12 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class GameManager {
      ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
-     int turnoAtual = 0; //turno em que se encontra
+     int turnoAtual = 1; //turno em que se encontra
      int tamanhoTabuleiro;
+     int nrTotalJogadas = 0;
      Programmer jogadorAtual = new Programmer();
 
      Programmer getJogadorAtual(int posicao){
@@ -26,32 +24,51 @@ public class GameManager {
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
         tamanhoTabuleiro = boardSize;
+
         if (boardSize <= 1) {
             return false;
         }
 
         //Adicionar Jogadores
-        ArrayList<Programmer> listaJogadores = new ArrayList<>();
         for (int i = 0; i < playerInfo.length; i++) {
             Programmer programador = new Programmer();
             ArrayList<String> linguagens = new ArrayList<>();
-            for (int j = 0; j < playerInfo[j].length; j++) {
+            System.out.println(playerInfo[i].length);
+            for (int j = 0; j < playerInfo[i].length; j++) {
                 if (j == 0) { //adicionar o id
-                    programador.iD = Integer.parseInt(playerInfo[i][j]);
+                    programador.setID(Integer.parseInt(playerInfo[i][j]));
                 } else if (j == 1) { //adicionar o nome
-                    programador.name = playerInfo[i][j];
+                    programador.setName(playerInfo[i][j]);
                 } else if (j == 2) { //adicionar as linguagens
                     linguagens.addAll(List.of(playerInfo[i][j].split(";")));
-                    programador.languages = linguagens;
+                    programador.setLanguages(linguagens);
                 } else if (j == 3) { //adicionar a cor
-                    programador.colorAvatar = ProgrammerColor.valueOf(playerInfo[i][j]);
+                    if (Objects.equals(playerInfo[i][j], "Purple")){
+                        programador.setColorAvatar(ProgrammerColor.PURPLE);
+                    }else if (Objects.equals(playerInfo[i][j], "Blue")) {
+                        programador.setColorAvatar(ProgrammerColor.BLUE);
+                    }else if (Objects.equals(playerInfo[i][j], "Green")){
+                        programador.setColorAvatar(ProgrammerColor.GREEN);
+                    }else if (Objects.equals(playerInfo[i][j], "Brown")){
+                        programador.setColorAvatar(ProgrammerColor.BROWN);
+                    }else {
+                        return false;
+                    }
                 }
             }
-            listaJogadores.add(programador);
+            jogadoresEmJogo.add(programador);
         }
 
         //total de jogadores não pode haver menos de 2 jogadores nem mais de 4
-        if (listaJogadores.size() < 2 || listaJogadores.size() > 4) {
+        if (jogadoresEmJogo.size() < 2 || jogadoresEmJogo.size() > 4) {
+            return false;
+        }
+
+        //ordenar a lista de jogadores por id
+        jogadoresEmJogo.sort(Comparator.comparingInt((Programmer programmer) -> programmer.id));
+
+        //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
+        if (2 * jogadoresEmJogo.size() <= boardSize){
             return false;
         }
 
@@ -59,54 +76,50 @@ public class GameManager {
         HashSet<Integer> idRepetidos = new HashSet<>();
         HashSet<ProgrammerColor> coresRepetidas = new HashSet<>();
 
-        for(Programmer jogadores : listaJogadores){
-            if (jogadores.getId() < 1 || !idRepetidos.add(jogadores.getId())) {
+        for(Programmer jogadores : jogadoresEmJogo){
+            if (jogadores.getId() != ' ' ||jogadores.getId() < 1 || !idRepetidos.add(jogadores.getId())) {
                 //se o id é repetido ou inferior a 1
+                jogadoresEmJogo.clear();
                 return false;
             }
-            if (Objects.equals(jogadores.getName(), "") || jogadores.getName() == null ) {
+            if ( jogadores.getName() == null || Objects.equals(jogadores.getName(), "")) {
                 //o nome é vazio ou null
+                jogadoresEmJogo.clear();
                 return false;
             }
-            if (!coresRepetidas.add(jogadores.getColor()) || jogadores.getColor() == null) {
+            if (!coresRepetidas.add(jogadores.getColor())) {
                 // a cor é repetida,  ou null
+                jogadoresEmJogo.clear();
                 return false;
             }
             idRepetidos.add(jogadores.getId());
             coresRepetidas.add(jogadores.getColor());
-            jogadoresEmJogo.add(jogadores); //adicionar os jogadores que tem tudo certo
         }
-
-        //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
-        return 2 * jogadoresEmJogo.size() <= boardSize;
-
-        //Para saber o turno basta fazer um collection sort por id e
-        // os jogadores ficam desta forma ordenados por turnos
+        return true;
     }
 
     public String getImagePng(int position) {
         if (position > tamanhoTabuleiro) {
             return null;
         }
-
-        switch (getJogadorAtual(position).getColor()) {
-            case BLUE -> {
-                return "playerBlue.png";
-            }
-            case BROWN -> {
-                return "playerBrown.png";
-            }
-            case GREEN -> {
-                return "playerGreen.png";
-            }
-            case PURPLE -> {
-                return "playerPurple.png";
-            }
-        }
+//        switch (getJogadorAtual(position).getColor()) {
+//            case BLUE -> {
+//                return "playerBlue.png";
+//            }
+//            case BROWN -> {
+//                return "playerBrown.png";
+//            }
+//            case GREEN -> {
+//                return "playerGreen.png";
+//            }
+//            case PURPLE -> {
+//                return "playerPurple.png";
+//            }
+//        }
         if (position == tamanhoTabuleiro) {
             return "glory.png";
         }
-        return null;
+        return "";
     }
 
     public ArrayList<Programmer> getProgrammers() {
@@ -126,22 +139,50 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
+        for (Programmer programmer : jogadoresEmJogo) {
+            //verifica qual e o turno atual e a associa à posição do arrayList de jogadores
+            return switch (turnoAtual) {
+                case 1 -> jogadoresEmJogo.get(0).getId();
+                case 2 -> jogadoresEmJogo.get(1).getId();
+                case 3 -> jogadoresEmJogo.get(2).getId();
+                case 4 -> jogadoresEmJogo.get(3).getId();
+                default -> 0;
+            };
+        }
         return 0;
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
-        if (nrPositions < 1 || nrPositions > 6) {  //pois o dado vai de 1..6
+         //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
+        if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
+                switch (turnoAtual) {
+                    //incrementa a posicao do jogador numero de posicoes passada
+                    case 1 :
+                        jogadoresEmJogo.get(0).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                        break;
+                    case 2 :
+                        jogadoresEmJogo.get(1).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                        break;
+                    case 3 :
+                        jogadoresEmJogo.get(2).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                        break;
+                    case 4 :
+                        jogadoresEmJogo.get(3).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                        break;
+                }
+            nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             turnoAtual++; //passa ao proximo jogador
-            if (turnoAtual > jogadoresEmJogo.size()){
-                turnoAtual = 0;
+            if (turnoAtual > jogadoresEmJogo.size()){ // os turnos vão de 1-4
+                turnoAtual = 1;
             }
             return true;
         }
     }
 
     public boolean gameIsOver() {
+        //o jogo acaba quando um jogador chegar à casa de patida
         for (Programmer jogadores : jogadoresEmJogo) {
             if (jogadores.getPosicao() == tamanhoTabuleiro){
                 return true;
@@ -162,6 +203,7 @@ public class GameManager {
         <...> */
         return null;
         /*
+
         StringBuilder colocacoes = new StringBuilder();
 
         ArrayList<String> resultados = new ArrayList<>();
@@ -176,7 +218,6 @@ public class GameManager {
             colocacoes.append(programmer.name).append(" ").append(programmer.position).append("\n");
         }
          */
-
     }
 
     public JPanel getAuthorsPanel(){
