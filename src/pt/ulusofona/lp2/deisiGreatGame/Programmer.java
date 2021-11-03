@@ -65,11 +65,10 @@ public class Programmer {
         Collections.sort(languages);
         for (int i = 0; i < languages.size(); i++) {
             if (count != languages.size() -1) {
-                count++;
                 texto.append(languages.get(i));
             }else {
                 count++;
-                texto.append("; ").append(languages.get(i));
+                texto.append(languages.get(i)).append("; ");
             }
         }
         return id +" | "+name+" | "+posicao+" | "+texto+" | "+estado;

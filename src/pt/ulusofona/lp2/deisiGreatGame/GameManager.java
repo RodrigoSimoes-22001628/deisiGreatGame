@@ -33,7 +33,6 @@ public class GameManager {
         for (int i = 0; i < playerInfo.length; i++) {
             Programmer programador = new Programmer();
             ArrayList<String> linguagens = new ArrayList<>();
-            System.out.println(playerInfo[i].length);
             for (int j = 0; j < playerInfo[i].length; j++) {
                 if (j == 0) { //adicionar o id
                     programador.setID(Integer.parseInt(playerInfo[i][j]));
