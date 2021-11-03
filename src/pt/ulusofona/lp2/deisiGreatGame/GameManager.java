@@ -65,7 +65,7 @@ public class GameManager {
         }
 
         //ordenar a lista de jogadores por id
-        jogadoresEmJogo.sort(Comparator.comparingInt((Programmer programmer) -> programmer.id));
+        jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getId));
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
         if (2 * jogadoresEmJogo.size() <= boardSize){
@@ -102,23 +102,11 @@ public class GameManager {
         if (position > tamanhoTabuleiro) {
             return null;
         }
-//        switch (getJogadorAtual(position).getColor()) {
-//            case BLUE -> {
-//                return "playerBlue.png";
-//            }
-//            case BROWN -> {
-//                return "playerBrown.png";
-//            }
-//            case GREEN -> {
-//                return "playerGreen.png";
-//            }
-//            case PURPLE -> {
-//                return "playerPurple.png";
-//            }
-//        }
+
         if (position == tamanhoTabuleiro) {
             return "glory.png";
         }
+
         return "";
     }
 
@@ -159,18 +147,10 @@ public class GameManager {
         }else {
             switch (turnoAtual) {
                 //incrementa a posicao do jogador numero de posicoes passada
-                case 1 :
-                    jogadoresEmJogo.get(0).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                    break;
-                case 2 :
-                    jogadoresEmJogo.get(1).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                    break;
-                case 3 :
-                    jogadoresEmJogo.get(2).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                    break;
-                case 4 :
-                    jogadoresEmJogo.get(3).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                    break;
+                case 1 -> jogadoresEmJogo.get(0).incrementaPosicao(nrPositions, tamanhoTabuleiro);
+                case 2 -> jogadoresEmJogo.get(1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
+                case 3 -> jogadoresEmJogo.get(2).incrementaPosicao(nrPositions, tamanhoTabuleiro);
+                case 4 -> jogadoresEmJogo.get(3).incrementaPosicao(nrPositions, tamanhoTabuleiro);
             }
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             turnoAtual++; //passa ao proximo jogador
@@ -192,30 +172,24 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-       /* O GRANDE JOGO DO DEISI
-        NR. DE TURNOS
-        <NR DE TURNOS>
-        VENCEDOR
-        <NOME DO PROGRAMADOR VENCEDOR>
-        RESTANTES
-        <NOME DO SEGUNDO MELHOR CLASSIFICADO> <POSIÇãO>
-        <NOME DO TERCEIRO MELHOR CLASSIFICADO> <POSIçÃO>
-        <...> */
-        return null;
-        /*
+        //ordenar a lista de jogadores por id
+        jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
+
         StringBuilder colocacoes = new StringBuilder();
         ArrayList<String> resultados = new ArrayList<>();
-        resultados.add("O GRANDE JOGO DO DEISI" + "\n" + "\n");
-        resultados.add("NR. DE TURNOS" + "\n");
-        resultados.add("" + turnos + "\n"+ "\n");
+        resultados.add("O GRANDE JOGO DO DEISI");
+        resultados.add("");
+        resultados.add("NR. DE TURNOS");
+        resultados.add("");
+        resultados.add(""+nrTotalJogadas);
         resultados.add("VENCEDOR");
-        if(programmer.position == meta) {
-            resultados.add(programmer.name + "\n" + "\n");
-        } else {
-            resultados.add("RESTANTES");
-            colocacoes.append(programmer.name).append(" ").append(programmer.position).append("\n");
+        resultados.add(jogadoresEmJogo.get(0).getName());
+        resultados.add("");
+        resultados.add("RESTANTES");
+        for (int i = 1 ; i < jogadoresEmJogo.size() ; i++) {
+                resultados.add(jogadoresEmJogo.get(i).getName()+" "+jogadoresEmJogo.get(i).getPosicao());
         }
-         */
+        return resultados;
     }
 
     public JPanel getAuthorsPanel(){
