@@ -3,20 +3,20 @@ import javax.swing.*;
 import java.util.*;
 
 public class GameManager {
-     ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
-     int turnoAtual = 1; //turno em que se encontra
-     int tamanhoTabuleiro;
-     int nrTotalJogadas = 0;
-     Programmer jogadorAtual = new Programmer();
+    ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
+    int turnoAtual = 1; //turno em que se encontra
+    int tamanhoTabuleiro;
+    int nrTotalJogadas = 0;
+    Programmer jogadorAtual = new Programmer();
 
-     Programmer getJogadorAtual(int posicao){
-         for (Programmer jogador : jogadoresEmJogo){
-             if (Objects.equals(jogador.getPosicao(),posicao)){
-                 return jogador;
-             }
-         }
-         return null;
-     }
+    Programmer getJogadorAtual(int posicao){
+        for (Programmer jogador : jogadoresEmJogo){
+            if (Objects.equals(jogador.getPosicao(),posicao)){
+                return jogador;
+            }
+        }
+        return null;
+    }
 
     public GameManager() {
 
@@ -129,13 +129,13 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers(int position) {
         //retorna a lista dos jogadores em jogo numa certa posição
-       ArrayList<Programmer> jogadoresNaPosicao = new ArrayList<>();
-       for (Programmer jogadores : jogadoresEmJogo){
-           if (Objects.equals(jogadores.getPosicao(),position)){
-               jogadoresNaPosicao.add(jogadores);
-           }
-       }
-       return jogadoresNaPosicao;
+        ArrayList<Programmer> jogadoresNaPosicao = new ArrayList<>();
+        for (Programmer jogadores : jogadoresEmJogo){
+            if (Objects.equals(jogadores.getPosicao(),position)){
+                jogadoresNaPosicao.add(jogadores);
+            }
+        }
+        return jogadoresNaPosicao;
     }
 
     public int getCurrentPlayerID() {
@@ -153,25 +153,25 @@ public class GameManager {
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
-         //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
+        //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
-                switch (turnoAtual) {
-                    //incrementa a posicao do jogador numero de posicoes passada
-                    case 1 :
-                        jogadoresEmJogo.get(0).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                        break;
-                    case 2 :
-                        jogadoresEmJogo.get(1).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                        break;
-                    case 3 :
-                        jogadoresEmJogo.get(2).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                        break;
-                    case 4 :
-                        jogadoresEmJogo.get(3).incrementaPosicao(nrPositions,tamanhoTabuleiro);
-                        break;
-                }
+            switch (turnoAtual) {
+                //incrementa a posicao do jogador numero de posicoes passada
+                case 1 :
+                    jogadoresEmJogo.get(0).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                    break;
+                case 2 :
+                    jogadoresEmJogo.get(1).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                    break;
+                case 3 :
+                    jogadoresEmJogo.get(2).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                    break;
+                case 4 :
+                    jogadoresEmJogo.get(3).incrementaPosicao(nrPositions,tamanhoTabuleiro);
+                    break;
+            }
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             turnoAtual++; //passa ao proximo jogador
             if (turnoAtual > jogadoresEmJogo.size()){ // os turnos vão de 1-4
@@ -203,9 +203,7 @@ public class GameManager {
         <...> */
         return null;
         /*
-
         StringBuilder colocacoes = new StringBuilder();
-
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI" + "\n" + "\n");
         resultados.add("NR. DE TURNOS" + "\n");

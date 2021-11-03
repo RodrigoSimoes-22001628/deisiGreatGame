@@ -48,7 +48,9 @@ public class Programmer {
 
     void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
         if (posicao + this.posicao > tamanhoTabuleiro){
-            this.posicao = tamanhoTabuleiro - posicao;
+            int conta = (tamanhoTabuleiro - this.posicao);
+            conta = posicao - conta;
+            this.posicao = tamanhoTabuleiro - conta;
         }else {
             this.posicao += posicao;
         }
@@ -61,7 +63,7 @@ public class Programmer {
         for (int i = 0; i < languages.size(); i++) {
             if (count != languages.size() -1) {
                 count++;
-               texto.append(languages.get(i));
+                texto.append(languages.get(i));
             }else {
                 count++;
                 texto.append(languages.get(i)).append(";");
