@@ -66,7 +66,7 @@ public class Programmer {
                 texto.append(languages.get(i));
             }else {
                 count++;
-                texto.append(languages.get(i)).append(";");
+                texto.append("; ").append(languages.get(i));
             }
         }
         return id +" | "+name+" | "+posicao+" | "+texto+" | "+estado;
