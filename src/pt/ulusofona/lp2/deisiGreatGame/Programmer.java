@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Programmer {
     String name = "";
@@ -60,6 +61,7 @@ public class Programmer {
     public String toString() {
         StringBuilder texto = new StringBuilder();
         int count = 0;
+        Collections.sort(languages);
         for (int i = 0; i < languages.size(); i++) {
             if (count != languages.size() -1) {
                 count++;
