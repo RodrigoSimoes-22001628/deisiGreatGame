@@ -7,16 +7,6 @@ public class GameManager {
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
     int nrTotalJogadas = 0;
-    Programmer jogadorAtual = new Programmer();
-
-//    Programmer getJogadorAtual(int posicao){
-//        for (Programmer jogador : jogadoresEmJogo){
-//            if (Objects.equals(jogador.getPosicao(),posicao)){
-//                return jogador;
-//            }
-//        }
-//        return null;
-//    }
 
     public GameManager() {
 
@@ -91,7 +81,6 @@ public class GameManager {
         if (position == tamanhoTabuleiro) {
             return "glory.png";
         }
-
         return "";
     }
 
@@ -144,13 +133,12 @@ public class GameManager {
     public ArrayList<String> getGameResults() {
         //ordenar a lista de jogadores por posição
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
-
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
         resultados.add("NR. DE TURNOS");
-        resultados.add("");
         resultados.add(""+nrTotalJogadas);
+        resultados.add("");
         resultados.add("VENCEDOR");
         resultados.add(jogadoresEmJogo.get(0).getName());
         resultados.add("");
