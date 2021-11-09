@@ -13,7 +13,9 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
-        jogadoresEmJogo = new ArrayList<>();
+        jogadoresEmJogo.clear();
+        turnoAtual = 1;
+        nrTotalJogadas = 1;
         tamanhoTabuleiro = boardSize;
 
         if (boardSize <= 1) {
