@@ -66,7 +66,7 @@ public class Programmer {
             if (i == languages.size() -1) {
                 texto.append(languages.get(i));
             }else {
-                texto.append(languages.get(i)).append(";");
+                texto.append(languages.get(i)).append("; ");
             }
         }
 

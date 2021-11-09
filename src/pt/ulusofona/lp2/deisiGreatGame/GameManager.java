@@ -20,6 +20,7 @@ public class GameManager {
         }
 
         HashSet<Integer> idRepetidos = new HashSet<>();
+        HashSet<Integer> corRepetida = new HashSet<>();
         //Adicionar Jogadores
         for (int i = 0; i < playerInfo.length; i++) {
             Programmer programador = new Programmer();
@@ -27,7 +28,7 @@ public class GameManager {
             for (int j = 0; j < playerInfo[i].length; j++) {
                 switch (j){
                     case 0 :
-                        if (Integer.parseInt(playerInfo[i][j]) < 1 ||!idRepetidos.add((Integer.parseInt(playerInfo[i][j])))){
+                        if (Integer.parseInt(playerInfo[i][j]) < 1 || idRepetidos.contains((Integer.parseInt(playerInfo[i][j])))){
                             jogadoresEmJogo = new ArrayList<>();
                             return false;
                         }else{
@@ -37,7 +38,7 @@ public class GameManager {
                         }
                         break;
                     case 1:
-                        if (playerInfo[i][j] == null || Objects.equals(playerInfo[i][j], "")){
+                        if (playerInfo[i][j] == null || playerInfo[i][j].equals("")){
                             jogadoresEmJogo.clear();
                             return false;
                         }else{
@@ -45,17 +46,18 @@ public class GameManager {
                         }
                         break;
                     case 2:
-                        linguagens.addAll(List.of(playerInfo[i][j]));
+                        linguagens.addAll(List.of(playerInfo[i][j].split(";")));
                         programador.setLanguages(linguagens);
                         break;
                     case 3:
-                        if (Objects.equals(playerInfo[i][j], "Purple")) {
+
+                        if (playerInfo[i][j].equals("Purple")) {
                             programador.setColorAvatar(ProgrammerColor.PURPLE);
-                        } else if (Objects.equals(playerInfo[i][j], "Blue")) {
+                        } else if (playerInfo[i][j].equals("Blue")) {
                             programador.setColorAvatar(ProgrammerColor.BLUE);
-                        } else if (Objects.equals(playerInfo[i][j], "Green")) {
+                        } else if (playerInfo[i][j].equals("Green")) {
                             programador.setColorAvatar(ProgrammerColor.GREEN);
-                        } else if (Objects.equals(playerInfo[i][j], "Brown")) {
+                        } else if (playerInfo[i][j].equals("Brown")) {
                             programador.setColorAvatar(ProgrammerColor.BROWN);
                         }
                         break;
