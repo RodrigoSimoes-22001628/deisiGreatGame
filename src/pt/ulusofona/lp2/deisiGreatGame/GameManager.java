@@ -28,21 +28,26 @@ public class GameManager {
                 switch (j){
                     case 0 :
                         if (Integer.parseInt(playerInfo[i][j]) < 1 ||!idRepetidos.add((Integer.parseInt(playerInfo[i][j])))){
+                            jogadoresEmJogo = new ArrayList<>();
                             return false;
                         }else{
                             programador.setID(Integer.parseInt(playerInfo[i][j]));
                             //adiciono no Hashset para evitar repetidos
                             idRepetidos.add(Integer.parseInt(playerInfo[i][j]));
                         }
+                        break;
                     case 1:
                         if (playerInfo[i][j] == null || Objects.equals(playerInfo[i][j], "")){
+                            jogadoresEmJogo.clear();
                             return false;
                         }else{
                             programador.setName(playerInfo[i][j]);
                         }
+                        break;
                     case 2:
                         linguagens.addAll(List.of(playerInfo[i][j].split(";")));
                         programador.setLanguages(linguagens);
+                        break;
                     case 3:
                         if (Objects.equals(playerInfo[i][j], "Purple")) {
                             programador.setColorAvatar(ProgrammerColor.PURPLE);
@@ -53,6 +58,7 @@ public class GameManager {
                         } else if (Objects.equals(playerInfo[i][j], "Brown")) {
                             programador.setColorAvatar(ProgrammerColor.BROWN);
                         }
+                        break;
                 }
             }
             jogadoresEmJogo.add(programador);
