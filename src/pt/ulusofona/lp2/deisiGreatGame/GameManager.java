@@ -6,13 +6,14 @@ public class GameManager {
     ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
-    int nrTotalJogadas = 0;
+    int nrTotalJogadas = 1;
 
     public GameManager() {
 
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        jogadoresEmJogo = new ArrayList<>();
         tamanhoTabuleiro = boardSize;
 
         if (boardSize <= 1) {
@@ -20,7 +21,7 @@ public class GameManager {
         }
 
         HashSet<Integer> idRepetidos = new HashSet<>();
-        HashSet<Integer> corRepetida = new HashSet<>();
+        HashSet<String> corRepetida = new HashSet<>();
         //Adicionar Jogadores
         for (int i = 0; i < playerInfo.length; i++) {
             Programmer programador = new Programmer();
@@ -29,7 +30,6 @@ public class GameManager {
                 switch (j){
                     case 0 :
                         if (Integer.parseInt(playerInfo[i][j]) < 1 || idRepetidos.contains((Integer.parseInt(playerInfo[i][j])))){
-                            jogadoresEmJogo = new ArrayList<>();
                             return false;
                         }else{
                             programador.setID(Integer.parseInt(playerInfo[i][j]));
@@ -39,7 +39,6 @@ public class GameManager {
                         break;
                     case 1:
                         if (playerInfo[i][j] == null || playerInfo[i][j].equals("")){
-                            jogadoresEmJogo.clear();
                             return false;
                         }else{
                             programador.setName(playerInfo[i][j]);
@@ -50,15 +49,19 @@ public class GameManager {
                         programador.setLanguages(linguagens);
                         break;
                     case 3:
-
-                        if (playerInfo[i][j].equals("Purple")) {
-                            programador.setColorAvatar(ProgrammerColor.PURPLE);
-                        } else if (playerInfo[i][j].equals("Blue")) {
-                            programador.setColorAvatar(ProgrammerColor.BLUE);
-                        } else if (playerInfo[i][j].equals("Green")) {
-                            programador.setColorAvatar(ProgrammerColor.GREEN);
-                        } else if (playerInfo[i][j].equals("Brown")) {
-                            programador.setColorAvatar(ProgrammerColor.BROWN);
+                        if (corRepetida.contains(playerInfo[i][j])) {
+                             return false;
+                        }else {
+                            if (playerInfo[i][j].equals("Purple")) {
+                                programador.setColorAvatar(ProgrammerColor.PURPLE);
+                            } else if (playerInfo[i][j].equals("Blue")) {
+                                programador.setColorAvatar(ProgrammerColor.BLUE);
+                            } else if (playerInfo[i][j].equals("Green")) {
+                                programador.setColorAvatar(ProgrammerColor.GREEN);
+                            } else if (playerInfo[i][j].equals("Brown")) {
+                                programador.setColorAvatar(ProgrammerColor.BROWN);
+                            }
+                           corRepetida.add(playerInfo[i][j]);
                         }
                         break;
                 }
@@ -75,7 +78,7 @@ public class GameManager {
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getId));
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
-        if (2 * jogadoresEmJogo.size() > boardSize){
+        if (boardSize < 2 * jogadoresEmJogo.size()){
             return false;
         }
         return true;
