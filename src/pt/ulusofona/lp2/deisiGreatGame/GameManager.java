@@ -45,7 +45,7 @@ public class GameManager {
                         }
                         break;
                     case 2:
-                        linguagens.addAll(List.of(playerInfo[i][j].split(";")));
+                        linguagens.addAll(List.of(playerInfo[i][j]));
                         programador.setLanguages(linguagens);
                         break;
                     case 3:

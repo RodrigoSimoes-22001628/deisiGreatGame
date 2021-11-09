@@ -61,16 +61,15 @@ public class Programmer {
     @Override
     public String toString() {
         StringBuilder texto = new StringBuilder();
-        int count = 0;
         Collections.sort(languages);
         for (int i = 0; i < languages.size(); i++) {
-            if (count != languages.size() -1) {
+            if (i == languages.size() -1) {
                 texto.append(languages.get(i));
             }else {
-                count++;
                 texto.append(languages.get(i)).append(";");
             }
         }
+
         return id +" | "+name+" | "+posicao+" | "+texto+" | "+estado;
     }
 }
