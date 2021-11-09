@@ -9,7 +9,6 @@ public class GameManager {
     int nrTotalJogadas = 1;
 
     public GameManager() {
-
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
