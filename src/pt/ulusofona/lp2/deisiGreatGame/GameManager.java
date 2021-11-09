@@ -9,14 +9,14 @@ public class GameManager {
     int nrTotalJogadas = 0;
     Programmer jogadorAtual = new Programmer();
 
-    Programmer getJogadorAtual(int posicao){
-        for (Programmer jogador : jogadoresEmJogo){
-            if (Objects.equals(jogador.getPosicao(),posicao)){
-                return jogador;
-            }
-        }
-        return null;
-    }
+//    Programmer getJogadorAtual(int posicao){
+//        for (Programmer jogador : jogadoresEmJogo){
+//            if (Objects.equals(jogador.getPosicao(),posicao)){
+//                return jogador;
+//            }
+//        }
+//        return null;
+//    }
 
     public GameManager() {
 
@@ -29,28 +29,40 @@ public class GameManager {
             return false;
         }
 
+        HashSet<Integer> idRepetidos = new HashSet<>();
         //Adicionar Jogadores
         for (int i = 0; i < playerInfo.length; i++) {
             Programmer programador = new Programmer();
             ArrayList<String> linguagens = new ArrayList<>();
             for (int j = 0; j < playerInfo[i].length; j++) {
-                if (j == 0) { //adicionar o id
-                    programador.setID(Integer.parseInt(playerInfo[i][j]));
-                } else if (j == 1) { //adicionar o nome
-                    programador.setName(playerInfo[i][j]);
-                } else if (j == 2) { //adicionar as linguagens
-                    linguagens.addAll(List.of(playerInfo[i][j].split(";")));
-                    programador.setLanguages(linguagens);
-                } else if (j == 3) { //adicionar a cor
-                    if (Objects.equals(playerInfo[i][j], "Purple")){
-                        programador.setColorAvatar(ProgrammerColor.PURPLE);
-                    }else if (Objects.equals(playerInfo[i][j], "Blue")) {
-                        programador.setColorAvatar(ProgrammerColor.BLUE);
-                    }else if (Objects.equals(playerInfo[i][j], "Green")){
-                        programador.setColorAvatar(ProgrammerColor.GREEN);
-                    }else if (Objects.equals(playerInfo[i][j], "Brown")){
-                        programador.setColorAvatar(ProgrammerColor.BROWN);
-                    }
+                switch (j){
+                    case 0 :
+                        if (Integer.parseInt(playerInfo[i][j]) < 1 ||!idRepetidos.add((Integer.parseInt(playerInfo[i][j])))){
+                            return false;
+                        }else{
+                            programador.setID(Integer.parseInt(playerInfo[i][j]));
+                            //adiciono no Hashset para evitar repetidos
+                            idRepetidos.add(Integer.parseInt(playerInfo[i][j]));
+                        }
+                    case 1:
+                        if (playerInfo[i][j] == null || Objects.equals(playerInfo[i][j], "")){
+                            return false;
+                        }else{
+                            programador.setName(playerInfo[i][j]);
+                        }
+                    case 2:
+                        linguagens.addAll(List.of(playerInfo[i][j].split(";")));
+                        programador.setLanguages(linguagens);
+                    case 3:
+                        if (Objects.equals(playerInfo[i][j], "Purple")) {
+                            programador.setColorAvatar(ProgrammerColor.PURPLE);
+                        } else if (Objects.equals(playerInfo[i][j], "Blue")) {
+                            programador.setColorAvatar(ProgrammerColor.BLUE);
+                        } else if (Objects.equals(playerInfo[i][j], "Green")) {
+                            programador.setColorAvatar(ProgrammerColor.GREEN);
+                        } else if (Objects.equals(playerInfo[i][j], "Brown")) {
+                            programador.setColorAvatar(ProgrammerColor.BROWN);
+                        }
                 }
             }
             jogadoresEmJogo.add(programador);
@@ -67,30 +79,6 @@ public class GameManager {
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
         if (2 * jogadoresEmJogo.size() > boardSize){
             return false;
-        }
-
-        //uso de Hashset para evitar duplicados (id e cor)
-        HashSet<Integer> idRepetidos = new HashSet<>();
-        HashSet<ProgrammerColor> coresRepetidas = new HashSet<>();
-
-        for(Programmer jogadores : jogadoresEmJogo){
-            if (jogadores.getId() < 1 || !idRepetidos.add(jogadores.getId())) {
-                //se o id é repetido ou inferior a 1
-                jogadoresEmJogo.clear();
-                return false;
-            }
-            if ( jogadores.getName() == null || Objects.equals(jogadores.getName(), "")) {
-                //o nome é vazio ou null
-                jogadoresEmJogo.clear();
-                return false;
-            }
-            if (!coresRepetidas.add(jogadores.getColor())) {
-                // a cor é repetida,  ou null
-                jogadoresEmJogo.clear();
-                return false;
-            }
-            idRepetidos.add(jogadores.getId());
-            coresRepetidas.add(jogadores.getColor());
         }
         return true;
     }
@@ -124,17 +112,7 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-        for (Programmer programmer : jogadoresEmJogo) {
-            //verifica qual e o turno atual e a associa à posição do arrayList de jogadores
-            return switch (turnoAtual) {
-                case 1 -> jogadoresEmJogo.get(0).getId();
-                case 2 -> jogadoresEmJogo.get(1).getId();
-                case 3 -> jogadoresEmJogo.get(2).getId();
-                case 4 -> jogadoresEmJogo.get(3).getId();
-                default -> 0;
-            };
-        }
-        return 0;
+        return  jogadoresEmJogo.get(turnoAtual-1).getId();
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
@@ -142,15 +120,10 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
-            switch (turnoAtual) {
-                //incrementa a posicao do jogador numero de posicoes passada
-                case 1 -> jogadoresEmJogo.get(0).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-                case 2 -> jogadoresEmJogo.get(1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-                case 3 -> jogadoresEmJogo.get(2).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-                case 4 -> jogadoresEmJogo.get(3).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-            }
+            jogadoresEmJogo.get(turnoAtual-1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             turnoAtual++; //passa ao proximo jogador
+
             if (turnoAtual > jogadoresEmJogo.size()){ // os turnos vão de 1-4
                 turnoAtual = 1;
             }
@@ -159,9 +132,9 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
-        //o jogo acaba quando um jogador chegar à casa de patida
-        for (Programmer jogadores : jogadoresEmJogo) {
-            if (jogadores.getPosicao() == tamanhoTabuleiro){
+        //o jogo acaba quando um jogador chegar à meta
+        for (int i = 0; i < jogadoresEmJogo.size(); i++) {
+            if (jogadoresEmJogo.get(i).getPosicao() == tamanhoTabuleiro){
                 return true;
             }
         }
@@ -169,10 +142,9 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        //ordenar a lista de jogadores por id
+        //ordenar a lista de jogadores por posição
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
 
-        StringBuilder colocacoes = new StringBuilder();
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
@@ -184,7 +156,7 @@ public class GameManager {
         resultados.add("");
         resultados.add("RESTANTES");
         for (int i = 1 ; i < jogadoresEmJogo.size() ; i++) {
-                resultados.add(jogadoresEmJogo.get(i).getName()+" "+jogadoresEmJogo.get(i).getPosicao());
+            resultados.add(jogadoresEmJogo.get(i).getName() + " " + jogadoresEmJogo.get(i).getPosicao());
         }
         return resultados;
     }
