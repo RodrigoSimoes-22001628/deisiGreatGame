@@ -90,9 +90,11 @@ public class GameManager {
         if (position > tamanhoTabuleiro) {
             return null;
         }
-
+        if (position == 1) {
+            return "partida.png";
+        }
         if (position == tamanhoTabuleiro) {
-            return "glory.png";
+            return "meta.png";
         }
         return "";
     }
