@@ -14,6 +14,14 @@ public class Programmer {
     public Programmer() {
 
     }
+
+    public Programmer(int id ,String nome, ArrayList<String> languages, ProgrammerColor colorAvatar) {
+        this.id = id;
+        this.name = nome;
+        this.languages = languages;
+        this.colorAvatar = colorAvatar;
+    }
+
     // set atribuir um valor
     // get ir buscar esse valor
 
