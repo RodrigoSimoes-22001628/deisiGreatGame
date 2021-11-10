@@ -12,6 +12,7 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+        //reset às variáveis
         jogadoresEmJogo.clear();
         turnoAtual = 1;
         nrTotalJogadas = 1;
