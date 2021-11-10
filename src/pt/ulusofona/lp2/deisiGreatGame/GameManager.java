@@ -94,7 +94,7 @@ public class GameManager {
             return "partida.png";
         }
         if (position == tamanhoTabuleiro) {
-            return "meta.png";
+            return "glory.png";
         }
         return "";
     }
