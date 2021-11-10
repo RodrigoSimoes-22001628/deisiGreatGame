@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 
 public class TestGameManager {
+    GameManager game = new GameManager();
 
     public void adicionarJogadores(){
         String[][] listaJogadores = new String[1][4];
@@ -12,17 +13,29 @@ public class TestGameManager {
         listaJogadores[0][1] = "Pedro";
         listaJogadores[0][2] = "c;kotlin";
         listaJogadores[0][3] = "Green";
-        GameManager game = new GameManager();
-        game.createInitialBoard(listaJogadores,5);
+        game.createInitialBoard(listaJogadores,10);
     }
 
-//    @Test
-//    public void testMoveCurrentPlayer() {
-//        adicionarJogadores();
-//        GameManager mover = new GameManager();
-//        mover.moveCurrentPlayer(2);
-//
-//    }
+    @Test
+    public void testMoveCurrentPlayer1() {
+        adicionarJogadores();
+        game.moveCurrentPlayer(2);
+        ArrayList<Programmer> programmers = game.getProgrammers();
+         String obtido = programmers.get(0).toString();
+         String esperada = "1 | Pedro | 3 | c; kotlin | Em Jogo";
+         assertEquals("a posição não está correta: ", esperada, obtido);
+
+    }
+    @Test
+    public void testMoveCurrentPlayer2() {
+        adicionarJogadores();
+        game.moveCurrentPlayer(5);
+        ArrayList<Programmer> programmers = game.getProgrammers();
+        String obtido = programmers.get(0).toString();
+        String esperada = "1 | Pedro | 6 | c; kotlin | Em Jogo";
+        assertEquals("a posição não está correta: ", esperada, obtido);
+
+    }
 
     @Test
     public void testGetters() {
