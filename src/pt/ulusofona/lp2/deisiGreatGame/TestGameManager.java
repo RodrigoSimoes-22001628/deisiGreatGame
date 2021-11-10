@@ -8,12 +8,16 @@ public class TestGameManager {
     GameManager game = new GameManager();
 
     public void adicionarJogadores(){
-        String[][] listaJogadores = new String[1][4];
+        String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Pedro";
         listaJogadores[0][2] = "c;kotlin";
         listaJogadores[0][3] = "Green";
-        game.createInitialBoard(listaJogadores,10);
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        game.createInitialBoard(listaJogadores,5);
     }
 
     @Test
@@ -24,20 +28,38 @@ public class TestGameManager {
          String obtido = programmers.get(0).toString();
          String esperada = "1 | Pedro | 3 | c; kotlin | Em Jogo";
          assertEquals("a posição não está correta: ", esperada, obtido);
-
     }
     @Test
     public void testMoveCurrentPlayer2() {
         adicionarJogadores();
-        game.moveCurrentPlayer(5);
+        game.moveCurrentPlayer(1);
         ArrayList<Programmer> programmers = game.getProgrammers();
-        String obtido = programmers.get(0).toString();
-        String esperada = "1 | Pedro | 6 | c; kotlin | Em Jogo";
+        String obtido = programmers.get(1).toString();
+        String esperada = "2 | Goncalo | 1 | java; phyton | Em Jogo";
         assertEquals("a posição não está correta: ", esperada, obtido);
 
     }
+    @Test
+    public void testMoveCurrentPlayer1PosicaoMaiorTabuleiro() {
+        adicionarJogadores();
+        game.moveCurrentPlayer(6);
+        ArrayList<Programmer> programmers = game.getProgrammers();
+        String obtido = programmers.get(0).toString();
+        String esperada = "1 | Pedro | 3 | c; kotlin | Em Jogo";
+        assertEquals("a posição não está correta: ", esperada, obtido);
+    }
 
     @Test
+    public void testMoveCurrentPlayer2PosicaoMaiorTabuleiro() {
+        adicionarJogadores();
+        game.moveCurrentPlayer(8);
+        ArrayList<Programmer> programmers = game.getProgrammers();
+        String obtido = programmers.get(1).toString();
+        String esperada = "2 | Goncalo | 1 | java; phyton | Em Jogo";
+        assertEquals("a posição não está correta: ", esperada, obtido);
+    }
+
+        @Test
     public void testGetters() {
         ArrayList<String> languages = new ArrayList<>();
         languages.add("kotlin; c");
