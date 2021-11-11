@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class GameManager {
     ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
@@ -163,6 +165,20 @@ public class GameManager {
     }
 
     public JPanel getAuthorsPanel(){
-        return null;
+        JPanel painelAuthors = new JPanel();
+        JLabel titulo = new JLabel();
+        JLabel realizador1 = new JLabel();
+        JLabel realizador2 = new JLabel();
+
+        titulo.setText("Projeto Deisi Great Game");
+        realizador1.setText("Rodrigo Simões a22001628");
+        realizador2.setText("Gonçalo Soares a22003736");
+
+        painelAuthors.add(titulo);
+        painelAuthors.add(realizador1);
+        painelAuthors.add(realizador2);
+        painelAuthors.setSize(new Dimension(300, 300));
+
+        return painelAuthors;
     }
 }
