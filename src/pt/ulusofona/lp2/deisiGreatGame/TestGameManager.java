@@ -59,6 +59,16 @@ public class TestGameManager {
         assertEquals("a posição não está correta: ", esperada, obtido);
     }
 
+    @Test
+    public void testMoveCurrentPlayer2PosicaoInvalidaTabuleiro() {
+        adicionarJogadores();
+        game.moveCurrentPlayer(0);
+        ArrayList<Programmer> programmers = game.getProgrammers();
+        String obtido = programmers.get(1).toString();
+        String esperada = "2 | Goncalo | 1 | java; phyton | Em Jogo";
+        assertEquals("a posição não está correta: ", esperada, obtido);
+    }
+
         @Test
     public void testGetters() {
         ArrayList<String> languages = new ArrayList<>();
