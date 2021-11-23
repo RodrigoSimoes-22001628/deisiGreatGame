@@ -10,10 +10,12 @@ public class Programmer {
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
+    ArrayList<Ferramentas> ferramenta;
 
     public Programmer() {
 
     }
+
 
     public Programmer(int id ,String nome, ArrayList<String> languages, ProgrammerColor colorAvatar) {
         this.id = id;
@@ -22,7 +24,8 @@ public class Programmer {
         this.colorAvatar = colorAvatar;
     }
 
-    // set atribuir um valor
+
+// set atribuir um valor
     // get ir buscar esse valor
 
     void setLanguages(ArrayList<String> languages) {
@@ -56,6 +59,10 @@ public class Programmer {
         return posicao;
     }
 
+    public ArrayList<Ferramentas> getFerramenta() {
+        return ferramenta;
+    }
+
     void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
         if (posicao + this.posicao > tamanhoTabuleiro){
             int conta = (tamanhoTabuleiro - this.posicao);
@@ -64,6 +71,18 @@ public class Programmer {
         }else {
             this.posicao += posicao;
         }
+    }
+
+    String criarFerramentas(ArrayList<Ferramentas> ferramentas){
+        StringBuilder texto = new StringBuilder();
+        for (int i = 0; i < ferramentas.size(); i++) {
+            if (i == ferramentas.size() - 1) {
+                texto.append(ferramentas.get(i));
+            } else {
+                texto.append(ferramentas.get(i)).append(";");
+            }
+        }
+        return texto.toString();
     }
 
     @Override
@@ -77,7 +96,10 @@ public class Programmer {
                 texto.append(languages.get(i)).append("; ");
             }
         }
-
-        return id +" | "+name+" | "+posicao+" | "+texto+" | "+estado;
+        if(getFerramenta().size() == 0){
+            return id +" | "+name+" | "+posicao+" | "+ "No tools" + " | " +texto+" | "+estado;
+        }else {
+            return id + " | " + name + " | " + posicao + " | " + criarFerramentas(ferramenta) + " | " + texto + " | " + estado;
+        }
     }
 }
