@@ -6,6 +6,8 @@ import java.util.List;
 
 public class GameManager {
     ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
+    ArrayList<Ferramentas> ferramentas = new ArrayList<>();
+    ArrayList<Abismo> abismos = new ArrayList<>();
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
     int nrTotalJogadas = 1;
@@ -13,14 +15,14 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
         //reset às variáveis
         jogadoresEmJogo.clear();
         turnoAtual = 1;
         nrTotalJogadas = 1;
-        tamanhoTabuleiro = boardSize;
+        tamanhoTabuleiro = worldSize;
 
-        if (boardSize <= 1) {
+        if (tamanhoTabuleiro <= 1) {
             return false;
         }
 
@@ -82,12 +84,79 @@ public class GameManager {
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getId));
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
-        if (boardSize < 2 * jogadoresEmJogo.size()){
+        if (worldSize < 2 * jogadoresEmJogo.size()){
             return false;
         }
         return true;
     }
 
+    boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+        createInitialBoard(playerInfo,worldSize);
+        Abismo abismo = new Abismo();
+        for(int i = 0; i < abyssesAndTools.length; i++){
+            for(int j = 0; j < abyssesAndTools[i].length; j++){
+                switch (j){
+                    case 0:
+                        if(j == 0){
+                          //  abismo.
+                        }
+
+                    case 1:
+                        abismo.setId(Integer.parseInt(abyssesAndTools[i][j]));
+
+                    case 2:
+                        abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][j]));
+                }
+
+            }
+        }
+        return true;
+    }
+
+    String abismoPorId(int id){
+        switch (id){
+            case 0:
+                return "Erro de sintaxe";
+            case 1:
+                return "Erro de lógica";
+
+            case 2:
+                return "Exception";
+            case 3:
+                return "File Not Found Exception";
+            case 4:
+                return "Crash (aka Rebentanço)";
+            case 5:
+                return "Duplicated Code";
+            case 6:
+                return "Efeitos secundários";
+            case 7:
+                return "Blue Screen of Death";
+            case 8:
+                return "Ciclo infinito";
+            case 9:
+                return "Segmentation Fault";
+        }
+        return null;
+    }
+
+    String ferramentaPorId(int id) {
+        switch (id) {
+            case 0:
+                return "Herança";
+            case 1:
+                return "Programação funcional";
+            case 2:
+                return "Testes unitários";
+            case 3:
+                return "Tratamento de Excepções";
+            case 4:
+                return "IDE";
+            case 5:
+                return "Ajuda Do Professor";
+        }
+        return null;
+    }
     public String getImagePng(int position) {
         if (position > tamanhoTabuleiro) {
             return null;
@@ -99,8 +168,16 @@ public class GameManager {
         return "";
     }
 
-    public ArrayList<Programmer> getProgrammers() {
-        //retorna a lista dos jogadores em jogo
+    List<Programmer> getProgrammers(boolean includeDefeated){
+        ArrayList<Programmer> jogadoresSemDefeated = new ArrayList<>();
+        if(!includeDefeated){
+            for (Programmer jogadores : jogadoresEmJogo){
+                if (jogadores.estado.equals("Em jogo")){
+                    jogadoresSemDefeated.add(jogadores);
+                }
+            }
+        }
+    //retorna a lista dos jogadores em jogo
         return jogadoresEmJogo;
     }
 
@@ -119,6 +196,13 @@ public class GameManager {
         return  jogadoresEmJogo.get(turnoAtual-1).getId();
     }
 
+    String getTitle(int position){
+        if (position > tamanhoTabuleiro) {
+            return null;
+        }
+        return null;
+
+    }
     public boolean moveCurrentPlayer(int nrPositions) {
         //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
         if (nrPositions < 1 || nrPositions > 6) {

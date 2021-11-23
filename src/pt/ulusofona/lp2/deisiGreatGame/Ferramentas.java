@@ -23,4 +23,16 @@ public class Ferramentas {
     public String getTitulo() {
         return titulo;
     }
+
+    public void setPosicao(int posicao) {
+        this.posicao = posicao;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 }

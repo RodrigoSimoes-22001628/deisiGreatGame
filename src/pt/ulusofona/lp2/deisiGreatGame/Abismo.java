@@ -12,6 +12,9 @@ public class Abismo {
         this.posicao = posicao;
     }
 
+    public Abismo() {
+    }
+
     public int getId() {
         return id;
     }
@@ -22,5 +25,17 @@ public class Abismo {
 
     public int getPosicao() {
         return posicao;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setPosicao(int posicao) {
+        this.posicao = posicao;
     }
 }
