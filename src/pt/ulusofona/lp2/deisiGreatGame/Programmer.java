@@ -10,12 +10,11 @@ public class Programmer {
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
-    ArrayList<Ferramentas> ferramenta;
+    ArrayList<Ferramenta> ferramenta;
 
     public Programmer() {
 
     }
-
 
     public Programmer(int id ,String nome, ArrayList<String> languages, ProgrammerColor colorAvatar) {
         this.id = id;
@@ -59,8 +58,11 @@ public class Programmer {
         return posicao;
     }
 
-    public ArrayList<Ferramentas> getFerramenta() {
+    public ArrayList<Ferramenta> getFerramenta() {
         return ferramenta;
+    }
+    public void setFerramenta(Ferramenta ferramentaAdicionada) {
+       this.ferramenta.add(ferramentaAdicionada);
     }
 
     void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
@@ -73,7 +75,14 @@ public class Programmer {
         }
     }
 
-    String criarFerramentas(ArrayList<Ferramentas> ferramentas){
+    void subtraiPosicao(int posicao) {
+        if (posicao - this.posicao < 0){
+            this.posicao = 0;
+        }else {
+            this.posicao -= posicao;
+        }
+    }
+    String criarFerramentas(ArrayList<Ferramenta> ferramentas){
         StringBuilder texto = new StringBuilder();
         for (int i = 0; i < ferramentas.size(); i++) {
             if (i == ferramentas.size() - 1) {

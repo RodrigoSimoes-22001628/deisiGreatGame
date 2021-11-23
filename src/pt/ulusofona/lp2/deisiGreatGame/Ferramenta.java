@@ -1,12 +1,14 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class Ferramentas {
+public class Ferramenta {
     int posicao;
     int id;
     String titulo;
 
+    public Ferramenta() {
+    }
 
-    public Ferramentas(int posicao, int id, String titulo) {
+    public Ferramenta(int posicao, int id, String titulo) {
         this.posicao = posicao;
         this.id = id;
         this.titulo = titulo;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GameManager {
     ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
-    ArrayList<Ferramentas> ferramentas = new ArrayList<>();
+    ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     ArrayList<Abismo> abismos = new ArrayList<>();
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
@@ -93,21 +93,19 @@ public class GameManager {
     boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
         createInitialBoard(playerInfo,worldSize);
         Abismo abismo = new Abismo();
+        Ferramenta ferramenta = new Ferramenta();
+
         for(int i = 0; i < abyssesAndTools.length; i++){
-            for(int j = 0; j < abyssesAndTools[i].length; j++){
-                switch (j){
-                    case 0:
-                        if(j == 0){
-                          //  abismo.
-                        }
-
-                    case 1:
-                        abismo.setId(Integer.parseInt(abyssesAndTools[i][j]));
-
-                    case 2:
-                        abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][j]));
-                }
-
+            if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
+                abismo.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                abismo.setTitulo(abismoPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
+                abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
+                abismos.add(abismo); //adicionar na lista
+            }else if (Integer.parseInt(abyssesAndTools[i][0]) == 1){
+                ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
+                ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
+                ferramentas.add(ferramenta); //adicionar na lista
             }
         }
         return true;
@@ -119,7 +117,6 @@ public class GameManager {
                 return "Erro de sintaxe";
             case 1:
                 return "Erro de lógica";
-
             case 2:
                 return "Exception";
             case 3:
@@ -157,9 +154,22 @@ public class GameManager {
         }
         return null;
     }
+
     public String getImagePng(int position) {
         if (position > tamanhoTabuleiro) {
             return null;
+        }
+
+        for (Abismo abismo : abismos){
+            if (abismo.getPosicao() == position){
+               return abismo.getTitulo() + ".png";
+            }
+        }
+
+        for (Ferramenta ferramenta : ferramentas){
+            if (ferramenta.getPosicao() == position){
+                return ferramenta.getTitulo() + ".png";
+            }
         }
 
         if (position == tamanhoTabuleiro) {
@@ -181,15 +191,25 @@ public class GameManager {
         return jogadoresEmJogo;
     }
 
-    public ArrayList<Programmer> getProgrammers(int position) {
+    public List<Programmer> getProgrammers(int position) {
         //retorna a lista dos jogadores em jogo numa certa posição
-        ArrayList<Programmer> jogadoresNaPosicao = new ArrayList<>();
+        List<Programmer> jogadoresNaPosicao = new ArrayList<>();
         for (Programmer jogadores : jogadoresEmJogo){
             if (Objects.equals(jogadores.getPosicao(),position)){
                 jogadoresNaPosicao.add(jogadores);
             }
         }
         return jogadoresNaPosicao;
+    }
+    String getProgrammersInfo(){
+        for (Programmer programmer : jogadoresEmJogo){
+            if (ferramentas.size() == 0){
+                return programmer.getName()+": No tools";
+            }else {
+                return programmer.getName() +" : "+ programmer.criarFerramentas(ferramentas);
+            }
+        }
+        return "";
     }
 
     public int getCurrentPlayerID() {
@@ -201,22 +221,34 @@ public class GameManager {
             return null;
         }
         return null;
-
     }
+
     public boolean moveCurrentPlayer(int nrPositions) {
         //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
             jogadoresEmJogo.get(turnoAtual-1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
+
+            for (Ferramenta ferramenta : ferramentas){
+                if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
+                    jogadoresEmJogo.get(turnoAtual-1).setFerramenta(ferramenta);
+                }
+            }
+
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             turnoAtual++; //passa ao proximo jogador
 
             if (turnoAtual > jogadoresEmJogo.size()){ // os turnos vão de 1-4
                 turnoAtual = 1;
             }
+            reactToAbyssOrTool();
             return true;
         }
+    }
+    String reactToAbyssOrTool(){
+
+        return "";
     }
 
     public boolean gameIsOver() {
@@ -229,7 +261,7 @@ public class GameManager {
         return false;
     }
 
-    public ArrayList<String> getGameResults() {
+    public List<String> getGameResults() {
         //ordenar a lista de jogadores por posição
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
         ArrayList<String> resultados = new ArrayList<>();
