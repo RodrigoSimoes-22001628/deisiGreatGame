@@ -182,7 +182,7 @@ public class GameManager {
             jogadoresSemDefeated.addAll(jogadoresEmJogo);
         }
     //retorna a lista dos jogadores em jogo
-        return jogadoresEmJogo;
+        return jogadoresSemDefeated;
     }
 
     public List<Programmer> getProgrammers(int position) {
