@@ -58,6 +58,10 @@ public class Programmer {
         return posicao;
     }
 
+    public void setPosicao(int posicao){
+        this.posicao = posicao;
+    }
+
     public ArrayList<Ferramenta> getFerramenta() {
         return ferramenta;
     }
@@ -76,8 +80,8 @@ public class Programmer {
     }
 
     void subtraiPosicao(int posicao) {
-        if (posicao - this.posicao < 0){
-            this.posicao = 0;
+        if (posicao - this.posicao < 1){
+            this.posicao = 1;
         }else {
             this.posicao -= posicao;
         }

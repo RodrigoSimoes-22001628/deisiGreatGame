@@ -11,6 +11,7 @@ public class GameManager {
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
     int nrTotalJogadas = 1;
+    int valorDado = 0;
 
     public GameManager() {
     }
@@ -90,8 +91,11 @@ public class GameManager {
         return true;
     }
 
-    boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
+   boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
         createInitialBoard(playerInfo,worldSize);
+        if (!createInitialBoard(playerInfo, worldSize)){
+            return false;
+        }
         Abismo abismo = new Abismo();
         Ferramenta ferramenta = new Ferramenta();
 
@@ -112,47 +116,31 @@ public class GameManager {
     }
 
     String abismoPorId(int id){
-        switch (id){
-            case 0:
-                return "Erro de sintaxe";
-            case 1:
-                return "Erro de lógica";
-            case 2:
-                return "Exception";
-            case 3:
-                return "File Not Found Exception";
-            case 4:
-                return "Crash (aka Rebentanço)";
-            case 5:
-                return "Duplicated Code";
-            case 6:
-                return "Efeitos secundários";
-            case 7:
-                return "Blue Screen of Death";
-            case 8:
-                return "Ciclo infinito";
-            case 9:
-                return "Segmentation Fault";
-        }
-        return null;
+        return switch (id) {
+            case 0 -> "Erro de sintaxe";
+            case 1 -> "Erro de lógica";
+            case 2 -> "Exception";
+            case 3 -> "File Not Found Exception";
+            case 4 -> "Crash (aka Rebentanço)";
+            case 5 -> "Duplicated Code";
+            case 6 -> "Efeitos secundários";
+            case 7 -> "Blue Screen of Death";
+            case 8 -> "Ciclo infinito";
+            case 9 -> "Segmentation Fault";
+            default -> null;
+        };
     }
 
     String ferramentaPorId(int id) {
-        switch (id) {
-            case 0:
-                return "Herança";
-            case 1:
-                return "Programação funcional";
-            case 2:
-                return "Testes unitários";
-            case 3:
-                return "Tratamento de Excepções";
-            case 4:
-                return "IDE";
-            case 5:
-                return "Ajuda Do Professor";
-        }
-        return null;
+        return switch (id) {
+            case 0 -> "Herança";
+            case 1 -> "Programação funcional";
+            case 2 -> "Testes unitários";
+            case 3 -> "Tratamento de Excepções";
+            case 4 -> "IDE";
+            case 5 -> "Ajuda Do Professor";
+            default -> null;
+        };
     }
 
     public String getImagePng(int position) {
@@ -217,20 +205,31 @@ public class GameManager {
     }
 
     String getTitle(int position){
-        if (position > tamanhoTabuleiro) {
+        if (position < 1 || position > tamanhoTabuleiro) { // verifica se a posicão esta dentro do tabuleiro
             return null;
+        }
+        for (Abismo abismo : abismos){ // retorna nome do abismo nessa posição
+            if (abismo.getPosicao() == position){
+                return abismo.getTitulo();
+            }
+        }
+        for (Ferramenta ferramenta : ferramentas){ // retorna nome da ferramenta nessa posição
+            if (ferramenta.getPosicao() == position){
+                return ferramenta.getTitulo();
+            }
         }
         return null;
     }
 
     public boolean moveCurrentPlayer(int nrPositions) {
         //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
+        valorDado = nrPositions;
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
             jogadoresEmJogo.get(turnoAtual-1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
 
-            for (Ferramenta ferramenta : ferramentas){
+            for (Ferramenta ferramenta : ferramentas){ //adiconar ferramenta ao joagador
                 if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
                     jogadoresEmJogo.get(turnoAtual-1).setFerramenta(ferramenta);
                 }
@@ -248,13 +247,57 @@ public class GameManager {
     }
     String reactToAbyssOrTool(){
 
+        for (Abismo abismo : abismos){ //adiconar ferramenta ao joagador
+            if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
+                verificaAbismos(abismo.getTitulo());
+            }
+        }
+
+        valorDado = 0; //limpar o valor do dado
         return "";
+    }
+
+    void verificaAbismos(String nome){
+        switch (nome) {
+            case "Erro de sintaxe":  //recua 1 casas
+                jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
+                break;
+            case "Erro de lógica":  //recua o valor dos dados a dividir por 2
+                jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
+                break;
+            case "Exception":  //recua 2 casas
+                jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
+                break;
+            case "File Not Found Exception":  //recua 3 casas
+                jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
+                break;
+            case "Crash (aka Rebentanço)":  //volta à casa de partida
+                jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
+                break;
+            case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
+                jogadoresEmJogo.get(turnoAtual - 1).setPosicao(valorDado);
+                break;
+            case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
+                break;
+            case "Blue Screen of Death":  // O programador perde imediatamente o jogo
+                jogadoresEmJogo.remove(jogadoresEmJogo.get(turnoAtual - 1));
+                break;
+            case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
+                break;
+            case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
+
+                break;
+        }
     }
 
     public boolean gameIsOver() {
         //o jogo acaba quando um jogador chegar à meta
-        for (int i = 0; i < jogadoresEmJogo.size(); i++) {
-            if (jogadoresEmJogo.get(i).getPosicao() == tamanhoTabuleiro){
+
+        if (jogadoresEmJogo.size() == 1){ //caso so exista um jogador a jogar
+            return true;
+        }
+        for (Programmer emJogo : jogadoresEmJogo) {
+            if (emJogo.getPosicao() == tamanhoTabuleiro) {
                 return true;
             }
         }
