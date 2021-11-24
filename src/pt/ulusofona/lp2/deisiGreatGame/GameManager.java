@@ -278,6 +278,10 @@ public class GameManager {
                 jogadoresEmJogo.get(turnoAtual - 1).setPosicao(valorDado);
                 break;
             case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
+                int ultimas2jogadas = 0;
+                    ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size()-1);
+                    ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size()-2);
+                jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                 break;
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
                 jogadoresEmJogo.remove(jogadoresEmJogo.get(turnoAtual - 1));
@@ -285,7 +289,6 @@ public class GameManager {
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                 break;
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
-
                 break;
         }
     }
