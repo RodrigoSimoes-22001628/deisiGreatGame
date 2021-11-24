@@ -292,6 +292,9 @@ public class GameManager {
                 jogadoresEmJogo.remove(jogadoresEmJogo.get(turnoAtual-1)); //remove-o da lista
                 break;
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
+                if(casaContestada(jogadoresEmJogo.get(turnoAtual - 1).posicao)) {
+                    moveCurrentPlayer(jogadoresEmJogo.get(turnoAtual-1).posicao-valorDado);  // feito a PEDRADA ver melhor depois
+                }
                 break;
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 break;
@@ -306,6 +309,15 @@ public class GameManager {
         }
         for (Programmer emJogo : jogadoresEmJogo) {
             if (emJogo.getPosicao() == tamanhoTabuleiro) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean casaContestada(int posicao){
+        for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
+            if (jogadores.getPosicao() == posicao){
                 return true;
             }
         }
