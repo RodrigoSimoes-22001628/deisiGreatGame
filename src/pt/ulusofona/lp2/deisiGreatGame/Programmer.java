@@ -64,6 +64,14 @@ public class Programmer {
         this.posicao = posicao;
     }
 
+    public String getEstado(){
+        return estado;
+    }
+
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
+
     public ArrayList<Ferramenta> getFerramenta() {
         return ferramenta;
     }

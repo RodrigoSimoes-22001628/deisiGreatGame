@@ -100,6 +100,10 @@ public class GameManager {
         Ferramenta ferramenta = new Ferramenta();
 
         for(int i = 0; i < abyssesAndTools.length; i++){
+            if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
+                    ||abyssesAndTools[i][2].equals("")){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                return false;
+            }
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
                 abismo.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
                 abismo.setTitulo(abismoPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
@@ -143,7 +147,7 @@ public class GameManager {
         };
     }
 
-    public String getImagePng(int position) {
+    public String getImagePng(int position) { // FALTA !!! resolver nome das imagens
         if (position > tamanhoTabuleiro) {
             return null;
         }
@@ -168,12 +172,14 @@ public class GameManager {
 
     List<Programmer> getProgrammers(boolean includeDefeated){
         ArrayList<Programmer> jogadoresSemDefeated = new ArrayList<>();
-        if(!includeDefeated){
+        if(includeDefeated){ //se includeDefeated == true, deve incluir os jogadores derrotados.
             for (Programmer jogadores : jogadoresEmJogo){
-                if (jogadores.estado.equals("Em jogo")){
+                if (jogadores.estado.equals("Perdeu")){
                     jogadoresSemDefeated.add(jogadores);
                 }
             }
+        }else { //se includeDefeated == false, deve incluir todos os jogadores
+            jogadoresSemDefeated.addAll(jogadoresEmJogo);
         }
     //retorna a lista dos jogadores em jogo
         return jogadoresEmJogo;
@@ -223,7 +229,7 @@ public class GameManager {
 
     public boolean moveCurrentPlayer(int nrPositions) {
         //o dado so vai de 1..6 logo valores ou inferiores a estes são excluidos
-        valorDado = nrPositions;
+        valorDado = nrPositions; //atribuir à variável o valor que calhou no dado
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
@@ -252,8 +258,6 @@ public class GameManager {
                 verificaAbismos(abismo.getTitulo());
             }
         }
-
-        valorDado = 0; //limpar o valor do dado
         return "";
     }
 
@@ -284,7 +288,8 @@ public class GameManager {
                 jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                 break;
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
-                jogadoresEmJogo.remove(jogadoresEmJogo.get(turnoAtual - 1));
+                jogadoresEmJogo.get(turnoAtual-1).setEstado("Perdeu"); //altera o estado do jogador para perdeu
+                jogadoresEmJogo.remove(jogadoresEmJogo.get(turnoAtual-1)); //remove-o da lista
                 break;
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                 break;
