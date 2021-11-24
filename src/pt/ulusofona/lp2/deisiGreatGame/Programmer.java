@@ -11,6 +11,7 @@ public class Programmer {
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
     ArrayList<Ferramenta> ferramenta;
+    ArrayList<Integer> gravadorDePosicoes;
 
     public Programmer() {
 
@@ -21,6 +22,7 @@ public class Programmer {
         this.name = nome;
         this.languages = languages;
         this.colorAvatar = colorAvatar;
+        ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
     }
 
 
@@ -74,16 +76,20 @@ public class Programmer {
             int conta = (tamanhoTabuleiro - this.posicao);
             conta = posicao - conta;
             this.posicao = tamanhoTabuleiro - conta;
+            gravadorDePosicoes.add(posicao);
         }else {
             this.posicao += posicao;
+            gravadorDePosicoes.add(posicao);
         }
     }
 
     void subtraiPosicao(int posicao) {
         if (posicao - this.posicao < 1){
             this.posicao = 1;
+            gravadorDePosicoes.add(posicao);
         }else {
             this.posicao -= posicao;
+            gravadorDePosicoes.add(posicao);
         }
     }
     String criarFerramentas(ArrayList<Ferramenta> ferramentas){
