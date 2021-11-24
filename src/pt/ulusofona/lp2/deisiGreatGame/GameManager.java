@@ -252,10 +252,10 @@ public class GameManager {
         }
     }
     String reactToAbyssOrTool(){
-
         for (Abismo abismo : abismos){ //adiconar ferramenta ao joagador
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
                 verificaAbismos(abismo.getTitulo());
+                return abismo.getTitulo();
             }
         }
         return "";
