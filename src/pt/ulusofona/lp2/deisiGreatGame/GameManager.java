@@ -251,20 +251,25 @@ public class GameManager {
     }
 
     public String reactToAbyssOrTool(){
+        String imprimir = " ";
         for (Abismo abismo : abismos){ //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
-                verificaAbismos(abismo.getTitulo());
-                return abismo.getTitulo();
+              imprimir = verificaAbismos(abismo.getTitulo());
             }
         }
         for (Ferramenta ferramenta : ferramentas){ //adicionar ferramenta ao joagador
             if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
-               jogadoresEmJogo.get(turnoAtual-1).setFerramenta(ferramenta); // adiciono a ferramenta ao jogador
-                return ferramenta.getTitulo();
+               jogadoresEmJogo.get(turnoAtual-1).setFerramenta(ferramenta);// adiciono a ferramenta ao jogador
+               imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
             }
         }
-        return null;
+        if (imprimir.equals(" ")){
+            return null;
+        }else {
+            return imprimir;
+        }
     }
+
 
     boolean verificaSeTemFerramenta(String ajuda){
         for (Ferramenta ferramenta :jogadoresEmJogo.get(turnoAtual-1).ferramenta) {
@@ -273,6 +278,23 @@ public class GameManager {
             }
         }
         return false;
+    }
+    String apanhouUmaFerramenta(String nome){
+        switch (nome) {
+            case "Herança":
+                return "Apanhou a ferramenta Herança";
+            case "Programação funcional":
+                return "Apanhou a ferramenta Programação funcional";
+            case "Testes unitários":
+                return "Apanhou a ferramenta Testes unitários";
+            case "Tratamento de Excepções":
+                return "Apanhou a ferramenta Tratamento de Excepções";
+            case "IDE":
+                return "Apanhou a ferramenta IDE";
+            case "Ajuda Do Professor":
+                return "Apanhou a ferramenta Ajuda do Professor";
+        }
+        return null;
     }
 
     String verificaAbismos(String nome){
