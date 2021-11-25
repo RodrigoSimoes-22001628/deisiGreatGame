@@ -315,7 +315,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                     return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "Exception":  //recua 2 casas
@@ -324,7 +324,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
                     return "Exception : Que azar! Recua 2 casas";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "File Not Found Exception":  //recua 3 casas
@@ -332,7 +332,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "Crash (aka Rebentanço)":  //volta à casa de partida
@@ -340,7 +340,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Crash (aka Rebentanço) : Já Foste voltas ao início";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
@@ -348,7 +348,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(valorDado);
                     return "Duplicated Code : Que azar! Volta para onde vieste";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
@@ -359,7 +359,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                     return "Efeitos secundários : Que azar! Volta 2 jogadas atrás";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
@@ -367,21 +367,21 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado"); //altera o estado do jogador para perdeu
                     return "Game Over";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                if (!verificaSeTemFerramenta("")) {
                    return "Aguarda por ajuda";
                }else{
-                   return "Foste pela tua ferramenta!";
+                   return "Foste salvo pela tua ferramenta!";
                }
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta("Programação funcional")) {
                     return "Tu e o teu parceiro recuam 3 casas";
                 }else {
-                    return "Foste pela tua ferramenta!";
+                    return "Foste salvo pela tua ferramenta!";
                 }
         }
         return " ";

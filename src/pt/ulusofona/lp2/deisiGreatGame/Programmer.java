@@ -92,7 +92,7 @@ public class Programmer {
     }
 
     void subtraiPosicao(int posicao) {
-        if (posicao - this.posicao < 1){
+        if (this.posicao - posicao < 1){
             this.posicao = 1;
         }else {
             this.posicao -= posicao;
