@@ -198,7 +198,7 @@ public class GameManager {
 
     public String getProgrammersInfo(){
         for (Programmer programmer : jogadoresEmJogo){
-            if (programmer.getFerramenta().size() == 0){
+            if (programmer.getFerramentas().size() == 0){
                 return programmer.getName()+": No tools";
             }else {
                 return programmer.getName() +" : "+ programmer.criarFerramentas(ferramentas);
@@ -256,7 +256,7 @@ public class GameManager {
 
         for (Ferramenta ferramenta : ferramentas){ //adicionar ferramenta ao joagador
             if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
-               jogadoresEmJogo.get(turnoAtual-1).setFerramenta(ferramenta);// adiciono a ferramenta ao jogador
+               jogadoresEmJogo.get(turnoAtual-1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
                imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
             }
         }
@@ -274,7 +274,7 @@ public class GameManager {
 
 
     boolean verificaSeTemFerramenta(String ajuda){
-        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramenta) {
+        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramentas) {
             if (ferramenta.getTitulo().equals(ajuda)) {
                 return true;
             }

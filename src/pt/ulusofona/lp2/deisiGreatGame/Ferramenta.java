@@ -37,4 +37,8 @@ public class Ferramenta {
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
+
+    public Ferramenta(String titulo) {
+        this.titulo = titulo;
+    }
 }

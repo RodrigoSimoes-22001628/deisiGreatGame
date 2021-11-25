@@ -10,7 +10,7 @@ public class Programmer {
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
-    ArrayList<Ferramenta> ferramenta = new ArrayList<>();
+    ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
 
     public Programmer() {
@@ -72,11 +72,11 @@ public class Programmer {
         this.estado = estado;
     }
 
-    public ArrayList<Ferramenta> getFerramenta() {
-        return ferramenta;
+    public ArrayList<Ferramenta> getFerramentas() {
+        return ferramentas;
     }
-    public void setFerramenta(Ferramenta ferramentaAdicionada) {
-       this.ferramenta.add(ferramentaAdicionada);
+    public void setFerramentas(Ferramenta ferramentaAdicionada) {
+       this.ferramentas.add(ferramentaAdicionada);
     }
 
     void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
@@ -122,10 +122,10 @@ public class Programmer {
                 texto.append(languages.get(i)).append("; ");
             }
         }
-        if(getFerramenta().size() == 0){
+        if(getFerramentas().size() == 0){
             return id +" | "+name+" | "+posicao+" | "+ "No tools" + " | " +texto+" | "+estado;
         }else {
-            return id + " | " + name + " | " + posicao + " | " + criarFerramentas(ferramenta) + " | " + texto + " | " + estado;
+            return id + " | " + name + " | " + posicao + " | " + criarFerramentas(ferramentas) + " | " + texto + " | " + estado;
         }
     }
 }
