@@ -10,8 +10,8 @@ public class Programmer {
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
-    ArrayList<Ferramenta> ferramenta;
-    ArrayList<Integer> gravadorDePosicoes;
+    ArrayList<Ferramenta> ferramenta = new ArrayList<>();
+    ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
 
     public Programmer() {
 
@@ -94,12 +94,11 @@ public class Programmer {
     void subtraiPosicao(int posicao) {
         if (posicao - this.posicao < 1){
             this.posicao = 1;
-            gravadorDePosicoes.add(posicao);
         }else {
             this.posicao -= posicao;
-            gravadorDePosicoes.add(posicao);
         }
     }
+
     String criarFerramentas(ArrayList<Ferramenta> ferramentas){
         StringBuilder texto = new StringBuilder();
         for (int i = 0; i < ferramentas.size(); i++) {
