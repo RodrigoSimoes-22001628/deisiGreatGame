@@ -189,7 +189,7 @@ public class GameManager {
         //retorna a lista dos jogadores em jogo numa certa posição
         List<Programmer> jogadoresNaPosicao = new ArrayList<>();
         for (Programmer jogadores : jogadoresEmJogo){
-            if (Objects.equals(jogadores.getPosicao(),position)){
+            if (jogadores.getPosicao() == position){
                 jogadoresNaPosicao.add(jogadores);
             }
         }
@@ -239,13 +239,6 @@ public class GameManager {
                 turnoAtual++;
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-
-               /* for (Ferramenta ferramenta : ferramentas) { //adiconar ferramenta ao joagador
-                    if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                        jogadoresEmJogo.get(turnoAtual - 1).setFerramenta(ferramenta);
-                    }
-                } */
-
                 nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
                 turnoAtual++; //passa ao proximo jogador
                 if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
@@ -256,6 +249,7 @@ public class GameManager {
         }
         return true;
     }
+
     public String reactToAbyssOrTool(){
         for (Abismo abismo : abismos){ //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
