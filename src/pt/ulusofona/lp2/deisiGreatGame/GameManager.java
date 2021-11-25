@@ -274,7 +274,7 @@ public class GameManager {
 
 
     boolean verificaSeTemFerramenta(String ajuda){
-        for (Ferramenta ferramenta :jogadoresEmJogo.get(turnoAtual-1).ferramenta) {
+        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramenta) {
             if (ferramenta.getTitulo().equals(ajuda)) {
                 return true;
             }
@@ -345,7 +345,7 @@ public class GameManager {
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
                 if (!verificaSeTemFerramenta("Herança")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).setPosicao(valorDado);
+                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
                     return "Duplicated Code : Que azar! Volta para onde vieste";
                 }else {
                     return "Foste salvo pela tua ferramenta!";
@@ -413,7 +413,7 @@ public class GameManager {
         resultados.add("VENCEDOR");
         resultados.add(jogadoresEmJogo.get(0).getName());
         resultados.add("");
-        resultados.add("RESTANTES");
+        resultados.add("RESTANTES"); //FALTA!! ordenar por ordem alfabética
         for (int i = 1 ; i < jogadoresEmJogo.size() ; i++) {
             resultados.add(jogadoresEmJogo.get(i).getName() + " " + jogadoresEmJogo.get(i).getPosicao());
         }
