@@ -285,7 +285,7 @@ public class GameManager {
     String verificaAbismos(String nome){
         switch (nome) {
             case "Erro de sintaxe": //recua 1 casa
-                if (!verificaSeTemFerramenta("Ajuda Professor") || !verificaSeTemFerramenta("IDE")) {
+                if (!verificaSeTemFerramenta("IDE") || !verificaSeTemFerramenta("Ajuda Professor")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                     return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
