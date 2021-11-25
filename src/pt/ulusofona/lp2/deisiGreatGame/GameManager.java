@@ -197,14 +197,15 @@ public class GameManager {
     }
 
     public String getProgrammersInfo(){
+        StringBuilder imprimir = new StringBuilder();
         for (Programmer programmer : jogadoresEmJogo){
             if (programmer.getFerramentas().size() == 0){
-                return programmer.getName()+": No tools";
+                imprimir.append(programmer.getName()).append(": No tools");
             }else {
-                return programmer.getName() +" : "+ programmer.criarFerramentas(ferramentas);
+                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(ferramentas));
             }
         }
-        return "";
+        return imprimir.toString();
     }
 
     public int getCurrentPlayerID() {
