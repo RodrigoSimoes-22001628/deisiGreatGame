@@ -236,14 +236,9 @@ public class GameManager {
         }else {
             if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
                 //verifica se o jogador já perdeu ou não
-                turnoAtual++;
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
                 nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
-                turnoAtual++; //passa ao proximo jogador
-                if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-                    turnoAtual = 1;
-                }
                 return true;
             }
         }
@@ -252,17 +247,24 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
+
         for (Abismo abismo : abismos){ //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
               imprimir = verificaAbismos(abismo.getTitulo());
             }
         }
+
         for (Ferramenta ferramenta : ferramentas){ //adicionar ferramenta ao joagador
             if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
                jogadoresEmJogo.get(turnoAtual-1).setFerramenta(ferramenta);// adiciono a ferramenta ao jogador
                imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
             }
         }
+        turnoAtual++;//passa ao proximo jogador
+        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+            turnoAtual = 1;
+        }
+
         if (imprimir.equals(" ")){
             return null;
         }else {
@@ -279,6 +281,7 @@ public class GameManager {
         }
         return false;
     }
+
     String apanhouUmaFerramenta(String nome){
         switch (nome) {
             case "Herança":
@@ -294,7 +297,7 @@ public class GameManager {
             case "Ajuda Do Professor":
                 return "Apanhou a ferramenta Ajuda do Professor";
         }
-        return null;
+        return " ";
     }
 
     String verificaAbismos(String nome){
@@ -381,7 +384,7 @@ public class GameManager {
                     return "Foste pela tua ferramenta!";
                 }
         }
-        return null;
+        return " ";
     }
 
     public boolean gameIsOver() {
