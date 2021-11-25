@@ -172,17 +172,16 @@ public class GameManager {
     }
 
     public List<Programmer> getProgrammers(boolean includeDefeated){
-        ArrayList<Programmer> jogadoresSemDefeated = new ArrayList<>();
+        List<Programmer> jogadoresSemDefeated = new ArrayList<>();
         if(includeDefeated){ //se includeDefeated == true, deve incluir os jogadores derrotados.
+            jogadoresSemDefeated.addAll(jogadoresEmJogo);
+        }else { //se includeDefeated == false, deve incluir todos os jogadores
             for (Programmer jogadores : jogadoresEmJogo){
-                if (jogadores.estado.equals("Perdeu")){
+                if (!jogadores.estado.equals("Derrotado")){
                     jogadoresSemDefeated.add(jogadores);
                 }
             }
-        }else { //se includeDefeated == false, deve incluir todos os jogadores
-            jogadoresSemDefeated.addAll(jogadoresEmJogo);
         }
-    //retorna a lista dos jogadores em jogo
         return jogadoresSemDefeated;
     }
 
