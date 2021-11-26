@@ -101,17 +101,21 @@ public class GameManager {
         Ferramenta ferramenta = new Ferramenta();
 
         for(int i = 0; i < abyssesAndTools.length; i++){
-            if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
-                    ||abyssesAndTools[i][2].equals("")){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
-                return false;
-            }
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
+                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
+                        ||abyssesAndTools[i][2].equals("")){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                    return false;
+                }
                 abismo.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
                 abismo.setTitulo(abismoPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 abismos.add(abismo); //adicionar na lista
             }else if (Integer.parseInt(abyssesAndTools[i][0]) == 1){
-                ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
+                        ||abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                    return false;
+                }
+                    ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
                 ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 ferramentas.add(ferramenta); //adicionar na lista
@@ -153,7 +157,7 @@ public class GameManager {
             return null;
         }
 
-        for (Abismo abismo : abismos){
+        for (Abismo abismo : abismos){ //Reformular colocar por id
             if (abismo.getPosicao() == position){
                return abismo.getTitulo() + ".png";
             }
@@ -380,10 +384,9 @@ public class GameManager {
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta("Programação funcional")) {
-                    if(casaContestada(jogadoresEmJogo.get(turnoAtual - 1).posicao)) {
-                        moveCurrentPlayer(jogadoresEmJogo.get(turnoAtual-1).posicao-3);  // feito a PEDRADA ver melhor depois
+                    if(casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao())) {
+                        return "Tu e o teu parceiro recuam 3 casas";
                     }
-                    return "Tu e o teu parceiro recuam 3 casas";
                 }else {
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -394,7 +397,8 @@ public class GameManager {
     public boolean casaContestada(int posicao){
         for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
             if (jogadores.getPosicao() == posicao){
-                return true;
+               jogadores.subtraiPosicao(3);
+               return true;
             }
         }
         return false;
