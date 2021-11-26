@@ -380,12 +380,24 @@ public class GameManager {
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta("Programação funcional")) {
+                    if(casaContestada(jogadoresEmJogo.get(turnoAtual - 1).posicao)) {
+                        moveCurrentPlayer(jogadoresEmJogo.get(turnoAtual-1).posicao-3);  // feito a PEDRADA ver melhor depois
+                    }
                     return "Tu e o teu parceiro recuam 3 casas";
                 }else {
                     return "Foste salvo pela tua ferramenta!";
                 }
         }
         return " ";
+    }
+
+    public boolean casaContestada(int posicao){
+        for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
+            if (jogadores.getPosicao() == posicao){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean gameIsOver() {
