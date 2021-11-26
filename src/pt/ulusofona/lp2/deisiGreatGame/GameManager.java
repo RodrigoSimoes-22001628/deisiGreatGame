@@ -395,10 +395,14 @@ public class GameManager {
     }
 
     public boolean casaContestada(int posicao){
+        int contador = 0;
         for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
             if (jogadores.getPosicao() == posicao){
-               jogadores.subtraiPosicao(3);
-               return true;
+                if (contador >= 2) {
+                    jogadores.subtraiPosicao(3);
+                    return true;
+                }
+                contador++;
             }
         }
         return false;
