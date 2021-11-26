@@ -200,7 +200,7 @@ public class GameManager {
         StringBuilder imprimir = new StringBuilder();
         for (Programmer programmer : jogadoresEmJogo){
             if (programmer.getFerramentas().size() == 0){
-                imprimir.append(programmer.getName()).append(": No tools");
+                imprimir.append(programmer.getName()).append(" : No tools");
             }else {
                 imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(ferramentas));
             }
@@ -414,7 +414,7 @@ public class GameManager {
         resultados.add("VENCEDOR");
         resultados.add(jogadoresEmJogo.get(0).getName());
         resultados.add("");
-        resultados.add("RESTANTES"); //FALTA!! ordenar por ordem alfabética
+        resultados.add("RESTANTES");
         for (int i = 1 ; i < jogadoresEmJogo.size() ; i++) {
             resultados.add(jogadoresEmJogo.get(i).getName() + " " + jogadoresEmJogo.get(i).getPosicao());
         }

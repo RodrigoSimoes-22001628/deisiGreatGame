@@ -103,9 +103,9 @@ public class Programmer {
         StringBuilder texto = new StringBuilder();
         for (int i = 0; i < ferramentas.size(); i++) {
             if (i == ferramentas.size() - 1) {
-                texto.append(ferramentas.get(i));
+                texto.append(ferramentas.get(i).titulo);
             } else {
-                texto.append(ferramentas.get(i)).append(";");
+                texto.append(ferramentas.get(i).titulo).append(";");
             }
         }
         return texto.toString();
