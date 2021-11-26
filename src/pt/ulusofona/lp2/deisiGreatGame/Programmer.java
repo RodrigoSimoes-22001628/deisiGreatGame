@@ -99,13 +99,13 @@ public class Programmer {
         }
     }
 
-    String criarFerramentas(ArrayList<Ferramenta> ferramentas){
+    String criarFerramentas(ArrayList<Ferramenta> ferramentasDoProgramador){
         StringBuilder texto = new StringBuilder();
-        for (int i = 0; i < ferramentas.size(); i++) {
-            if (i == ferramentas.size() - 1) {
-                texto.append(ferramentas.get(i).titulo);
+        for (int i = 0; i < ferramentasDoProgramador.size(); i++) {
+            if (i == ferramentasDoProgramador.size() - 1) {
+                texto.append(ferramentasDoProgramador.get(i).titulo);
             } else {
-                texto.append(ferramentas.get(i).titulo).append(";");
+                texto.append(ferramentasDoProgramador.get(i).titulo).append(";");
             }
         }
         return texto.toString();

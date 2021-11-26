@@ -94,6 +94,8 @@ public class GameManager {
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
         createInitialBoard(playerInfo,worldSize);
+        ferramentas.clear();
+        abismos.clear();
         if (!createInitialBoard(playerInfo, worldSize)){
             return false;
         }
@@ -121,6 +123,8 @@ public class GameManager {
                 ferramentas.add(ferramenta); //adicionar na lista
             }
         }
+        ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
+        abismos.sort(Comparator.comparingInt(Abismo::getId));
         return true;
     }
 
@@ -153,26 +157,31 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
+        StringBuilder imprimir = new StringBuilder();
         if (position > tamanhoTabuleiro) {
             return null;
         }
 
         for (Abismo abismo : abismos){ //Reformular colocar por id
             if (abismo.getPosicao() == position){
-               return abismo.getTitulo() + ".png";
+               imprimir.append("abismo").append(abismo.getId()).append(".png");
             }
         }
 
         for (Ferramenta ferramenta : ferramentas){
             if (ferramenta.getPosicao() == position){
-                return ferramenta.getTitulo() + ".png";
+                imprimir.append("ferramenta").append(ferramenta.getId()).append(".png");
             }
         }
 
         if (position == tamanhoTabuleiro) {
-            return "glory.png";
+            imprimir.append("glory.png");
         }
-        return null;
+        if (imprimir.toString().equals("")) {
+            return null;
+        }else {
+            return imprimir.toString().toString();
+        }
     }
 
     public List<Programmer> getProgrammers(boolean includeDefeated){
@@ -206,7 +215,7 @@ public class GameManager {
             if (programmer.getFerramentas().size() == 0){
                 imprimir.append(programmer.getName()).append(" : No tools");
             }else {
-                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(ferramentas));
+                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas()));
             }
         }
         return imprimir.toString();
@@ -423,8 +432,9 @@ public class GameManager {
     }
 
     public List<String> getGameResults() {
-        //ordenar a lista de jogadores por posição
-        jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
+        //ordenar a lista de jogadores por
+        jogadoresEmJogo.sort(Comparator.comparing(Programmer::getName));
+        jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());//ordena por posição
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");
