@@ -254,7 +254,7 @@ public class GameManager {
             return false;
         }else {
             if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-                //verifica se o jogador já perdeu ou não
+
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
                 return true;
@@ -265,36 +265,40 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-        for (Abismo abismo : abismos){ //verifica se é um abismo
-            if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
-                imprimir = verificaAbismos(abismo.getTitulo());
-            }
-        }
-
-        for (Ferramenta ferramenta : ferramentas){ //adicionar ferramenta ao joagador
-            if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
-                jogadoresEmJogo.get(turnoAtual-1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
-                imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
-            }
-        }
 
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")){
+            if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+                turnoAtual = 1;
+            }
             turnoAtual++;
         }else {
+            for (Abismo abismo : abismos) { //verifica se é um abismo
+                if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
+                    imprimir = verificaAbismos(abismo.getTitulo());
+                }
+            }
+
+            for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao joagador
+                if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
+                    jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
+                    imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
+                    break;
+                }
+            }
             turnoAtual++;//passa ao proximo jogador
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
                 turnoAtual = 1;
             }
-        }
-        if (imprimir.equals(" ")){
-            return null;
-        }else {
+            if (imprimir.equals(" ")) {
+                return null;
+            } else {
 
-            return imprimir;
+                return imprimir;
+            }
         }
+        return imprimir;
     }
-
 
     boolean verificaSeTemFerramenta(String ajuda){
         for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramentas) {
@@ -363,7 +367,7 @@ public class GameManager {
 
             case "File Not Found Exception":  //recua 3 casas
                 if ( !verificaSeTemFerramenta("Tratamento de Excepções")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3-1);
+                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
                     jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3);
