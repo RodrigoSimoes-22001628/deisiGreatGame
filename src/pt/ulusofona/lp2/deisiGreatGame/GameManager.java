@@ -10,7 +10,7 @@ public class GameManager {
     ArrayList<Abismo> abismos = new ArrayList<>();
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
-    int nrTotalJogadas = 1;
+    int nrTotalJogadas = 0;
     int valorDado = 0;
 
     public GameManager() {
@@ -148,7 +148,7 @@ public class GameManager {
     String ferramentaPorId(int id) {
         return switch (id) {
             case 0 -> "Herança";
-            case 1 -> "Programação funcional";
+            case 1 -> "Programação Funcional";
             case 2 -> "Testes unitários";
             case 3 -> "Tratamento de Excepções";
             case 4 -> "IDE";
@@ -247,7 +247,7 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
-            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
+            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
                 //verifica se o jogador já perdeu ou não
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
@@ -402,7 +402,13 @@ public class GameManager {
                 }
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
-               if (!verificaSeTemFerramenta("")) {
+               if (!verificaSeTemFerramenta("")){
+                   jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado");
+                   for (Programmer jogadores : jogadoresEmJogo) {
+                       if (jogadores.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
+                           jogadores.setBloqueado("Desbloqueado");
+                       }
+                   }
                    return "Aguarda por ajuda";
                }else{
                    return "Foste salvo pela tua ferramenta!";
@@ -420,6 +426,7 @@ public class GameManager {
         }
         return " ";
     }
+
 
     public boolean casaContestada(int posicao){
         int contador = 0;
