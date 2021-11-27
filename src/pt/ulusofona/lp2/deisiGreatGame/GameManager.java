@@ -148,7 +148,7 @@ public class GameManager {
     String ferramentaPorId(int id) {
         return switch (id) {
             case 0 -> "Herança";
-            case 1 -> "Programação funcional";
+            case 1 -> "Programação Funcional";
             case 2 -> "Testes unitários";
             case 3 -> "Tratamento de Excepções";
             case 4 -> "IDE";
@@ -269,7 +269,6 @@ public class GameManager {
             if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
                jogadoresEmJogo.get(turnoAtual-1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
                imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
-               break;
             }
         }
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")){
