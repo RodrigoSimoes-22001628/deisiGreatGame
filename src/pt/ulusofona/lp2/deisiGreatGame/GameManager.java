@@ -419,11 +419,8 @@ public class GameManager {
         int contador = 0;
         for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
             if (jogadores.getPosicao() == posicao){
-                if (contador >= 2) {
                     jogadores.subtraiPosicao(3);
                     return true;
-                }
-                contador++;
             }
         }
         return false;
