@@ -99,13 +99,13 @@ public class Programmer {
         }
     }
 
-    String criarFerramentas(ArrayList<Ferramenta> ferramentasDoProgramador){
+    String criarFerramentas(ArrayList<Ferramenta> ferramentasJogador){
         StringBuilder texto = new StringBuilder();
-        for (int i = 0; i < ferramentasDoProgramador.size(); i++) {
-            if (i == ferramentasDoProgramador.size() - 1) {
-                texto.append(ferramentasDoProgramador.get(i).titulo);
+        for (int i = 0; i < ferramentasJogador.size(); i++) {
+            if (i == ferramentasJogador.size()-1) {
+                texto.append(ferramentasJogador.get(i).titulo);
             } else {
-                texto.append(ferramentasDoProgramador.get(i).titulo).append(";");
+                texto.append(ferramentasJogador.get(i).titulo).append(";");
             }
         }
         return texto.toString();
@@ -122,7 +122,7 @@ public class Programmer {
                 texto.append(languages.get(i)).append("; ");
             }
         }
-        if(getFerramentas().size() == 0){
+        if(ferramentas.size() == 0){
             return id +" | "+name+" | "+posicao+" | "+ "No tools" + " | " +texto+" | "+estado;
         }else {
             return id + " | " + name + " | " + posicao + " | " + criarFerramentas(ferramentas) + " | " + texto + " | " + estado;
