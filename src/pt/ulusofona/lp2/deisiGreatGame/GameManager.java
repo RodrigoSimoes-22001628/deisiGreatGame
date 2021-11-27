@@ -96,6 +96,10 @@ public class GameManager {
         createInitialBoard(playerInfo,worldSize);
         ferramentas.clear();
         abismos.clear();
+
+        HashSet<Integer> abismosRepetidos = new HashSet<>();
+        HashSet<Integer> ferramentasRepetidas = new HashSet<>();
+
         if (!createInitialBoard(playerInfo, worldSize)){
             return false;
         }
@@ -105,20 +109,22 @@ public class GameManager {
             Ferramenta ferramenta = new Ferramenta();
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
-                    ||abyssesAndTools[i][2].equals("")){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                    ||abyssesAndTools[i][2].equals("") || abismosRepetidos.contains(Integer.parseInt(abyssesAndTools[i][1]))){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
                 abismo.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                abismosRepetidos.add(Integer.parseInt(abyssesAndTools[i][1]));
                 abismo.setTitulo(abismoPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 abismos.add(abismo); //adicionar na lista
 
             }else if (Integer.parseInt(abyssesAndTools[i][0]) == 1){
                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
-                        ||abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                        ||abyssesAndTools[i][2].equals("") || ferramentasRepetidas.contains(Integer.parseInt(abyssesAndTools[i][1]))) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
                 ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                ferramentasRepetidas.add(Integer.parseInt(abyssesAndTools[i][1]));
                 ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 ferramentas.add(ferramenta); //adicionar na lista
@@ -271,6 +277,7 @@ public class GameManager {
                imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
             }
         }
+
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")){
             turnoAtual++;
         }else {
@@ -324,9 +331,9 @@ public class GameManager {
                     return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
                     }else if (verificaSeTemFerramenta("IDE")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4-1); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4); //remove a ferramenta
                     }
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -336,7 +343,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                     return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1);
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -347,9 +354,9 @@ public class GameManager {
                     return "Exception : Que azar! Recua 2 casas";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
                     }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3-1); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3); //remove a ferramenta
                     }
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -359,7 +366,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3-1);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3-1);
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -425,7 +432,7 @@ public class GameManager {
         int contador = 0;
         for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
             if (jogadores.getPosicao() == posicao){
-                if (contador >= 2) {
+                if (contador >= 2){
                     jogadores.subtraiPosicao(3);
                     return true;
                 }
@@ -437,7 +444,6 @@ public class GameManager {
 
     public boolean gameIsOver() {
         //o jogo acaba quando um jogador chegar à meta
-
         if (jogadoresEmJogo.size() == 1){ //caso so exista um jogador a jogar
             return true;
         }
