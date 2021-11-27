@@ -272,18 +272,19 @@ public class GameManager {
                break;
             }
         }
-        turnoAtual++;//passa ao proximo jogador
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")){
             turnoAtual++;
+        }else {
+            turnoAtual++;//passa ao proximo jogador
+            nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
+            if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+                turnoAtual = 1;
+            }
         }
-        nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-            turnoAtual = 1;
-        }
-
         if (imprimir.equals(" ")){
             return null;
         }else {
+
             return imprimir;
         }
     }
@@ -324,9 +325,9 @@ public class GameManager {
                     return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1); //remove a ferramenta
                     }else if (verificaSeTemFerramenta("IDE")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4-1); //remove a ferramenta
                     }
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -336,7 +337,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                     return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5);
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -347,19 +348,19 @@ public class GameManager {
                     return "Exception : Que azar! Recua 2 casas";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1); //remove a ferramenta
                     }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3); //remove a ferramenta
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3-1); //remove a ferramenta
                     }
                     return "Foste salvo pela tua ferramenta!";
                 }
 
             case "File Not Found Exception":  //recua 3 casas
                 if ( !verificaSeTemFerramenta("Tratamento de Excepções")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
+                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3-1);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3);
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3-1);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -368,7 +369,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Crash (aka Rebentanço) : Já Foste voltas ao início";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(1);
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
