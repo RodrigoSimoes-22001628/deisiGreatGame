@@ -101,10 +101,10 @@ public class GameManager {
         if (!createInitialBoard(playerInfo, worldSize)){
             return false;
         }
-        Abismo abismo = new Abismo();
-        Ferramenta ferramenta = new Ferramenta();
 
         for(int i = 0; i < abyssesAndTools.length; i++){
+            Abismo abismo = new Abismo();
+            Ferramenta ferramenta = new Ferramenta();
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
                     ||abyssesAndTools[i][2].equals("")|| abismosRepetidos.contains(Integer.parseInt(abyssesAndTools[i][1]))){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
