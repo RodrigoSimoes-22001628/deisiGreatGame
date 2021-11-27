@@ -10,7 +10,7 @@ public class GameManager {
     ArrayList<Abismo> abismos = new ArrayList<>();
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
-    int nrTotalJogadas = 1;
+    int nrTotalJogadas = 0;
     int valorDado = 0;
 
     public GameManager() {
