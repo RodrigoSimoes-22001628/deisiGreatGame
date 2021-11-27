@@ -10,7 +10,6 @@ public class Programmer {
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
-    String bloqueado = "Desbloqueado";
     ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
 
@@ -71,14 +70,6 @@ public class Programmer {
 
     public void setEstado(String estado){
         this.estado = estado;
-    }
-
-    public String getBloqueado() {
-        return bloqueado;
-    }
-
-    public void setBloqueado(String bloqueado) {
-        this.bloqueado = bloqueado;
     }
 
     public ArrayList<Ferramenta> getFerramentas() {
