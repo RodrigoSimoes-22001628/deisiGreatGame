@@ -94,6 +94,10 @@ public class GameManager {
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools){
         createInitialBoard(playerInfo,worldSize);
+        ferramentas.clear();
+        abismos.clear();
+        HashSet<Integer> abismosRepetidos = new HashSet<>();
+        HashSet<Integer> ferramentasRepetidas = new HashSet<>();
         if (!createInitialBoard(playerInfo, worldSize)){
             return false;
         }
@@ -103,24 +107,32 @@ public class GameManager {
         for(int i = 0; i < abyssesAndTools.length; i++){
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
-                        ||abyssesAndTools[i][2].equals("")){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                    ||abyssesAndTools[i][2].equals("")|| abismosRepetidos.contains(Integer.parseInt(abyssesAndTools[i][1]))){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
+
                 abismo.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                abismosRepetidos.add(Integer.parseInt(abyssesAndTools[i][1])); //evita ids repetidos abismos
                 abismo.setTitulo(abismoPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 abismos.add(abismo); //adicionar na lista
+
             }else if (Integer.parseInt(abyssesAndTools[i][0]) == 1){
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
-                        ||abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                        ||abyssesAndTools[i][2].equals("") || ferramentasRepetidas.contains(Integer.parseInt(abyssesAndTools[i][1]))) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
-                    ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+
+                ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
+                ferramentasRepetidas.add(Integer.parseInt(abyssesAndTools[i][1])); //evita ids repetidos ferramentas
                 ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 ferramentas.add(ferramenta); //adicionar na lista
             }
         }
+
+        ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
+        abismos.sort(Comparator.comparingInt(Abismo::getId));
         return true;
     }
 
@@ -153,25 +165,27 @@ public class GameManager {
     }
 
     public String getImagePng(int position) {
+
         if (position > tamanhoTabuleiro) {
             return null;
         }
 
-        for (Abismo abismo : abismos){ //Reformular colocar por id
-            if (abismo.getPosicao() == position){
-               return abismo.getTitulo() + ".png";
+        for (Abismo abismo : abismos) { //Reformular colocar por id
+            if (abismo.getPosicao() == position) {
+                return "abismo" + abismo.getId() + ".png";
             }
         }
 
         for (Ferramenta ferramenta : ferramentas){
             if (ferramenta.getPosicao() == position){
-                return ferramenta.getTitulo() + ".png";
+                return "ferramenta"+ferramenta.getId()+".png";
             }
         }
 
         if (position == tamanhoTabuleiro) {
             return "glory.png";
         }
+
         return null;
     }
 
@@ -206,7 +220,7 @@ public class GameManager {
             if (programmer.getFerramentas().size() == 0){
                 imprimir.append(programmer.getName()).append(" : No tools");
             }else {
-                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(ferramentas));
+                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas()));
             }
         }
         return imprimir.toString();
@@ -423,8 +437,9 @@ public class GameManager {
     }
 
     public List<String> getGameResults() {
-        //ordenar a lista de jogadores por posição
-        jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());
+        //ordenar a lista de jogadores por
+        jogadoresEmJogo.sort(Comparator.comparing(Programmer::getName));
+        jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());//ordena por posição
         ArrayList<String> resultados = new ArrayList<>();
         resultados.add("O GRANDE JOGO DO DEISI");
         resultados.add("");

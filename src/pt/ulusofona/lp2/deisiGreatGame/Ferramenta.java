@@ -1,5 +1,4 @@
 package pt.ulusofona.lp2.deisiGreatGame;
-
 public class Ferramenta {
     int posicao;
     int id;
@@ -35,10 +34,6 @@ public class Ferramenta {
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public Ferramenta(String titulo) {
         this.titulo = titulo;
     }
 }
