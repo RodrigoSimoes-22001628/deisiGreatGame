@@ -10,7 +10,7 @@ public class GameManager {
     ArrayList<Abismo> abismos = new ArrayList<>();
     int turnoAtual = 1; //turno em que se encontra
     int tamanhoTabuleiro;
-    int nrTotalJogadas = 0;
+    int nrTotalJogadas = 1;
     int valorDado = 0;
 
     public GameManager() {
@@ -96,8 +96,6 @@ public class GameManager {
         createInitialBoard(playerInfo,worldSize);
         ferramentas.clear();
         abismos.clear();
-        HashSet<Integer> abismosRepetidos = new HashSet<>();
-        HashSet<Integer> ferramentasRepetidas = new HashSet<>();
         if (!createInitialBoard(playerInfo, worldSize)){
             return false;
         }
@@ -107,30 +105,25 @@ public class GameManager {
             Ferramenta ferramenta = new Ferramenta();
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0){
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
-                    ||abyssesAndTools[i][2].equals("")|| abismosRepetidos.contains(Integer.parseInt(abyssesAndTools[i][1]))){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                    ||abyssesAndTools[i][2].equals("")){ //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
-
                 abismo.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
-                abismosRepetidos.add(Integer.parseInt(abyssesAndTools[i][1])); //evita ids repetidos abismos
                 abismo.setTitulo(abismoPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 abismo.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 abismos.add(abismo); //adicionar na lista
 
             }else if (Integer.parseInt(abyssesAndTools[i][0]) == 1){
-                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
-                        ||abyssesAndTools[i][2].equals("") || ferramentasRepetidas.contains(Integer.parseInt(abyssesAndTools[i][1]))) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
+               if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
+                        ||abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
-
                 ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
-                ferramentasRepetidas.add(Integer.parseInt(abyssesAndTools[i][1])); //evita ids repetidos ferramentas
                 ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 ferramentas.add(ferramenta); //adicionar na lista
             }
         }
-
         ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
         abismos.sort(Comparator.comparingInt(Abismo::getId));
         return true;
@@ -172,7 +165,7 @@ public class GameManager {
 
         for (Abismo abismo : abismos) { //Reformular colocar por id
             if (abismo.getPosicao() == position) {
-                return "abismo" + abismo.getId() + ".png";
+                return "abismo"+ abismo.getId()+".png";
             }
         }
 
@@ -203,6 +196,7 @@ public class GameManager {
         return jogadoresSemDefeated;
     }
 
+
     public List<Programmer> getProgrammers(int position) {
         //retorna a lista dos jogadores em jogo numa certa posição
         List<Programmer> jogadoresNaPosicao = new ArrayList<>();
@@ -217,11 +211,11 @@ public class GameManager {
     public String getProgrammersInfo(){
         StringBuilder imprimir = new StringBuilder();
         for (Programmer programmer : jogadoresEmJogo){
-            if (programmer.getFerramentas().size() == 0){
-                imprimir.append(programmer.getName()).append(" : No tools");
-            }else {
-                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas()));
-            }
+                if (programmer.getFerramentas().size() == 0) {
+                    imprimir.append(programmer.getName()).append(" : No tools");
+                } else {
+                    imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas())).append("\n");
+                }
         }
         return imprimir.toString();
     }
@@ -253,11 +247,10 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }else {
-            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
+            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
                 //verifica se o jogador já perdeu ou não
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-                nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
                 return true;
             }
         }
@@ -266,7 +259,6 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-
         for (Abismo abismo : abismos){ //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual-1).getPosicao()){
               imprimir = verificaAbismos(abismo.getTitulo());
@@ -279,14 +271,19 @@ public class GameManager {
                imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
             }
         }
-        turnoAtual++;//passa ao proximo jogador
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-            turnoAtual = 1;
+        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")){
+            turnoAtual++;
+        }else {
+            turnoAtual++;//passa ao proximo jogador
+            nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
+            if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+                turnoAtual = 1;
+            }
         }
-
         if (imprimir.equals(" ")){
             return null;
         }else {
+
             return imprimir;
         }
     }
@@ -326,6 +323,11 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                     return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
+                    if (verificaSeTemFerramenta("Ajuda Professor")){
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1); //remove a ferramenta
+                    }else if (verificaSeTemFerramenta("IDE")){
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4-1); //remove a ferramenta
+                    }
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -334,6 +336,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                     return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -343,14 +346,20 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
                     return "Exception : Que azar! Recua 2 casas";
                 }else {
+                    if (verificaSeTemFerramenta("Ajuda Professor")){
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5-1); //remove a ferramenta
+                    }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
+                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3-1); //remove a ferramenta
+                    }
                     return "Foste salvo pela tua ferramenta!";
                 }
 
             case "File Not Found Exception":  //recua 3 casas
                 if ( !verificaSeTemFerramenta("Tratamento de Excepções")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
+                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3-1);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3-1);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -359,6 +368,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Crash (aka Rebentanço) : Já Foste voltas ao início";
                 }else {
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -367,6 +377,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
                     return "Duplicated Code : Que azar! Volta para onde vieste";
                 }else {
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -378,6 +389,7 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                     return "Efeitos secundários : Que azar! Volta 2 jogadas atrás";
                 }else {
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(2);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -390,13 +402,7 @@ public class GameManager {
                 }
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
-               if (!verificaSeTemFerramenta("")){
-                   jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado");
-                   for (Programmer jogadores : jogadoresEmJogo) {
-                       if (jogadores.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                           jogadores.setBloqueado("Desbloqueado");
-                       }
-                   }
+               if (!verificaSeTemFerramenta("")) {
                    return "Aguarda por ajuda";
                }else{
                    return "Foste salvo pela tua ferramenta!";
@@ -408,12 +414,12 @@ public class GameManager {
                         return "Tu e o teu parceiro recuam 3 casas";
                     }
                 }else {
+                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(1);
                     return "Foste salvo pela tua ferramenta!";
                 }
         }
         return " ";
     }
-
 
     public boolean casaContestada(int posicao){
         int contador = 0;
