@@ -218,9 +218,9 @@ public class GameManager {
         StringBuilder imprimir = new StringBuilder();
         for (Programmer programmer : jogadoresEmJogo){
             if (programmer.getFerramentas().size() == 0) {
-                imprimir.append(programmer.getName()).append(" : No tools");
+                imprimir.append(programmer.getName()).append(" : No tools").append(" | ");
             } else {
-                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas())).append("\n");
+                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas())).append(" | ");
             }
         }
         return imprimir.toString();
@@ -293,7 +293,6 @@ public class GameManager {
             if (imprimir.equals(" ")) {
                 return null;
             } else {
-
                 return imprimir;
             }
         }
