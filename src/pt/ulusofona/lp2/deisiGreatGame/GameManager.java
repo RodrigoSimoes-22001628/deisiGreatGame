@@ -271,6 +271,7 @@ public class GameManager {
                 turnoAtual = 1;
             }
             turnoAtual++;
+            imprimir = "Esta Derrotado";
         }else {
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
@@ -282,7 +283,6 @@ public class GameManager {
                 if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
                     imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
-                    break;
                 }
             }
             turnoAtual++;//passa ao proximo jogador
@@ -413,10 +413,10 @@ public class GameManager {
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                 if (!verificaSeTemFerramenta("")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).setEstado("Bloqueado");
+                    jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado");
                     for (Programmer jogadores : jogadoresEmJogo) {
                         if (jogadores.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                            jogadores.setEstado("Desbloqueado");
+                            jogadores.setBloqueado("Desbloqueado");
                         }
                     }
                     return "Aguarda por ajuda";
