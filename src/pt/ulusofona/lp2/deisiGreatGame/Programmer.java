@@ -10,6 +10,7 @@ public class Programmer {
     int posicao = 1; // 1 é a casa de Partida
     int turnoJogador; //turno do jogador teste
     String estado = "Em Jogo";
+    String bloqueado = "Desbloqueado";
     ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
 
@@ -78,6 +79,15 @@ public class Programmer {
     public void setFerramentas(Ferramenta ferramentaAdicionada) {
        this.ferramentas.add(ferramentaAdicionada);
     }
+
+    public String getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(String bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
 
     void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
         if (posicao + this.posicao > tamanhoTabuleiro){
