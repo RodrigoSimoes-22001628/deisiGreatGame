@@ -334,9 +334,11 @@ public class GameManager {
                     return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
+                      //  jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
+                        removeTools(5);
                     }else if (verificaSeTemFerramenta("IDE")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4); //remove a ferramenta
+                    //    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4); //remove a ferramenta
+                        removeTools(4);
                     }
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -346,7 +348,8 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                     return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5);
+                    // jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5);
+                    removeTools(5);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -357,9 +360,11 @@ public class GameManager {
                     return "Exception : Que azar! Recua 2 casas";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
+                     //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
+                        removeTools(5);
                     }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
-                        jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3); //remove a ferramenta
+                    //    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3); //remove a ferramenta
+                        removeTools(3);
                     }
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -369,7 +374,8 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3);
+                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3);
+                    removeTools(3);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -378,7 +384,8 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Crash (aka Rebentanço) : Já Foste voltas ao início";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
+                //    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
+                    removeTools(0);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -387,7 +394,8 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
                     return "Duplicated Code : Que azar! Volta para onde vieste";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
+                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
+                    removeTools(0);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -399,7 +407,8 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                     return "Efeitos secundários : Que azar! Volta 2 jogadas atrás";
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(2);
+                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(2);
+                    removeTools(2);
                     return "Foste salvo pela tua ferramenta!";
                 }
 
@@ -430,11 +439,20 @@ public class GameManager {
                         return "Tu e o teu parceiro recuam 3 casas";
                     }
                 }else {
-                    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(1);
+                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(1);
+                    removeTools(1);
                     return "Foste salvo pela tua ferramenta!";
                 }
         }
         return " ";
+    }
+
+    public void removeTools(int id){
+        for(int i = 0; i< jogadoresEmJogo.get(turnoAtual-1).getFerramentas().size(); i++) {
+            if(jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().get(i).getId() == id){
+                jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().remove(i);
+            }
+        }
     }
 
     public boolean casaContestada(int posicao){
