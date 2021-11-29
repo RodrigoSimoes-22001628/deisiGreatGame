@@ -266,10 +266,10 @@ public class GameManager {
     public String reactToAbyssOrTool(){
         String imprimir = " ";
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")){
+            turnoAtual++;
             if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
                 turnoAtual = 1;
             }
-            turnoAtual++;
             imprimir = "";
         }else {
             for (Abismo abismo : abismos) { //verifica se é um abismo
@@ -284,14 +284,12 @@ public class GameManager {
                     imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
                 }
             }
-
             turnoAtual++;//passa ao proximo jogador
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
                 turnoAtual = 1;
             }
         }
-
         if (imprimir.equals(" ")){
             return null;
         }
