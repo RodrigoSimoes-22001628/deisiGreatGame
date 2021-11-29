@@ -218,7 +218,7 @@ public class GameManager {
         StringBuilder imprimir = new StringBuilder();
         for (Programmer programmer : jogadoresEmJogo){
             if (programmer.getFerramentas().size() == 0) {
-                imprimir.append(programmer.getName()).append(" : No tools").append(" | ");
+                imprimir.append(programmer.getName()).append(" : No tools");
             } else {
                 imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas())).append(" | ");
             }
@@ -253,7 +253,7 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }  else {
-            if (!(jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Em Jogo"))) {
+            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")|| jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
                 return false;
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
@@ -272,15 +272,14 @@ public class GameManager {
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     verificaAbismos(abismo.getTitulo());
-                    imprimir = "calhou num abismo";
+                    imprimir = "Calhou em um abismo";
                 }
             }
 
             for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao joagador
                 if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
-                    apanhouUmaFerramenta(ferramenta.getTitulo());
-                    imprimir = "calhou numa ferramenta";
+                    imprimir = "Calhou em uma ferramenta";
                 }
             }
             turnoAtual++;//passa ao proximo jogador
@@ -402,7 +401,7 @@ public class GameManager {
                 }
 
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
-                if (!verificaSeTemFerramenta("")) {
+                if (!verificaSeTemFerramenta("ola")) {
                     jogadoresEmJogo.get(turnoAtual - 1).estado = "Derrotado"; //altera o estado do jogador para Derrotado
                     return "Game Over";
                 }else {
