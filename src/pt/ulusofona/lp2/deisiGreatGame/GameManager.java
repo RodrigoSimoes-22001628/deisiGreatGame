@@ -328,7 +328,7 @@ public class GameManager {
 
     void verificaAbismos(String nome){
         switch (nome) {
-            case "Erro de sintaxe": //recua 1 casa
+            case "Erro de sintaxe" : //recua 1 casa
                 if (!verificaSeTemFerramenta("Ajuda Professor") || !verificaSeTemFerramenta("IDE")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                 }else {
@@ -340,7 +340,7 @@ public class GameManager {
                 }
                 break;
 
-            case "Erro de lógica":  //recua o valor dos dados a dividir por 2
+            case "Erro de lógica" :  //recua o valor dos dados a dividir por 2
                 if (!verificaSeTemFerramenta("Ajuda Professor")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                 }else {
@@ -350,7 +350,7 @@ public class GameManager {
                 }
                 break;
 
-            case "Exception":  //recua 2 casas
+            case "Exception" :  //recua 2 casas
                 if (!verificaSeTemFerramenta("Ajuda Professor")
                         || !verificaSeTemFerramenta("Tratamento de Excepções")){
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
@@ -363,7 +363,7 @@ public class GameManager {
                 }
                 break;
 
-            case "File Not Found Exception":  //recua 3 casas
+            case "File Not Found Exception" :  //recua 3 casas
                 if ( !verificaSeTemFerramenta("Tratamento de Excepções")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                 }else {
@@ -373,7 +373,7 @@ public class GameManager {
                 }
                 break;
 
-            case "Crash (aka Rebentanço)":  //volta à casa de partida
+            case "Crash (aka Rebentanço)" :  //volta à casa de partida
                 if (!verificaSeTemFerramenta("Programação funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                 }else {
@@ -383,7 +383,7 @@ public class GameManager {
                 }
                 break;
 
-            case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
+            case "Duplicated Code" :  //O programador recua até à casa onde estava antes de chegar a esta casa.
                 if (!verificaSeTemFerramenta("Herança")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
                 }else {
@@ -393,17 +393,17 @@ public class GameManager {
                 }
                 break;
 
-            case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
+            case "Efeitos secundários" :  //O programador recua para a posição onde estava há 2 movimentos atrás.
                     int ultimas2jogadas = 0;
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 1);
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 2);
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                     break;
-            case "Blue Screen of Death":  // O programador perde imediatamente o jogo
+            case "Blue Screen of Death" :  // O programador perde imediatamente o jogo
                     jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado");
                     break;
 
-            case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
+            case "Ciclo infinito" :  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                 if (!verificaSeTemFerramenta("Programação funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado"); //fica bloqueado na casa
                     for (Programmer jogadores : jogadoresEmJogo) {
@@ -419,7 +419,7 @@ public class GameManager {
                 }
                 break;
 
-            case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
+            case "Segmentation Fault" :  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta("Programação funcional")) {
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                 }else {
