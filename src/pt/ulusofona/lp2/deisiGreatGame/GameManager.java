@@ -216,11 +216,19 @@ public class GameManager {
 
     public String getProgrammersInfo(){
         StringBuilder imprimir = new StringBuilder();
-        for (Programmer programmer : jogadoresEmJogo){
-            if (programmer.getFerramentas().size() == 0) {
-                imprimir.append(programmer.getName()).append(" : No tools");
-            } else {
-                imprimir.append(programmer.getName()).append(" : ").append(programmer.criarFerramentas(programmer.getFerramentas())).append(" | ");
+        for (int  i = 0 ; i < jogadoresEmJogo.size() ; i++){
+            if (i == jogadoresEmJogo.size()-1){
+                if (jogadoresEmJogo.get(i).getFerramentas().size() == 0) {
+                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : No tools");
+                } else {
+                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : ").append(jogadoresEmJogo.get(i).criarFerramentas(jogadoresEmJogo.get(i).getFerramentas()));
+                }
+            }else {
+                if (jogadoresEmJogo.get(i).getFerramentas().size() == 0) {
+                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : No tools").append(" | ");
+                } else {
+                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : ").append(jogadoresEmJogo.get(i).criarFerramentas(jogadoresEmJogo.get(i).getFerramentas())).append(" | ");
+                }
             }
         }
         return imprimir.toString();
@@ -264,7 +272,7 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-        if (!(jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Em Jogo"))){
+        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado") ||jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado") ){
             turnoAtual++; //passa ao proximo jogador
             imprimir = "";
         }else {
@@ -276,13 +284,13 @@ public class GameManager {
                 }
             }
 
-            for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao joagador
+            for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao jogador
                 if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
                     imprimir = "Calhou em uma ferramenta";
                 }
             }
-            turnoAtual++;//passa ao proximo jogador
+            turnoAtual++;//passa ao próximo jogador
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
         }
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
