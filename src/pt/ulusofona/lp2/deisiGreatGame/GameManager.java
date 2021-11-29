@@ -272,7 +272,6 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     verificaAbismos(abismo.getTitulo());
@@ -298,14 +297,12 @@ public class GameManager {
 
         if (jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")) {
             imprimir = " ";
-            turnoAtual++;
         }
 
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")) {
             imprimir = " ";
             turnoAtual++;
         }
-
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
