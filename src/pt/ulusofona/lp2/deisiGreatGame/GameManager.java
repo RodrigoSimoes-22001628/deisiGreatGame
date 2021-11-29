@@ -264,14 +264,12 @@ public class GameManager {
     }
 
     public String reactToAbyssOrTool(){
-        String imprimir = " ";
-
-        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")){
+        String imprimir = "";
+        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")){
             if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
                 turnoAtual = 1;
             }
             turnoAtual++;
-            imprimir = "Esta Derrotado";
         }else {
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
@@ -285,27 +283,14 @@ public class GameManager {
                     imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
                 }
             }
+
             turnoAtual++;//passa ao proximo jogador
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
             if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
                 turnoAtual = 1;
             }
-            if (imprimir.equals(" ")) {
-                return null;
-            } else {
-                return imprimir;
-            }
         }
         return imprimir;
-    }
-
-    boolean verificaSeTemFerramenta(String ajuda){
-        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramentas) {
-            if (ferramenta.getTitulo().equals(ajuda)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     String apanhouUmaFerramenta(String nome){
@@ -326,6 +311,15 @@ public class GameManager {
         return " ";
     }
 
+    boolean verificaSeTemFerramenta(String ajuda){ //verifica no array de ferramentas se tem a que seja util
+        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramentas) {
+            if (ferramenta.getTitulo().equals(ajuda)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     String verificaAbismos(String nome){
         switch (nome) {
             case "Erro de sintaxe": //recua 1 casa
@@ -334,10 +328,8 @@ public class GameManager {
                     return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                      //  jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
                         removeTools(5);
                     }else if (verificaSeTemFerramenta("IDE")){
-                    //    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(4); //remove a ferramenta
                         removeTools(4);
                     }
                     return "Foste salvo pela tua ferramenta!";
@@ -348,7 +340,6 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                     return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
-                    // jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5);
                     removeTools(5);
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -360,10 +351,8 @@ public class GameManager {
                     return "Exception : Que azar! Recua 2 casas";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
-                     //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(5); //remove a ferramenta
                         removeTools(5);
                     }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
-                    //    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3); //remove a ferramenta
                         removeTools(3);
                     }
                     return "Foste salvo pela tua ferramenta!";
@@ -374,7 +363,6 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                     return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
-                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(3);
                     removeTools(3);
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -384,7 +372,6 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Crash (aka Rebentanço) : Já Foste voltas ao início";
                 }else {
-                //    jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(0);
                     removeTools(0);
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -407,7 +394,6 @@ public class GameManager {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                     return "Efeitos secundários : Que azar! Volta 2 jogadas atrás";
                 }else {
-                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(2);
                     removeTools(2);
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -439,7 +425,6 @@ public class GameManager {
                         return "Tu e o teu parceiro recuam 3 casas";
                     }
                 }else {
-                 //   jogadoresEmJogo.get(turnoAtual-1).getFerramentas().remove(1);
                     removeTools(1);
                     return "Foste salvo pela tua ferramenta!";
                 }
@@ -447,12 +432,8 @@ public class GameManager {
         return " ";
     }
 
-    public void removeTools(int id){
-        for(int i = 0; i< jogadoresEmJogo.get(turnoAtual-1).getFerramentas().size(); i++) {
-            if(jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().get(i).getId() == id){
-                jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().remove(i);
-            }
-        }
+    public void removeTools(int id){ //remove a ferramenta utilizada
+        jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().removeIf(ferramenta -> ferramenta.getId() == id);
     }
 
     public boolean casaContestada(int posicao){
