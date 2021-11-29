@@ -252,26 +252,23 @@ public class GameManager {
         valorDado = nrPositions; //atribuir à variável o valor que calhou no dado
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
-        }else {
-            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Bloqueado")) {
-
+        }  else {
+            if (!(jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Em Jogo"))) {
+                return false;
             } else {
                 jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
                 return true;
             }
         }
-        return true;
     }
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")){
-            turnoAtual++;
-            if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-                turnoAtual = 1;
-            }
+        if (!(jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Em Jogo"))){
+            turnoAtual++; //passa ao proximo jogador
             imprimir = "";
         }else {
+
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     imprimir = verificaAbismos(abismo.getTitulo());
@@ -286,14 +283,15 @@ public class GameManager {
             }
             turnoAtual++;//passa ao proximo jogador
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
-            if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-                turnoAtual = 1;
-            }
+        }
+        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+            turnoAtual = 1;
         }
         if (imprimir.equals(" ")){
             return null;
         }
         return imprimir;
+
     }
 
     String apanhouUmaFerramenta(String nome){
@@ -403,7 +401,7 @@ public class GameManager {
 
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
                 if (!verificaSeTemFerramenta("")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado"); //altera o estado do jogador para perdeu
+                    jogadoresEmJogo.get(turnoAtual - 1).estado = "Derrotado"; //altera o estado do jogador para Derrotado
                     return "Game Over";
                 }else {
                     return "Foste salvo pela tua ferramenta!";
