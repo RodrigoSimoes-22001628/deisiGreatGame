@@ -241,11 +241,13 @@ public class GameManager {
         if (position < 1 || position > tamanhoTabuleiro) { // verifica se a posicão esta dentro do tabuleiro
             return null;
         }
+
         for (Abismo abismo : abismos){ // retorna nome do abismo nessa posição
             if (abismo.getPosicao() == position){
                 return abismo.getTitulo();
             }
         }
+
         for (Ferramenta ferramenta : ferramentas){ // retorna nome da ferramenta nessa posição
             if (ferramenta.getPosicao() == position){
                 return ferramenta.getTitulo();
@@ -260,10 +262,7 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
-        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
-            return false;
-        }
-        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")){
+        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado") || jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
             return false;
         } else {
             jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
@@ -273,10 +272,6 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")
-             || jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado") ){
-            imprimir = "";
-        }else {
 
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
@@ -295,12 +290,26 @@ public class GameManager {
                     imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
                 }
             }
+            turnoAtual++;
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
-        }
-        turnoAtual++;
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
+
+        if (jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")) {
+            imprimir = "O jogador está Bloqueado";
+            turnoAtual++;
+        }
+
+        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")) {
+            imprimir = "O jogador está Derrotado";
+            turnoAtual++;
+        }
+
+        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+            turnoAtual = 1;
+        }
+
         if (imprimir.equals(" ")){
             return null;
         }
@@ -316,103 +325,85 @@ public class GameManager {
         return false;
     }
 
-    String verificaAbismos(String nome){
+    void verificaAbismos(String nome){
         switch (nome) {
             case "Erro de sintaxe": //recua 1 casa
                 if (!verificaSeTemFerramenta("Ajuda Professor") || !verificaSeTemFerramenta("IDE")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
-                    return "Erro de sintaxe : Que azar! Recua 1 casa.";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
                         removeTools(5);
                     }else if (verificaSeTemFerramenta("IDE")){
                         removeTools(4);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
 
             case "Erro de lógica":  //recua o valor dos dados a dividir por 2
                 if (!verificaSeTemFerramenta("Ajuda Professor")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
-                    return "Erro de lógica : Que azar! Recua " + valorDado / 2 + "casas";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")) {
                         removeTools(5);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
 
             case "Exception":  //recua 2 casas
                 if (!verificaSeTemFerramenta("Ajuda Professor")
                         || !verificaSeTemFerramenta("Tratamento de Excepções")){
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
-                    return "Exception : Que azar! Recua 2 casas";
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Professor")){
                         removeTools(5);
                     }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
                         removeTools(3);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
 
             case "File Not Found Exception":  //recua 3 casas
                 if ( !verificaSeTemFerramenta("Tratamento de Excepções")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
-                    return "File Not Found Exception : Que azar! Recua 3 casas";
                 }else {
                     if (verificaSeTemFerramenta("Tratamento de Excepções")) {
                         removeTools(3);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
 
             case "Crash (aka Rebentanço)":  //volta à casa de partida
                 if (!verificaSeTemFerramenta("Programação funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
-                    return "Crash (aka Rebentanço) : Já Foste voltas ao início";
                 }else {
                     if (verificaSeTemFerramenta("Programação funcional")) {
                         removeTools(0);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
                 if (!verificaSeTemFerramenta("Herança")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
-                    return "Duplicated Code : Que azar! Volta para onde vieste";
                 }else {
                     if (verificaSeTemFerramenta("Herança")) {
                         removeTools(0);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
 
             case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
-                if (!verificaSeTemFerramenta("Testes unitários")) {
                     int ultimas2jogadas = 0;
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 1);
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 2);
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
-                    return "Efeitos secundários : Que azar! Volta 2 jogadas atrás";
-                }else {
-                    if (verificaSeTemFerramenta("Testes unitários")) {
-                        removeTools(2);
-                    }
-                    return "Foste salvo pela tua ferramenta!";
-                }
-
+                    break;
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
-                if (!verificaSeTemFerramenta("")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado"); //altera o estado do jogador para Derrotado
-                    return "Game Over";
-                }else {
-                    return "Foste salvo pela tua ferramenta!";
-                }
+                    jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado");
+                    break;
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
-                if (!verificaSeTemFerramenta("")) {
+                if (!verificaSeTemFerramenta("Programação funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado"); //fica bloqueado na casa
                     for (Programmer jogadores : jogadoresEmJogo) {
                         if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual - 1).getId()) {
@@ -422,23 +413,21 @@ public class GameManager {
                             jogadores.setBloqueado("Desbloqueado");
                         }
                     }
-                    return "Aguarda por ajuda";
                 }else{
-                    return "Foste salvo pela tua ferramenta!";
+                    removeTools(1);
                 }
+                break;
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta("Programação funcional")) {
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
-                    return "Tu e o teu parceiro recuam 3 casas";
                 }else {
                     if (verificaSeTemFerramenta("Programação funcional")) {
                         removeTools(1);
                     }
-                    return "Foste salvo pela tua ferramenta!";
                 }
+                break;
         }
-        return " ";
     }
 
     public void removeTools(int id){ //remove a ferramenta utilizada
