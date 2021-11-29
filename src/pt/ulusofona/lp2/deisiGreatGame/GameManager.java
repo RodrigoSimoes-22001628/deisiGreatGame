@@ -308,7 +308,7 @@ public class GameManager {
             case "Ajuda Do Professor":
                 return "Apanhou a ferramenta Ajuda do Professor";
         }
-        return " ";
+        return "";
     }
 
     boolean verificaSeTemFerramenta(String ajuda){ //verifica no array de ferramentas se tem a que seja util
@@ -429,7 +429,7 @@ public class GameManager {
                     return "Foste salvo pela tua ferramenta!";
                 }
         }
-        return " ";
+        return "";
     }
 
     public void removeTools(int id){ //remove a ferramenta utilizada
