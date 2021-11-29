@@ -272,25 +272,27 @@ public class GameManager {
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-            for (Abismo abismo : abismos) { //verifica se é um abismo
-                if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                    verificaAbismos(abismo.getTitulo());
-                    imprimir = "Que azar! Caíste no Abismo "+abismo.getTitulo();
-                }
-            }
 
-            for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao jogador
-                if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                    if(jogadoresEmJogo.get(turnoAtual-1).getFerramentas().contains(ferramenta)){
-                        break; //se já possuir a ferramenta não se adiciona
-                    }else {
-                        jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
-                    }
-                    imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
-                }
+        for (Abismo abismo : abismos) { //verifica se é um abismo
+            if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
+                verificaAbismos(abismo.getTitulo());
+                imprimir = "Que azar! Caíste no Abismo "+abismo.getTitulo();
             }
-            turnoAtual++;
-            nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
+        }
+
+        for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao jogador
+            if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
+                if(jogadoresEmJogo.get(turnoAtual-1).getFerramentas().contains(ferramenta)){
+                    break; //se já possuir a ferramenta não se adiciona
+                }else {
+                    jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
+                }
+                imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
+            }
+        }
+
+        turnoAtual++;
+        nrTotalJogadas++; //contador para saber quantas jogadas houve no jogo
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
@@ -303,6 +305,7 @@ public class GameManager {
             imprimir = " ";
             turnoAtual++;
         }
+
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
@@ -310,9 +313,9 @@ public class GameManager {
         if (imprimir.equals(" ")){
             return null;
         }
+
         return imprimir;
     }
-
 
     boolean verificaSeTemFerramenta(String ajuda){ //verifica no array de ferramentas se tem a que seja util
         for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).getFerramentas()) {
