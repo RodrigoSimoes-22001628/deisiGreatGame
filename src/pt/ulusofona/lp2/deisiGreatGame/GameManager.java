@@ -271,14 +271,16 @@ public class GameManager {
 
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                    imprimir = verificaAbismos(abismo.getTitulo());
+                    verificaAbismos(abismo.getTitulo());
+                    imprimir = "calhou num abismo";
                 }
             }
 
             for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao joagador
                 if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
-                    imprimir = apanhouUmaFerramenta(ferramenta.getTitulo());
+                    apanhouUmaFerramenta(ferramenta.getTitulo());
+                    imprimir = "calhou numa ferramenta";
                 }
             }
             turnoAtual++;//passa ao proximo jogador
