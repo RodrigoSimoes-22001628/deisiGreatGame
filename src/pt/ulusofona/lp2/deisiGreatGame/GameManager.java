@@ -190,9 +190,9 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(boolean includeDefeated){
         List<Programmer> jogadoresSemDefeated = new ArrayList<>();
-        if(includeDefeated){ //se includeDefeated == true, deve incluir os jogadores derrotados.
+        if(includeDefeated){
             jogadoresSemDefeated.addAll(jogadoresEmJogo);
-        }else { //se includeDefeated == false, deve incluir todos os jogadores
+        }else {
             for (Programmer jogadores : jogadoresEmJogo){
                 if (!jogadores.estado.equals("Derrotado")){
                     jogadoresSemDefeated.add(jogadores);
@@ -201,7 +201,6 @@ public class GameManager {
         }
         return jogadoresSemDefeated;
     }
-
 
     public List<Programmer> getProgrammers(int position) {
         //retorna a lista dos jogadores em jogo numa certa posição
@@ -309,7 +308,7 @@ public class GameManager {
     }
 
     boolean verificaSeTemFerramenta(String ajuda){ //verifica no array de ferramentas se tem a que seja util
-        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).ferramentas) {
+        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).getFerramentas()) {
             if (ferramenta.getTitulo().equals(ajuda)) {
                 return true;
             }
@@ -443,10 +442,11 @@ public class GameManager {
     }
 
     public void removeTools(int id){ //remove a ferramenta utilizada
+        //remove a ferramenta utilizada
         jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().removeIf(ferramenta -> ferramenta.getId() == id);
     }
 
-    public boolean casaContestada(int posicao){
+    public void casaContestada(int posicao){
         for (Programmer jogadores : jogadoresEmJogo){
             if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual-1).getId()){ //ignora o jogador do turnoAtual
                 continue;
@@ -454,18 +454,19 @@ public class GameManager {
             if (jogadores.getPosicao() == posicao){
                 jogadoresEmJogo.get(turnoAtual-1).subtraiPosicao(3);
                 jogadores.subtraiPosicao(3);
-                return true;
             }
         }
-        return false;
     }
 
     public boolean gameIsOver() {
         //o jogo acaba quando um jogador chegar à meta
         int verificaDerrotados= 0;
         for (Programmer programmer : jogadoresEmJogo){
-            if (programmer.getEstado().equals("Derrotado")){
+            if (programmer.getEstado().equals("Derrotado")){ //se ficarem derrotados ganha o que não estiver
                 verificaDerrotados++;
+                if (verificaDerrotados == jogadoresEmJogo.size()-1){
+                    return true;
+                }
             }
         }
         if (jogadoresEmJogo.size() == 1){ //caso so exista um jogador a jogar
