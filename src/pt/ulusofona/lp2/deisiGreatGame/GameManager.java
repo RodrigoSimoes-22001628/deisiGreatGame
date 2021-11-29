@@ -260,39 +260,45 @@ public class GameManager {
         valorDado = nrPositions; //atribuir à variável o valor que calhou no dado
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
-        }  else {
-            if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")|| jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
-                return false;
-            } else {
-                jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
-                return true;
-            }
+        }
+        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
+            return false;
+        }
+        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")){
+            return false;
+        } else {
+            jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
+            return true;
         }
     }
 
     public String reactToAbyssOrTool(){
         String imprimir = " ";
-        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado") ||jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado") ){
-            turnoAtual++; //passa ao proximo jogador
+        if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")
+             || jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")){
             imprimir = "";
         }else {
 
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                     verificaAbismos(abismo.getTitulo());
-                    imprimir = "Calhou em um abismo";
+                    imprimir = "Calhou no abismo"+abismo.getTitulo();
                 }
             }
 
             for (Ferramenta ferramenta : ferramentas) { //adicionar ferramenta ao jogador
                 if (ferramenta.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                    jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
-                    imprimir = "Calhou em uma ferramenta";
+                    if(jogadoresEmJogo.get(turnoAtual-1).getFerramentas().contains(ferramenta)){
+                        break; //se já possuir a ferramenta não se adiciona
+                    }else {
+                        jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
+                    }
+                    imprimir = "Calhou em uma ferramenta"+ferramenta.getTitulo();
                 }
             }
-            turnoAtual++;//passa ao próximo jogador
             nrTotalJogadas++; // contador para saber quantas jogadas houve no jogo
         }
+        turnoAtual++;
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
@@ -300,7 +306,6 @@ public class GameManager {
             return null;
         }
         return imprimir;
-
     }
 
     String apanhouUmaFerramenta(String nome){
@@ -409,8 +414,8 @@ public class GameManager {
                 }
 
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
-                if (!verificaSeTemFerramenta("ola")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).estado = "Derrotado"; //altera o estado do jogador para Derrotado
+                if (!verificaSeTemFerramenta("")) {
+                    jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado"); //altera o estado do jogador para Derrotado
                     return "Game Over";
                 }else {
                     return "Foste salvo pela tua ferramenta!";
@@ -418,8 +423,11 @@ public class GameManager {
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                 if (!verificaSeTemFerramenta("")) {
-                    jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado");
+                    jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado"); //fica bloqueado na casa
                     for (Programmer jogadores : jogadoresEmJogo) {
+                        if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual - 1).getId()) {
+                            continue; //não faz nada pois ignora essa posição
+                        }
                         if (jogadores.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                             jogadores.setBloqueado("Desbloqueado");
                         }
@@ -431,9 +439,8 @@ public class GameManager {
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta("Programação funcional")) {
-                    if(casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao())) {
+                    casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                         return "Tu e o teu parceiro recuam 3 casas";
-                    }
                 }else {
                     removeTools(1);
                     return "Foste salvo pela tua ferramenta!";
@@ -447,14 +454,14 @@ public class GameManager {
     }
 
     public boolean casaContestada(int posicao){
-        int contador = 0;
-        for (Programmer jogadores : jogadoresEmJogo){ // retorna nome da ferramenta nessa posição
+        for (Programmer jogadores : jogadoresEmJogo){
+            if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual-1).getId()){ //ignora o jogador do turnoAtual
+                continue;
+            }
             if (jogadores.getPosicao() == posicao){
-                if (contador >= 2){
-                    jogadores.subtraiPosicao(3);
-                    return true;
-                }
-                contador++;
+                jogadoresEmJogo.get(turnoAtual-1).subtraiPosicao(3);
+                jogadores.subtraiPosicao(3);
+                return true;
             }
         }
         return false;
@@ -462,6 +469,12 @@ public class GameManager {
 
     public boolean gameIsOver() {
         //o jogo acaba quando um jogador chegar à meta
+        int verificaDerrotados= 0;
+        for (Programmer programmer : jogadoresEmJogo){
+            if (programmer.getEstado().equals("Derrotado")){
+                verificaDerrotados++;
+            }
+        }
         if (jogadoresEmJogo.size() == 1){ //caso so exista um jogador a jogar
             return true;
         }

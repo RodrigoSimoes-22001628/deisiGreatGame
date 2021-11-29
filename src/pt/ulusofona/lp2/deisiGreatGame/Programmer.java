@@ -88,7 +88,6 @@ public class Programmer {
         this.bloqueado = bloqueado;
     }
 
-
     void incrementaPosicao(int posicao, int tamanhoTabuleiro) {
         if (posicao + this.posicao > tamanhoTabuleiro){
             int conta = (tamanhoTabuleiro - this.posicao);
