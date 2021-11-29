@@ -270,6 +270,7 @@ public class GameManager {
                 turnoAtual = 1;
             }
             turnoAtual++;
+            imprimir = "";
         }else {
             for (Abismo abismo : abismos) { //verifica se é um abismo
                 if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {

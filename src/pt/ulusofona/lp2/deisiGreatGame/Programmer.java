@@ -94,10 +94,10 @@ public class Programmer {
             int conta = (tamanhoTabuleiro - this.posicao);
             conta = posicao - conta;
             this.posicao = tamanhoTabuleiro - conta;
-            gravadorDePosicoes.add(posicao);
+            gravadorDePosicoes.add(posicao); //gravar a posição para usar no abismo Efeitos secundários
         }else {
             this.posicao += posicao;
-            gravadorDePosicoes.add(posicao);
+            gravadorDePosicoes.add(posicao); //gravar a posição para usar no abismo Efeitos secundários
         }
     }
 
