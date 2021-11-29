@@ -264,7 +264,7 @@ public class GameManager {
     }
 
     public String reactToAbyssOrTool(){
-        String imprimir = "";
+        String imprimir = " ";
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado") || jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")){
             if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
                 turnoAtual = 1;
@@ -290,6 +290,10 @@ public class GameManager {
                 turnoAtual = 1;
             }
         }
+
+        if (imprimir.equals(" ")){
+            return null;
+        }
         return imprimir;
     }
 
@@ -308,7 +312,7 @@ public class GameManager {
             case "Ajuda Do Professor":
                 return "Apanhou a ferramenta Ajuda do Professor";
         }
-        return "";
+        return " ";
     }
 
     boolean verificaSeTemFerramenta(String ajuda){ //verifica no array de ferramentas se tem a que seja util
@@ -429,7 +433,7 @@ public class GameManager {
                     return "Foste salvo pela tua ferramenta!";
                 }
         }
-        return "";
+        return " ";
     }
 
     public void removeTools(int id){ //remove a ferramenta utilizada
