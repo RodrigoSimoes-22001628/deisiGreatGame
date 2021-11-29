@@ -297,12 +297,12 @@ public class GameManager {
         }
 
         if (jogadoresEmJogo.get(turnoAtual-1).getBloqueado().equals("Bloqueado")) {
-            imprimir = "O jogador está Bloqueado";
+            imprimir = " ";
             turnoAtual++;
         }
 
         if (jogadoresEmJogo.get(turnoAtual-1).getEstado().equals("Derrotado")) {
-            imprimir = "O jogador está Derrotado";
+            imprimir = " ";
             turnoAtual++;
         }
 
@@ -315,6 +315,7 @@ public class GameManager {
         }
         return imprimir;
     }
+
 
     boolean verificaSeTemFerramenta(String ajuda){ //verifica no array de ferramentas se tem a que seja util
         for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual-1).getFerramentas()) {
