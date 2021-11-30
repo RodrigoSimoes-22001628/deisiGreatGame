@@ -286,8 +286,8 @@ public class GameManager {
                     break; //se já possuir a ferramenta não se adiciona
                 }else {
                     jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
+                    imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
                 }
-                imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
             }
         }
 
