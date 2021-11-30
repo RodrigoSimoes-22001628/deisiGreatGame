@@ -108,6 +108,7 @@ public class GameManager {
         for (int i = 0; i < abyssesAndTools.length; i++) {
             Abismo abismo = new Abismo();
             Ferramenta ferramenta = new Ferramenta();
+
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0) {
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
                         || abyssesAndTools[i][2].equals("") || abismosRepetidos.contains(Integer.parseInt(abyssesAndTools[i][1]))) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
@@ -129,6 +130,8 @@ public class GameManager {
                 ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
                 ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
                 ferramentas.add(ferramenta); //adicionar na lista
+            }else{
+                return false;
             }
         }
         ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
