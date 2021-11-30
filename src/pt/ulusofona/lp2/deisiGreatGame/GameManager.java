@@ -17,7 +17,7 @@ public class GameManager {
     public GameManager() {
 
     }
-
+ // Falta verificar as ferramentas
     public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
         //reset às variáveis
         jogadoresEmJogo.clear();
@@ -328,7 +328,7 @@ public class GameManager {
         }
         return false;
     }
-// para fazer update
+    
     void verificaAbismos(String nome) {
         switch (nome) {
             case "Erro de sintaxe": //recua 1 casa
