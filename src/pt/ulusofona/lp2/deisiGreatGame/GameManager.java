@@ -328,7 +328,7 @@ public class GameManager {
         }
         return false;
     }
-
+// para fazer update
     void verificaAbismos(String nome) {
         switch (nome) {
             case "Erro de sintaxe": //recua 1 casa
