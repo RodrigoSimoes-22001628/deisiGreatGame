@@ -25,7 +25,7 @@ public class TestGameManager {
         abismo[1][0] = "1"; // ferramenta
         abismo[1][1] = "5";  // id
         abismo[1][2] = "5";
-    //    game.createInitialBoard(listaJogadores,5);
+        //    game.createInitialBoard(listaJogadores,5);
         game.createInitialBoard(listaJogadores,20,abismo);
     }
 
@@ -34,16 +34,15 @@ public class TestGameManager {
         adicionarJogadores();
         game.moveCurrentPlayer(4);
         game.reactToAbyssOrTool();
-    //    game.turnoAtual += 1;
+        //    game.turnoAtual += 1;
         game.moveCurrentPlayer(5);
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(5);
         game.reactToAbyssOrTool();
-         List<Programmer> programmers = game.getProgrammers(false);
-         String obtido = programmers.get(0).toString();
-         //teste
-         String esperada = "1 | Pedro | 10 | No tools | c; kotlin | Em Jogo";
-         assertEquals("a posição não está correta: ", esperada, obtido);
+        List<Programmer> programmers = game.getProgrammers(false);
+        String obtido = programmers.get(0).toString();
+        String esperada = "1 | Pedro | 10 | No tools | c; kotlin | Em Jogo";
+        assertEquals("a posição não está correta: ", esperada, obtido);
     }
 /*
     @Test

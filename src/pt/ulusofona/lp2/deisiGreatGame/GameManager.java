@@ -329,7 +329,7 @@ public class GameManager {
     void verificaAbismos(String nome){
         switch (nome) {
             case "Erro de sintaxe" : //recua 1 casa
-                if (!verificaSeTemFerramenta("Ajuda Professor") || !verificaSeTemFerramenta("IDE")) {
+                if (!verificaSeTemFerramenta("Ajuda Do Professor") && !verificaSeTemFerramenta("IDE")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Do Professor")){
@@ -351,8 +351,7 @@ public class GameManager {
                 break;
 
             case "Exception" :  //recua 2 casas
-                if (!verificaSeTemFerramenta("Ajuda Do Professor")
-                        || !verificaSeTemFerramenta("Tratamento de Excepções")){
+                if (!verificaSeTemFerramenta("Ajuda Do Professor") && !verificaSeTemFerramenta("Tratamento de Excepções")){
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
                 }else {
                     if (verificaSeTemFerramenta("Ajuda Do Professor")){
