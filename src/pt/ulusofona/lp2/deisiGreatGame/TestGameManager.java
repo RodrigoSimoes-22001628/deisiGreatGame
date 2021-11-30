@@ -18,10 +18,13 @@ public class TestGameManager {
         listaJogadores[1][1] = "Goncalo";
         listaJogadores[1][2] = "java;phyton";
         listaJogadores[1][3] = "Blue";
-        String[][] abismo = new String[1][3];
+        String[][] abismo = new String[2][3];
         abismo[0][0] = "0"; // abismo
-        abismo[0][1] = "9";  // id
-        abismo[0][2] = "5"; // posicao
+        abismo[0][1] = "0";  // id
+        abismo[0][2] = "10"; // posicao
+        abismo[1][0] = "1"; // ferramenta
+        abismo[1][1] = "5";  // id
+        abismo[1][2] = "5";
     //    game.createInitialBoard(listaJogadores,5);
         game.createInitialBoard(listaJogadores,20,abismo);
     }
@@ -30,11 +33,15 @@ public class TestGameManager {
     public void testMoveCurrentPlayer1() {
         adicionarJogadores();
         game.moveCurrentPlayer(4);
-        game.turnoAtual += 1;
-        game.moveCurrentPlayer(4);
+        game.reactToAbyssOrTool();
+    //    game.turnoAtual += 1;
+        game.moveCurrentPlayer(5);
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(5);
+        game.reactToAbyssOrTool();
          List<Programmer> programmers = game.getProgrammers(false);
          String obtido = programmers.get(0).toString();
-         String esperada = "1 | Pedro | 5 | No tools | c; kotlin | Em Jogo";
+         String esperada = "1 | Pedro | 10 | No tools | c; kotlin | Em Jogo";
          assertEquals("a posição não está correta: ", esperada, obtido);
     }
 /*

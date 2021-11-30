@@ -332,7 +332,7 @@ public class GameManager {
                 if (!verificaSeTemFerramenta("Ajuda Professor") || !verificaSeTemFerramenta("IDE")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                 }else {
-                    if (verificaSeTemFerramenta("Ajuda Professor")){
+                    if (verificaSeTemFerramenta("Ajuda Do Professor")){
                         removeTools(5);
                     }else if (verificaSeTemFerramenta("IDE")){
                         removeTools(4);
@@ -341,21 +341,21 @@ public class GameManager {
                 break;
 
             case "Erro de lógica" :  //recua o valor dos dados a dividir por 2
-                if (!verificaSeTemFerramenta("Ajuda Professor")) {
+                if (!verificaSeTemFerramenta("Ajuda Do Professor")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                 }else {
-                    if (verificaSeTemFerramenta("Ajuda Professor")) {
+                    if (verificaSeTemFerramenta("Ajuda Do Professor")) {
                         removeTools(5);
                     }
                 }
                 break;
 
             case "Exception" :  //recua 2 casas
-                if (!verificaSeTemFerramenta("Ajuda Professor")
+                if (!verificaSeTemFerramenta("Ajuda Do Professor")
                         || !verificaSeTemFerramenta("Tratamento de Excepções")){
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
                 }else {
-                    if (verificaSeTemFerramenta("Ajuda Professor")){
+                    if (verificaSeTemFerramenta("Ajuda Do Professor")){
                         removeTools(5);
                     }else if (verificaSeTemFerramenta("Tratamento de Excepções")){
                         removeTools(3);
