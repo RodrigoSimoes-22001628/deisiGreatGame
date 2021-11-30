@@ -48,7 +48,7 @@ public class TestGameManager {
         assertEquals("a posição não está correta: ", esperada, obtido);
     }
 /*
-
+teste
     @Test
     public void testMoveCurrentPlayer2() {
         adicionarJogadores();
