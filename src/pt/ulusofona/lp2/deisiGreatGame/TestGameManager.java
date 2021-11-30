@@ -41,6 +41,7 @@ public class TestGameManager {
         game.reactToAbyssOrTool();
          List<Programmer> programmers = game.getProgrammers(false);
          String obtido = programmers.get(0).toString();
+         //teste
          String esperada = "1 | Pedro | 10 | No tools | c; kotlin | Em Jogo";
          assertEquals("a posição não está correta: ", esperada, obtido);
     }
