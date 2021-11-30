@@ -286,8 +286,8 @@ public class GameManager {
                     break; //se já possuir a ferramenta não se adiciona
                 }else {
                     jogadoresEmJogo.get(turnoAtual - 1).setFerramentas(ferramenta);// adiciono a ferramenta ao jogador
-                    imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
                 }
+                imprimir = "Apanhaste a Ferramenta "+ferramenta.getTitulo();
             }
         }
 
@@ -394,14 +394,14 @@ public class GameManager {
                 break;
 
             case "Efeitos secundários" :  //O programador recua para a posição onde estava há 2 movimentos atrás.
-                    int ultimas2jogadas = 0;
-                    ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 1);
-                    ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 2);
-                    jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
-                    break;
+                int ultimas2jogadas = 0;
+                ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 1);
+                ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 2);
+                jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
+                break;
             case "Blue Screen of Death" :  // O programador perde imediatamente o jogo
-                    jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado");
-                    break;
+                jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado");
+                break;
 
             case "Ciclo infinito" :  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
                 if (!verificaSeTemFerramenta("Programação funcional")) {
