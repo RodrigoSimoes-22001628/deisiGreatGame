@@ -373,10 +373,10 @@ public class GameManager {
                 break;
 
             case "Crash (aka Rebentanço)" :  //volta à casa de partida
-                if (!verificaSeTemFerramenta("Programação funcional")) {
+                if (!verificaSeTemFerramenta("Programação Funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                 }else {
-                    if (verificaSeTemFerramenta("Programação funcional")) {
+                    if (verificaSeTemFerramenta("Programação Funcional")) {
                         removeTools(0);
                     }
                 }
@@ -403,7 +403,7 @@ public class GameManager {
                 break;
 
             case "Ciclo infinito" :  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
-                if (!verificaSeTemFerramenta("Programação funcional")) {
+                if (!verificaSeTemFerramenta("Programação Funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado"); //fica bloqueado na casa
                     for (Programmer jogadores : jogadoresEmJogo) {
                         if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual - 1).getId()) {
@@ -419,10 +419,10 @@ public class GameManager {
                 break;
 
             case "Segmentation Fault" :  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
-                if (!verificaSeTemFerramenta("Programação funcional")) {
+                if (!verificaSeTemFerramenta("Programação Funcional")) {
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                 }else {
-                    if (verificaSeTemFerramenta("Programação funcional")) {
+                    if (verificaSeTemFerramenta("Programação Funcional")) {
                         removeTools(1);
                     }
                 }
