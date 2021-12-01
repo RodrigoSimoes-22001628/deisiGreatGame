@@ -54,6 +54,7 @@ public class Abismo {
         public LogicError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Ajuda Do Professor");
+            ferramentasSalvaAbismo.add("Testes unitários");
         }
     }
 

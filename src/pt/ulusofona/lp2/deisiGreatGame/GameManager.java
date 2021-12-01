@@ -378,9 +378,9 @@ public class GameManager {
         return imprimir;
     }
 
-    boolean verificaSeTemFerramenta(ArrayList<String> ajuda, ArrayList<Ferramenta> ferramentas) { //verifica no array de ferramentas se tem a que seja util
-        for (String ferramenta : ajuda) {
-            for(Ferramenta ferramentaJogador : ferramentas) {
+    boolean verificaSeTemFerramenta(ArrayList<String> ferramentasUteis, ArrayList<Ferramenta> ferramentasJogadorAtual) { //verifica no array de ferramentas se tem a que seja util
+        for (String ferramenta : ferramentasUteis ) {
+            for(Ferramenta ferramentaJogador : ferramentasJogadorAtual) {
                 if (ferramenta.equals(ferramentaJogador.getTitulo())) {
                     removeTools(ferramentaJogador.getId());
                     return true;
@@ -490,7 +490,7 @@ public class GameManager {
                 }
 
         }
-        return " ";
+        return "";
     }
 
     public void removeTools(int id) { //remove a ferramenta utilizada
