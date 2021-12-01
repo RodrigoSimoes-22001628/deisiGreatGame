@@ -1,12 +1,13 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Abismo {
     int id;
     String titulo;
     int posicao;
-    HashSet<String> ferramentasSalvaAbismo = new HashSet<>();
+    ArrayList<String> ferramentasSalvaAbismo = new ArrayList<>();
 
     public Abismo(int id, String titulo, int posicao) {
         this.id = id;
@@ -43,15 +44,21 @@ public class Abismo {
 }
 
     class SintaxeError extends Abismo {
-        public SintaxeError(int id, String titulo, int posicao, String ferramenta) {
+        public SintaxeError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Ajuda Do Professor");
             ferramentasSalvaAbismo.add("IDE");
         }
     }
+    class LogicError extends Abismo {
+        public LogicError(int id, String titulo, int posicao) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Ajuda Do Professor");
+        }
+    }
 
     class ExceptionError extends Abismo {
-        public ExceptionError(int id, String titulo, int posicao, String ferramenta) {
+        public ExceptionError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Ajuda Do Professor");
             ferramentasSalvaAbismo.add("Tratamento de Excepções");
@@ -59,48 +66,48 @@ public class Abismo {
     }
 
     class FileNotFoundExceptionError extends Abismo {
-        public FileNotFoundExceptionError(int id, String titulo, int posicao, String ferramenta) {
+        public FileNotFoundExceptionError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Tratamento de Excepções");
         }
     }
 
     class CrashError extends Abismo {
-        public CrashError(int id, String titulo, int posicao, String ferramenta) {
+        public CrashError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Programação Funcional");
         }
     }
 
     class DuplicatedCodeError extends Abismo {
-        public DuplicatedCodeError(int id, String titulo, int posicao, String ferramenta) {
+        public DuplicatedCodeError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Herança");
         }
     }
 
     class EfeitosSecundariosError extends Abismo {
-        public EfeitosSecundariosError(int id, String titulo, int posicao, String ferramenta) {
+        public EfeitosSecundariosError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Testes unitários");
         }
     }
 
     class BlueScreenOfDeathError extends Abismo {
-        public BlueScreenOfDeathError(int id, String titulo, int posicao, String ferramenta) {
+        public BlueScreenOfDeathError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
         }
     }
 
     class InfiniteCicleError extends Abismo {
-        public InfiniteCicleError(int id, String titulo, int posicao, String ferramenta) {
+        public InfiniteCicleError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Programação Funcional");
         }
     }
 
     class SegmentationFaultError extends Abismo {
-        public SegmentationFaultError(int id, String titulo, int posicao, String ferramenta) {
+        public SegmentationFaultError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Programação Funcional");
         }

@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
 public class Programmer {
     String name = "";
@@ -12,6 +13,7 @@ public class Programmer {
     String estado = "Em Jogo";
     String bloqueado = "Desbloqueado";
     ArrayList<Ferramenta> ferramentas = new ArrayList<>();
+    HashSet<String> ferramentasRepetidas = new HashSet<>();
     ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
 
     public Programmer() {
@@ -76,7 +78,11 @@ public class Programmer {
     public ArrayList<Ferramenta> getFerramentas() {
         return ferramentas;
     }
+    public HashSet<String> getFerramentasRepetidas() {
+        return ferramentasRepetidas;
+    }
     public void setFerramentas(Ferramenta ferramentaAdicionada) {
+       this.ferramentasRepetidas.add(ferramentaAdicionada.titulo);
        this.ferramentas.add(ferramentaAdicionada);
     }
 
