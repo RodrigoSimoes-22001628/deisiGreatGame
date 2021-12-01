@@ -1,10 +1,48 @@
 package pt.ulusofona.lp2.deisiGreatGame;
+
 public class Ferramenta {
-    int posicao;
-    int id;
+   protected int posicao;
+   protected int id;
     String titulo;
 
     public Ferramenta() {
+
+    }
+
+    static class Heranca extends Ferramenta {
+        Heranca() {
+            super();
+        }
+    }
+
+    static class ProgramacaoFuncional extends Ferramenta {
+        ProgramacaoFuncional() {
+            super();
+        }
+    }
+
+    static class TestesUnitarios extends Ferramenta {
+        TestesUnitarios() {
+            super();
+        }
+    }
+
+    static class TratamentoDeExcepcoes extends Ferramenta {
+        TratamentoDeExcepcoes() {
+            super();
+        }
+    }
+
+    static class IDE extends Ferramenta {
+        IDE() {
+            super();
+        }
+    }
+
+    static class AjudaDoProfessor extends Ferramenta {
+        AjudaDoProfessor() {
+            super();
+        }
     }
 
     public Ferramenta(int posicao, int id, String titulo) {

@@ -6,7 +6,7 @@ public class Abismo {
     int id;
     String titulo;
     int posicao;
-    HashSet<String> ferramentas = new HashSet<>();
+    HashSet<String> ferramentasSalvaAbismo = new HashSet<>();
 
     public Abismo(int id, String titulo, int posicao) {
         this.id = id;
@@ -40,67 +40,68 @@ public class Abismo {
     public void setPosicao(int posicao) {
         this.posicao = posicao;
     }
-
-
 }
 
-
-    class SintaxeError extends Abismo{
-
-        SintaxeError(int id, String titulo, int posicao, String ferramenta) {
+    class SintaxeError extends Abismo {
+        public SintaxeError(int id, String titulo, int posicao, String ferramenta) {
             super(id, titulo, posicao);
-            ferramentas.add("Ajuda Do Professor");
-            ferramentas.add("IDE");
+            ferramentasSalvaAbismo.add("Ajuda Do Professor");
+            ferramentasSalvaAbismo.add("IDE");
         }
     }
 
-    class ExceptionError extends Abismo{
-        public ExceptionError(int id, String titulo,int posicao, String ferramenta) {
+    class ExceptionError extends Abismo {
+        public ExceptionError(int id, String titulo, int posicao, String ferramenta) {
             super(id, titulo, posicao);
-            ferramentas.add("Ajuda Do Professor");
-            ferramentas.add("Tratamento de Excepções");
+            ferramentasSalvaAbismo.add("Ajuda Do Professor");
+            ferramentasSalvaAbismo.add("Tratamento de Excepções");
         }
     }
 
-    class FileNotFoundExceptionError extends Abismo{
-    public FileNotFoundExceptionError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-        ferramentas.add("Tratamento de Excepções");
+    class FileNotFoundExceptionError extends Abismo {
+        public FileNotFoundExceptionError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Tratamento de Excepções");
+        }
     }
-}
-class CrashError extends Abismo{
-    public CrashError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-        ferramentas.add("Programação Funcional");
-    }
-}
-class DuplicatedCodeError extends Abismo{
-    public DuplicatedCodeError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-        ferramentas.add("Herança");
-    }
-}
-class EfeitosSecundariosError extends Abismo{
-    public EfeitosSecundariosError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-        ferramentas.add("Testes unitários");
-    }
-}
-class BlueScreenOfDeathError extends Abismo{
-    public BlueScreenOfDeathError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-    }
-}
-class InfiniteCicleError extends Abismo{
-    public InfiniteCicleError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-        ferramentas.add("Programação Funcional");
-    }
-}
-class SegmentationFaultError extends Abismo{
-    public SegmentationFaultError(int id, String titulo,int posicao, String ferramenta) {
-        super(id, titulo, posicao);
-        ferramentas.add("Programação Funcional");
-    }
-}
 
+    class CrashError extends Abismo {
+        public CrashError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Programação Funcional");
+        }
+    }
+
+    class DuplicatedCodeError extends Abismo {
+        public DuplicatedCodeError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Herança");
+        }
+    }
+
+    class EfeitosSecundariosError extends Abismo {
+        public EfeitosSecundariosError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Testes unitários");
+        }
+    }
+
+    class BlueScreenOfDeathError extends Abismo {
+        public BlueScreenOfDeathError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+        }
+    }
+
+    class InfiniteCicleError extends Abismo {
+        public InfiniteCicleError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Programação Funcional");
+        }
+    }
+
+    class SegmentationFaultError extends Abismo {
+        public SegmentationFaultError(int id, String titulo, int posicao, String ferramenta) {
+            super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Programação Funcional");
+        }
+    }
