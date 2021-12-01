@@ -9,42 +9,6 @@ public class Ferramenta {
 
     }
 
-    static class Heranca extends Ferramenta {
-        Heranca() {
-            super();
-        }
-    }
-
-    static class ProgramacaoFuncional extends Ferramenta {
-        ProgramacaoFuncional() {
-            super();
-        }
-    }
-
-    static class TestesUnitarios extends Ferramenta {
-        TestesUnitarios() {
-            super();
-        }
-    }
-
-    static class TratamentoDeExcepcoes extends Ferramenta {
-        TratamentoDeExcepcoes() {
-            super();
-        }
-    }
-
-    static class IDE extends Ferramenta {
-        IDE() {
-            super();
-        }
-    }
-
-    static class AjudaDoProfessor extends Ferramenta {
-        AjudaDoProfessor() {
-            super();
-        }
-    }
-
     public Ferramenta(int posicao, int id, String titulo) {
         this.posicao = posicao;
         this.id = id;
