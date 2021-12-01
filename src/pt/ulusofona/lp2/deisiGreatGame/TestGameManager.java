@@ -20,10 +20,10 @@ public class TestGameManager {
         listaJogadores[1][3] = "Blue";
         String[][] abismo = new String[2][3];
         abismo[0][0] = "0"; // abismo
-        abismo[0][1] = "6";  // id
+        abismo[0][1] = "0";  // id
         abismo[0][2] = "10"; // posicao
         abismo[1][0] = "1"; // ferramenta
-        abismo[1][1] = "2";  // id
+        abismo[1][1] = "3";  // id
         abismo[1][2] = "5";
         //    game.createInitialBoard(listaJogadores,5);
         game.createInitialBoard(listaJogadores,20,abismo);

@@ -279,7 +279,7 @@ public class GameManager {
 
         for (Abismo abismo : abismos) { //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
-                verificaAbismos(abismo.getTitulo());
+                verificaAbismos(abismo);
                 imprimir = "Que azar! Caíste no Abismo " + abismo.getTitulo();
             }
         }
@@ -323,76 +323,78 @@ public class GameManager {
         return imprimir;
     }
 
-    boolean verificaSeTemFerramenta(String ajuda) { //verifica no array de ferramentas se tem a que seja util
-        for (Ferramenta ferramenta : jogadoresEmJogo.get(turnoAtual - 1).getFerramentas()) {
-            if (ferramenta.getTitulo().equals(ajuda)) {
-                return true;
+    boolean verificaSeTemFerramenta(HashSet<String> ajuda, ArrayList<Ferramenta> ferramentas) { //verifica no array de ferramentas se tem a que seja util
+        for (String ferramenta : ajuda) {
+            for(Ferramenta ferramentaJogador : ferramentas) {
+                if (ferramenta.equals(ferramentaJogador.getTitulo())) {
+                    return true;
+                }
             }
         }
         return false;
     }
     
-    void verificaAbismos(String nome) {
-        switch (nome) {
+    void verificaAbismos(Abismo abismo) {
+        switch (abismo.getTitulo()) {
             case "Erro de sintaxe": //recua 1 casa
-                if (!verificaSeTemFerramenta("Ajuda Do Professor") && !verificaSeTemFerramenta("IDE")) {
+                if (!abismo.ferramentas.contains("Ajuda Do Professor") && !abismo.ferramentas.contains("IDE")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                 } else {
-                    if (verificaSeTemFerramenta("Ajuda Do Professor")) {
+                    if (abismo.ferramentas.contains("Ajuda Do Professor")) {
                         removeTools(5);
-                    } else if (verificaSeTemFerramenta("IDE")) {
+                    } else if (!abismo.ferramentas.contains("IDE")) {
                         removeTools(4);
                     }
                 }
                 break;
 
             case "Erro de lógica":  //recua o valor dos dados a dividir por 2
-                if (!verificaSeTemFerramenta("Ajuda Do Professor")) {
+                if (!abismo.ferramentas.contains("Ajuda Do Professor")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado / 2);
                 } else {
-                    if (verificaSeTemFerramenta("Ajuda Do Professor")) {
+                    if (abismo.ferramentas.contains("Ajuda Do Professor")) {
                         removeTools(5);
                     }
                 }
                 break;
 
             case "Exception":  //recua 2 casas
-                if (!verificaSeTemFerramenta("Ajuda Do Professor") && !verificaSeTemFerramenta("Tratamento de Excepções")) {
+                if (!abismo.ferramentas.contains("Ajuda Do Professor") && !abismo.ferramentas.contains("Tratamento de Excepções")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
                 } else {
-                    if (verificaSeTemFerramenta("Ajuda Do Professor")) {
+                    if (abismo.ferramentas.contains("Ajuda Do Professor")) {
                         removeTools(5);
-                    } else if (verificaSeTemFerramenta("Tratamento de Excepções")) {
+                    } else if (abismo.ferramentas.contains("Tratamento de Excepções")) {
                         removeTools(3);
                     }
                 }
                 break;
 
             case "File Not Found Exception":  //recua 3 casas
-                if (!verificaSeTemFerramenta("Tratamento de Excepções")) {
+                if (!abismo.ferramentas.contains("Tratamento de Excepções")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                 } else {
-                    if (verificaSeTemFerramenta("Tratamento de Excepções")) {
+                    if (abismo.ferramentas.contains("Tratamento de Excepções")) {
                         removeTools(3);
                     }
                 }
                 break;
 
             case "Crash (aka Rebentanço)":  //volta à casa de partida
-                if (!verificaSeTemFerramenta("Programação Funcional")) {
+                if (!abismo.ferramentas.contains("Programação Funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                 } else {
-                    if (verificaSeTemFerramenta("Programação Funcional")) {
+                    if (abismo.ferramentas.contains("Programação Funcional")) {
                         removeTools(0);
                     }
                 }
                 break;
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
-                if (!verificaSeTemFerramenta("Herança")) {
+                if (!abismo.ferramentas.contains("Herança")) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
                 } else {
-                    if (verificaSeTemFerramenta("Herança")) {
+                    if (abismo.ferramentas.contains("Herança")) {
                         removeTools(0);
                     }
                 }
@@ -400,12 +402,12 @@ public class GameManager {
 
             case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
                 int ultimas2jogadas = 0;
-                if (!verificaSeTemFerramenta("Testes unitários")) {
+                if (!abismo.ferramentas.contains("Testes unitários")) {
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 1);
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 2);
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
                 } else {
-                    if (verificaSeTemFerramenta("Testes unitários")) {
+                    if (abismo.ferramentas.contains("Testes unitários")) {
                         removeTools(2);
                     }
                 }
@@ -415,7 +417,7 @@ public class GameManager {
                 break;
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
-                if (!verificaSeTemFerramenta("Programação Funcional")) {
+                if (!abismo.ferramentas.contains("Programação Funcional")) {
                     jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado"); //fica bloqueado na casa
                     for (Programmer jogadores : jogadoresEmJogo) {
                         if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual - 1).getId()) {
@@ -431,10 +433,10 @@ public class GameManager {
                 break;
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
-                if (!verificaSeTemFerramenta("Programação Funcional")) {
+                if (!abismo.ferramentas.contains(abismo.ferramentas)) {
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                 } else {
-                    if (verificaSeTemFerramenta("Programação Funcional")) {
+                    if (verificaSeTemFerramenta(abismo.ferramentas,jogadoresEmJogo.get(turnoAtual - 1).getFerramentas())) {
                         removeTools(1);
                     }
                 }
