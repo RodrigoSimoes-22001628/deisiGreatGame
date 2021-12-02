@@ -390,6 +390,22 @@ public class GameManager {
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
+        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
+            imprimir = " ";
+            turnoAtual++;
+        }
+
+        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+            turnoAtual = 1;
+        }
+        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
+            imprimir = " ";
+            turnoAtual++;
+        }
+
+        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+            turnoAtual = 1;
+        }
 
         if (imprimir.equals(" ")) {
             return null;
@@ -429,7 +445,6 @@ public class GameManager {
                     return "Foste salvo pela tua Ferramenta";
                 }
 
-
             case "Exception":  //recua 2 casas
                 if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo,jogadoresEmJogo.get(turnoAtual - 1).getFerramentas())) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
@@ -437,7 +452,6 @@ public class GameManager {
                 }else {
                     return "Foste salvo pela tua Ferramenta";
                 }
-
 
             case "File Not Found Exception":  //recua 3 casas
                 if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo,jogadoresEmJogo.get(turnoAtual - 1).getFerramentas())) {
@@ -447,7 +461,6 @@ public class GameManager {
                     return "Foste salvo pela tua Ferramenta";
                 }
 
-
             case "Crash (aka Rebentanço)":  //volta à casa de partida
                 if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo,jogadoresEmJogo.get(turnoAtual - 1).getFerramentas())) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
@@ -456,7 +469,6 @@ public class GameManager {
                     return "Foste salvo pela tua Ferramenta";
                 }
 
-
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
                 if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo,jogadoresEmJogo.get(turnoAtual - 1).getFerramentas())) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
@@ -464,7 +476,6 @@ public class GameManager {
                 }else {
                     return "Foste salvo pela tua Ferramenta";
                 }
-
 
             case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
                 int ultimas2jogadas = 0;
@@ -476,7 +487,6 @@ public class GameManager {
                 }else {
                     return "Foste salvo pela tua Ferramenta";
                 }
-
 
             case "Blue Screen of Death":  // O programador perde imediatamente o jogo
                 jogadoresEmJogo.get(turnoAtual - 1).setEstado("Derrotado");

@@ -60,7 +60,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void eEfeitosSecundarios() { //E Salvo pela Ferramenta Programação Funcional
+    public void eSalvoEfeitosSecundarios() { //E Salvo pela Ferramenta Programação Funcional
         adicionarJogadores(); adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7 Caí no Ciclo Infinito
         game.reactToAbyssOrTool();
