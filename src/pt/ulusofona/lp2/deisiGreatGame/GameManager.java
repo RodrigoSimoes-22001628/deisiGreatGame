@@ -506,7 +506,6 @@ public class GameManager {
                 }else {
                     return "Foste salvo pela tua Ferramenta";
                 }
-
         }
         return "";
     }

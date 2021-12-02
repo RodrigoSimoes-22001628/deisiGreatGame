@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 
 public class TestGameManager {
     GameManager game = new GameManager();
-
     public void adicionarJogadores(){
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
@@ -59,6 +58,33 @@ public class TestGameManager {
 
         game.createInitialBoard(listaJogadores,25,abismo);
     }
+
+    @Test
+    public void eEfeitosSecundarios() { //E Salvo pela Ferramenta Programação Funcional
+        adicionarJogadores(); adicionarJogadores();
+        game.moveCurrentPlayer(6); //Rodrigo posicao = 7 Caí no Ciclo Infinito
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(6); //Gonçalo posicao = 7 Caí no Ciclo Infinito
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(2); //Rodrigo posicao = 9 Apanha a ferramenta Programação Funcional
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(2); //Gonçalo posicao = 9 Apanha a ferramenta Programação Funcional
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(6); //Rodrigo posicao = 15
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(6); //Gonçalo posicao = 15
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 19 Caí no Abismo Efeitos Secundários é salvo pela ferramenta
+        game.reactToAbyssOrTool();
+        List<Programmer> programmers = game.getProgrammers(false);
+        String obtido1 = programmers.get(0).toString();
+        String esperada1 = "1 | Rodrigo | 19 | No tools | java; kotlin | Em Jogo";
+        assertEquals(esperada1, obtido1);
+        String obtido2 = programmers.get(1).toString();
+        String esperada2 = "2 | Goncalo | 15 | Programação Funcional | java; phyton | Em Jogo";
+        assertEquals(esperada2, obtido2);
+    }
+
     @Test
     public void caiNoAbismoSegmentationFault() { //Caí no Abismo Segmentation Fault tu e o teu adversário recuam 3 casas
         adicionarJogadores();
@@ -183,6 +209,7 @@ public class TestGameManager {
         String esperada2 = "1 | Rodrigo | 6 | No tools | java; kotlin | Em Jogo"; // Foi salvo pela Ferramenta Ajuda do Professor
         assertEquals(esperada2, obtido2);
     }
+
     @Test
     public void caiNoAbismoException() { //caí no Abismo Exception
         adicionarJogadores();
@@ -246,5 +273,4 @@ public class TestGameManager {
         String esperada1 = "1 | Rodrigo | 16 | Ajuda Do Professor;Programação Funcional;Testes unitários;IDE | java; kotlin | Em Jogo"; // Foi salvo pela Ferramenta Ajuda do Professor
         assertEquals(esperada1, obtido1);
     }
-
 }
