@@ -161,8 +161,6 @@ public class GameManager {
                         abismos.add(abismo9);
                         break;
                 }
-
-
             } else if (Integer.parseInt(abyssesAndTools[i][0]) == 1) {
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
                    || abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
@@ -199,7 +197,6 @@ public class GameManager {
                         ferramentas.add(ferramenta5);
                         break;
                 }
-
             } else {
                 return false;
             }
@@ -346,6 +343,9 @@ public class GameManager {
 
     public String reactToAbyssOrTool() {
         String imprimir = " ";
+        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
+            imprimir = " ";
+        }
 
         for (Abismo abismo : abismos) { //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
@@ -370,26 +370,6 @@ public class GameManager {
             turnoAtual = 1;
         }
 
-        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
-            imprimir = " ";
-        }
-
-        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = " ";
-            turnoAtual++;
-        }
-
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-            turnoAtual = 1;
-        }
-        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = " ";
-            turnoAtual++;
-        }
-
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-            turnoAtual = 1;
-        }
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
             imprimir = " ";
             turnoAtual++;
