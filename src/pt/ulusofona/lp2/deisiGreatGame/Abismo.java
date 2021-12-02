@@ -69,6 +69,7 @@ public class Abismo {
     class FileNotFoundExceptionError extends Abismo {
         public FileNotFoundExceptionError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Ajuda Do Professor");
             ferramentasSalvaAbismo.add("Tratamento de Excepções");
         }
     }
@@ -76,7 +77,6 @@ public class Abismo {
     class CrashError extends Abismo {
         public CrashError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
-            ferramentasSalvaAbismo.add("Programação Funcional");
         }
     }
 
@@ -90,6 +90,7 @@ public class Abismo {
     class EfeitosSecundariosError extends Abismo {
         public EfeitosSecundariosError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
+            ferramentasSalvaAbismo.add("Programação Funcional");
             ferramentasSalvaAbismo.add("Testes unitários");
         }
     }
