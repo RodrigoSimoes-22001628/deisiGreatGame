@@ -168,10 +168,38 @@ public class GameManager {
                    || abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
                     return false;
                 }
-                ferramenta.setId(Integer.parseInt(abyssesAndTools[i][1])); //adiciono o id
-                ferramenta.setTitulo(ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1]))); //adiciono o titulo correspondente ao id
-                ferramenta.setPosicao(Integer.parseInt(abyssesAndTools[i][2])); //adiciono a posicao
-                ferramentas.add(ferramenta); //adicionar na lista
+                switch (Integer.parseInt(abyssesAndTools[i][1])){
+                    case 0:
+                        Heranca ferramenta0= new Heranca(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
+                        ferramentas.add(ferramenta0); //adicionar na lista
+                        break;
+
+                    case 1:
+                        ProgramacaoFuncional ferramenta1 = new ProgramacaoFuncional(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
+                        ferramentas.add(ferramenta1); //adicionar na lista
+                        break;
+
+                    case 2:
+                        TestesUnitarios ferramenta2 = new TestesUnitarios(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
+                        ferramentas.add(ferramenta2);
+                        break;
+
+                    case 3:
+                        TratamentoExcepcoes ferramenta3 = new TratamentoExcepcoes(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
+                        ferramentas.add(ferramenta3);
+                        break;
+
+                    case 4:
+                        IDE ferramenta4 = new IDE(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
+                        ferramentas.add(ferramenta4);
+                        break;
+
+                    case 5:
+                        AjudaDoProfessor ferramenta5 = new AjudaDoProfessor(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
+                        ferramentas.add(ferramenta5);
+                        break;
+                }
+
             } else {
                 return false;
             }
@@ -346,22 +374,6 @@ public class GameManager {
             imprimir = " ";
         }
 
-        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = " ";
-            turnoAtual++;
-        }
-
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-            turnoAtual = 1;
-        }
-        if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = " ";
-            turnoAtual++;
-        }
-
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
-            turnoAtual = 1;
-        }
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
             imprimir = " ";
             turnoAtual++;

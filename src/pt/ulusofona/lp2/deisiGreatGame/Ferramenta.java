@@ -39,3 +39,33 @@ public class Ferramenta {
         this.titulo = titulo;
     }
 }
+class Heranca extends Ferramenta {
+    public Heranca(int id, String titulo, int posicao) {
+        super(posicao, id, titulo);
+    }
+}
+class ProgramacaoFuncional extends Ferramenta {
+    public ProgramacaoFuncional(int id, String titulo, int posicao) {
+        super(posicao, id, titulo);
+    }
+}
+class TestesUnitarios extends Ferramenta {
+    public TestesUnitarios(int id, String titulo, int posicao) {
+        super(posicao, id, titulo);
+    }
+}
+class TratamentoExcepcoes extends Ferramenta {
+    public TratamentoExcepcoes(int id, String titulo, int posicao) {
+        super(posicao, id, titulo);
+    }
+}
+class IDE extends Ferramenta {
+    public IDE(int id, String titulo, int posicao) {
+        super(posicao, id, titulo);
+    }
+}
+class AjudaDoProfessor extends Ferramenta {
+    public AjudaDoProfessor(int id, String titulo, int posicao) {
+        super(posicao, id, titulo);
+    }
+}
