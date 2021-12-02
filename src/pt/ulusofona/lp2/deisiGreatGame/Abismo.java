@@ -111,6 +111,5 @@ public class Abismo {
     class SegmentationFaultError extends Abismo {
         public SegmentationFaultError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
-            ferramentasSalvaAbismo.add("Programação Funcional");
         }
     }

@@ -499,8 +499,6 @@ public class GameManager {
                     return "Foste salvo pela tua Ferramenta";
                 }
 
-
-
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
                 if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo,jogadoresEmJogo.get(turnoAtual - 1).getFerramentas())){
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
