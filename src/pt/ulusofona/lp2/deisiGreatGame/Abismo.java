@@ -50,6 +50,7 @@ public class Abismo {
             ferramentasSalvaAbismo.add("IDE");
         }
     }
+
     class LogicError extends Abismo {
         public LogicError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);

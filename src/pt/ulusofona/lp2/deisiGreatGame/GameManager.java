@@ -342,7 +342,7 @@ public class GameManager {
     }
 
     public String reactToAbyssOrTool() {
-        String imprimir = " ";
+        String imprimir = "";
         if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
             imprimir = " ";
         }
@@ -371,7 +371,7 @@ public class GameManager {
         }
 
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = " ";
+            imprimir = "";
             turnoAtual++;
         }
 
@@ -379,7 +379,7 @@ public class GameManager {
             turnoAtual = 1;
         }
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = " ";
+            imprimir = "";
             turnoAtual++;
         }
 
@@ -387,7 +387,7 @@ public class GameManager {
             turnoAtual = 1;
         }
 
-        if (imprimir.equals(" ")) {
+        if (imprimir.equals("")) {
             return null;
         }
 
