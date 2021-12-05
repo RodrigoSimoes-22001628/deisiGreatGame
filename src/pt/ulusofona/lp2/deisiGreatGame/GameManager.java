@@ -390,7 +390,6 @@ public class GameManager {
         if (imprimir.equals("")) {
             return null;
         }
-
         return imprimir;
     }
 
