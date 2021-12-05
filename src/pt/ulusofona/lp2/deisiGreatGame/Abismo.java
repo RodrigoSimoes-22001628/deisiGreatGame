@@ -92,7 +92,6 @@ public class Abismo {
         public EfeitosSecundariosError(int id, String titulo, int posicao) {
             super(id, titulo, posicao);
             ferramentasSalvaAbismo.add("Programação Funcional");
-            ferramentasSalvaAbismo.add("Testes unitários");
         }
     }
 
