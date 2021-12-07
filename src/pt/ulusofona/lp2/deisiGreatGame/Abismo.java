@@ -17,6 +17,9 @@ public class Abismo {
 
     public Abismo() {
     }
+    public ArrayList<String>  getFerramentasSalvaAbismo(){
+        return ferramentasSalvaAbismo;
+    }
 
     public int getId() {
         return id;

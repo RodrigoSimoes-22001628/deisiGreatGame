@@ -408,7 +408,7 @@ public class GameManager {
      String verificaAbismos(Abismo abismo) {
         switch (abismo.getTitulo()) {
             case "Erro de sintaxe": //recua 1 casa
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(1);
                     return "Que azar! Recua 1 casa";
                 }else {
@@ -416,7 +416,7 @@ public class GameManager {
                 }
 
             case "Erro de lógica":  //recua o valor dos dados a dividir por 2
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     int recuar = valorDado / 2;
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(recuar);
                     return "Que azar! Recua o valor dos dados / 2";
@@ -425,7 +425,7 @@ public class GameManager {
                 }
 
             case "Exception":  //recua 2 casas
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(2);
                     return "Recua 2 casas";
                 }else {
@@ -433,7 +433,7 @@ public class GameManager {
                 }
 
             case "File Not Found Exception":  //recua 3 casas
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(3);
                     return "Que azar! Recua 3 casas";
                 }else {
@@ -441,7 +441,7 @@ public class GameManager {
                 }
 
             case "Crash (aka Rebentanço)":  //volta à casa de partida
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Que azar! Volta à casa de Partida";
                 }else {
@@ -449,7 +449,7 @@ public class GameManager {
                 }
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(valorDado);
                     return "Que azar! Volta para onde vieste";
                 }else {
@@ -458,7 +458,7 @@ public class GameManager {
 
             case "Efeitos secundários":  //O programador recua para a posição onde estava há 2 movimentos atrás.
                 int ultimas2jogadas = 0;
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 1);
                     ultimas2jogadas += jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.get(jogadoresEmJogo.get(turnoAtual - 1).gravadorDePosicoes.size() - 2);
                     jogadoresEmJogo.get(turnoAtual - 1).subtraiPosicao(ultimas2jogadas);
@@ -473,7 +473,7 @@ public class GameManager {
 
 
             case "Ciclo infinito":  //O programador fica preso na casa onde está até que lá apareça outro programador para o ajudar
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)) {
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).setBloqueado("Bloqueado"); //fica bloqueado na casa
                     for (Programmer jogadores : jogadoresEmJogo) {
                         if (jogadores.getId() == jogadoresEmJogo.get(turnoAtual - 1).getId()) {
@@ -489,7 +489,7 @@ public class GameManager {
                 }
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
-                if (!verificaSeTemFerramenta(abismo.ferramentasSalvaAbismo)){
+                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())){
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                     return "Que azar! Tu e o teu adversário  recuam 3 casas";
                 }else {
