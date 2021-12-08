@@ -371,7 +371,7 @@ public class GameManager {
         }
 
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = "";
+            imprimir = " ";
             turnoAtual++;
         }
 
@@ -379,7 +379,7 @@ public class GameManager {
             turnoAtual = 1;
         }
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
-            imprimir = "";
+            imprimir = " ";
             turnoAtual++;
         }
 
