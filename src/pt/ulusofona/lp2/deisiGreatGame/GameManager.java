@@ -333,7 +333,7 @@ public class GameManager {
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
-        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado")) {
+        if (jogadoresEmJogo.get(turnoAtual - 1).getBloqueado().equals("Bloqueado") || jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
             return false;
         } else {
             jogadoresEmJogo.get(turnoAtual - 1).incrementaPosicao(nrPositions, tamanhoTabuleiro);
