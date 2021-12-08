@@ -287,17 +287,19 @@ public class GameManager {
     public String getProgrammersInfo() {
         StringBuilder imprimir = new StringBuilder();
         for (int i = 0; i < jogadoresEmJogo.size(); i++) {
-            if (i == jogadoresEmJogo.size() - 1) {
-                if (jogadoresEmJogo.get(i).getFerramentas().size() == 0) {
-                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : No tools");
+            if (jogadoresEmJogo.get(i).getEstado().equals("Em Jogo")) {
+                if (i == jogadoresEmJogo.size() - 1) {
+                    if (jogadoresEmJogo.get(i).getFerramentas().size() == 0) {
+                        imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : No tools");
+                    } else {
+                        imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : ").append(jogadoresEmJogo.get(i).criarFerramentas(jogadoresEmJogo.get(i).getFerramentas()));
+                    }
                 } else {
-                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : ").append(jogadoresEmJogo.get(i).criarFerramentas(jogadoresEmJogo.get(i).getFerramentas()));
-                }
-            } else {
-                if (jogadoresEmJogo.get(i).getFerramentas().size() == 0) {
-                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : No tools").append(" | ");
-                } else {
-                    imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : ").append(jogadoresEmJogo.get(i).criarFerramentas(jogadoresEmJogo.get(i).getFerramentas())).append(" | ");
+                    if (jogadoresEmJogo.get(i).getFerramentas().size() == 0) {
+                        imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : No tools").append(" | ");
+                    } else {
+                        imprimir.append(jogadoresEmJogo.get(i).getName()).append(" : ").append(jogadoresEmJogo.get(i).criarFerramentas(jogadoresEmJogo.get(i).getFerramentas())).append(" | ");
+                    }
                 }
             }
         }
