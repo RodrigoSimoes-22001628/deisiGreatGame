@@ -538,7 +538,7 @@ public class GameManager {
     }
 
     public List<String> getGameResults() {
-        jogadoresEmJogo.removeIf(programmer -> programmer.getEstado().equals("Derrotado"));
+       // jogadoresEmJogo.removeIf(programmer -> programmer.getEstado().equals("Derrotado"));
         //ordenar a lista de jogadores por
         jogadoresEmJogo.sort(Comparator.comparing(Programmer::getName));
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());//ordena por posição
