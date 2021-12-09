@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import org.junit.Test;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -16,7 +18,7 @@ public class TestGameManager {
         listaJogadores[1][1] = "Goncalo";
         listaJogadores[1][2] = "java;phyton";
         listaJogadores[1][3] = "Blue";
-        String[][] abismoEFerramentas = new String[12][3];
+        String[][] abismoEFerramentas = new String[15][3];
         abismoEFerramentas[0][0] = "0"; // abismo
         abismoEFerramentas[0][1] = "4";  // id Crash
         abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
@@ -53,14 +55,280 @@ public class TestGameManager {
         abismoEFerramentas[11][0] = "0"; //Abismo
         abismoEFerramentas[11][1] = "9";  // id Segmentation Fault
         abismoEFerramentas[11][2] = "20"; // posição 20 tabuleiro
-
-
+        abismoEFerramentas[12][0] = "0"; //Abismo
+        abismoEFerramentas[12][1] = "1";  // id Segmentation Fault
+        abismoEFerramentas[12][2] = "23"; // posição 20 tabuleiro
+        abismoEFerramentas[13][0] = "1"; //Abismo
+        abismoEFerramentas[13][1] = "0";  // id Segmentation Fault
+        abismoEFerramentas[13][2] = "22"; // posição 20 tabuleiro
+        abismoEFerramentas[14][0] = "1"; //Abismo
+        abismoEFerramentas[14][1] = "3";  // id Segmentation Fault
+        abismoEFerramentas[14][2] = "24"; // posição 20 tabuleiro
         game.createInitialBoard(listaJogadores,25,abismoEFerramentas);
     }
 
     @Test
-    public void gameIsOver() { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
+    public void jogo() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[3][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "0"; //Erro Sintaxe
+        abismoEFerramentas[0][2] = "2";
+        abismoEFerramentas[1][0] = "0";
+        abismoEFerramentas[1][1] = "1"; //Erro de Logica
+        abismoEFerramentas[1][2] = "4";
+        abismoEFerramentas[2][0] = "0";
+        abismoEFerramentas[2][1] = "3"; //Exception
+        abismoEFerramentas[2][2] = "3";
+        game.createInitialBoard(listaJogadores,5,abismoEFerramentas);
+        game.moveCurrentPlayer(1); //Rodrigo posicao = 2 Erro de Sintaxe recua 1 casa
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(5); //Gonçalo posicao = 6
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Rodrigo posicao = 4 Erro de Logica recua 2 casas posicao = 2
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1); //Gonçalo posicao = 7
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1); //Rodrigo posicao = 3 Exception recua 2 casas posicao = 2
+        game.reactToAbyssOrTool();
+        List<Programmer> programmers = game.getProgrammers(false);
+        String obtido1 = programmers.get(0).toString();
+        String esperada1 = "1 | Rodrigo | 1 | No tools | java; kotlin | Em Jogo";
+        assertEquals(esperada1, obtido1);
+        String obtido2 = programmers.get(1).toString();
+        String esperada2 = "2 | Goncalo | 1 | No tools | java; phyton | Em Jogo";
+        assertEquals(esperada2, obtido2);
+    }
 
+    @Test
+    public void gameIsOver() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "2";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "3";
+        abismoEFerramentas[1][2] = "1";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        game.moveCurrentPlayer(6);
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(6);
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3);
+        boolean obtido1 = game.gameIsOver();
+        assertTrue(obtido1);
+        String obtido2 = game.getGameResults().toString();
+        String esperada1 = "[O GRANDE JOGO DO DEISI, , NR. DE TURNOS, 3, , VENCEDOR, Rodrigo, , RESTANTES, Goncalo 7]";
+        assertEquals(esperada1, obtido2);
+
+    }
+    @Test
+    public void getAuthorsPanel() {
+        int width = game.getAuthorsPanel().getWidth();
+        int height =game.getAuthorsPanel().getHeight();
+        int widthEsperado = 300;
+        int heightEsperado =300;
+        assertEquals(widthEsperado, width);
+        assertEquals(heightEsperado, height);
+    }
+
+    @Test
+    public void gameIsOverDerrotado() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[1][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "7";
+        abismoEFerramentas[0][2] = "2";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        game.moveCurrentPlayer(1);
+        game.getCurrentPlayerID();
+        game.reactToAbyssOrTool();
+        boolean obtido1 = game.gameIsOver();
+        assertTrue(obtido1);
+    }
+
+    @Test
+    public void apanhaFerramentaRepetida() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "1";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "2";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "1";
+        abismoEFerramentas[1][2] = "4";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        game.moveCurrentPlayer(1); //Rodrigo posicao = 2
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(2); //Gonçalo posicao = 3
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(2);
+        game.reactToAbyssOrTool();
+        List<Programmer> programmers = game.getProgrammers(false);
+        String obtido1 = programmers.get(0).toString();
+        String esperada1 = "1 | Rodrigo | 4 | Programação Funcional | java; kotlin | Em Jogo";
+        assertEquals(esperada1, obtido1);
+        String obtido2 = programmers.get(1).toString();
+        String esperada2 = "2 | Goncalo | 3 | No tools | java; phyton | Em Jogo";
+        assertEquals(esperada2, obtido2);
+    }
+
+    @Test
+    public void getTitle() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "10";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "3";
+        abismoEFerramentas[1][2] = "5";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        String obtido1 = game.getTitle(5);
+        String esperada1 ="Tratamento de Excepções" ;
+        assertEquals(esperada1, obtido1);
+        String obtido2= game.getTitle(10);
+        String esperada2 ="Erro de lógica" ;
+        assertEquals(esperada2, obtido2);
+    }
+
+   @Test
+    public void getProgrammerInfoImprimir() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "10";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "3";
+        abismoEFerramentas[1][2] = "5";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        String obtido1 = game.getProgrammersInfo();
+        String esperada1 ="Rodrigo : No tools | Goncalo : No tools" ;
+        assertEquals(esperada1, obtido1);
+    }
+
+    @Test
+    public void getProgrammers() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "10";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "3";
+        abismoEFerramentas[1][2] = "5";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        int obtido1 = game.getProgrammers(1).size();
+        int esperada1 = 2;
+        assertEquals(esperada1, obtido1);
+    }
+
+    @Test
+    public void getProgrammersIncludeDefeated() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "10";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "3";
+        abismoEFerramentas[1][2] = "5";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        int obtido1 = game.getProgrammers(false).size();
+        int esperada1 = 2;
+        assertEquals(esperada1, obtido1);
+        int obtido2 = game.getProgrammers(true).size();
+        int esperada2 = 0;
+        assertEquals(esperada1, obtido1);
+    }
+
+    @Test
+    public void gameManagerCarregarJogadoresComErros() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "0";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean carregarJogadores = game.createInitialBoard(listaJogadores, 10);
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "1";
+        abismoEFerramentas[0][2] = "10";
+        abismoEFerramentas[1][0] = "1";
+        abismoEFerramentas[1][1] = "3";
+        abismoEFerramentas[1][2] = "5";
+        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        assertFalse(jogo);
     }
 
     @Test

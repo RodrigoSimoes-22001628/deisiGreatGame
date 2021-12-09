@@ -129,19 +129,19 @@ public class Programmer {
 
     @Override
     public String toString() {
-        StringBuilder texto = new StringBuilder();
+        StringBuilder linguagens = new StringBuilder();
         Collections.sort(languages);
         for (int i = 0; i < languages.size(); i++) {
             if (i == languages.size() -1) {
-                texto.append(languages.get(i));
+                linguagens.append(languages.get(i));
             }else {
-                texto.append(languages.get(i)).append("; ");
+                linguagens.append(languages.get(i)).append("; ");
             }
         }
         if(ferramentas.size() == 0){
-            return id +" | "+name+" | "+posicao+" | "+ "No tools" + " | " +texto+" | "+estado;
+            return id +" | "+name+" | "+posicao+" | "+ "No tools" + " | " +linguagens+" | "+estado;
         }else {
-            return id + " | " + name + " | " + posicao + " | " + criarFerramentas(ferramentas) + " | " + texto + " | " + estado;
+            return id + " | " + name + " | " + posicao + " | " + criarFerramentas(ferramentas) + " | " + linguagens + " | " + estado;
         }
     }
 }
