@@ -442,8 +442,6 @@ public class GameManager {
                 if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Que azar! Volta à casa de Partida";
-                }else {
-                    return "Foste salvo pela tua Ferramenta";
                 }
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
@@ -490,8 +488,6 @@ public class GameManager {
                 if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())){
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                     return "Que azar! Tu e o teu adversário  recuam 3 casas";
-                }else {
-                    return "Foste salvo pela tua Ferramenta";
                 }
         }
         return "";
