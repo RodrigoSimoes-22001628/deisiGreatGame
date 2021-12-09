@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import org.junit.Test;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TestGameManager {
     GameManager game = new GameManager();
@@ -16,51 +16,319 @@ public class TestGameManager {
         listaJogadores[1][1] = "Goncalo";
         listaJogadores[1][2] = "java;phyton";
         listaJogadores[1][3] = "Blue";
-        String[][] abismo = new String[12][3];
-        abismo[0][0] = "0"; // abismo
-        abismo[0][1] = "4";  // id Crash
-        abismo[0][2] = "10"; // posição 10 tabuleiro
-        abismo[1][0] = "0"; // abismo
-        abismo[1][1] = "0";  // id erro de Sintaxe
-        abismo[1][2] = "6"; // posição 6 tabuleiro
-        abismo[2][0] = "1"; // ferramenta
-        abismo[2][1] = "5";  // id ajuda Professor
-        abismo[2][2] = "5"; //posição 5 tabuleiro
-        abismo[3][0] = "1"; // ferramenta
-        abismo[3][1] = "1";  // id Programação Funcional
-        abismo[3][2] = "9"; //posição 9 tabuleiro
-        abismo[4][0] = "0"; // abismo
-        abismo[4][1] = "7";  // id Blue Screen
-        abismo[4][2] = "12"; // posição 12 tabuleiro
-        abismo[5][0] = "1"; // Ferramenta
-        abismo[5][1] = "2";  // id Testes Unitarios
-        abismo[5][2] = "14"; // posição 14 tabuleiro
-        abismo[6][0] = "0"; //Abismo
-        abismo[6][1] = "5";  // id Duplicated Code
-        abismo[6][2] = "13"; // posição 13 tabuleiro
-        abismo[7][0] = "1"; //Ferramenta
-        abismo[7][1] = "4";  // id IDE
-        abismo[7][2] = "16"; // posição 16 tabuleiro
-        abismo[8][0] = "0"; //Abismo
-        abismo[8][1] = "2";  // id Exception
-        abismo[8][2] = "3"; // posição 3 tabuleiro
-        abismo[9][0] = "0"; //Abismo
-        abismo[9][1] = "8";  // id Ciclo infinito
-        abismo[9][2] = "2"; // posição 2 tabuleiro
-        abismo[10][0] = "0"; //Abismo
-        abismo[10][1] = "6";  // id Efeitos Secundários
-        abismo[10][2] = "19"; // posição 19 tabuleiro
-        abismo[11][0] = "0"; //Abismo
-        abismo[11][1] = "9";  // id Segmentation Fault
-        abismo[11][2] = "20"; // posição 20 tabuleiro
+        String[][] abismoEFerramentas = new String[12][3];
+        abismoEFerramentas[0][0] = "0"; // abismo
+        abismoEFerramentas[0][1] = "4";  // id Crash
+        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+        abismoEFerramentas[1][0] = "0"; // abismo
+        abismoEFerramentas[1][1] = "0";  // id erro de Sintaxe
+        abismoEFerramentas[1][2] = "6"; // posição 6 tabuleiro
+        abismoEFerramentas[2][0] = "1"; // ferramenta
+        abismoEFerramentas[2][1] = "5";  // id ajuda Professor
+        abismoEFerramentas[2][2] = "5"; //posição 5 tabuleiro
+        abismoEFerramentas[3][0] = "1"; // ferramenta
+        abismoEFerramentas[3][1] = "1";  // id Programação Funcional
+        abismoEFerramentas[3][2] = "9"; //posição 9 tabuleiro
+        abismoEFerramentas[4][0] = "0"; // abismo
+        abismoEFerramentas[4][1] = "7";  // id Blue Screen
+        abismoEFerramentas[4][2] = "12"; // posição 12 tabuleiro
+        abismoEFerramentas[5][0] = "1"; // Ferramenta
+        abismoEFerramentas[5][1] = "2";  // id Testes Unitarios
+        abismoEFerramentas[5][2] = "14"; // posição 14 tabuleiro
+        abismoEFerramentas[6][0] = "0"; //Abismo
+        abismoEFerramentas[6][1] = "5";  // id Duplicated Code
+        abismoEFerramentas[6][2] = "13"; // posição 13 tabuleiro
+        abismoEFerramentas[7][0] = "1"; //Ferramenta
+        abismoEFerramentas[7][1] = "4";  // id IDE
+        abismoEFerramentas[7][2] = "16"; // posição 16 tabuleiro
+        abismoEFerramentas[8][0] = "0"; //Abismo
+        abismoEFerramentas[8][1] = "2";  // id Exception
+        abismoEFerramentas[8][2] = "3"; // posição 3 tabuleiro
+        abismoEFerramentas[9][0] = "0"; //Abismo
+        abismoEFerramentas[9][1] = "8";  // id Ciclo infinito
+        abismoEFerramentas[9][2] = "2"; // posição 2 tabuleiro
+        abismoEFerramentas[10][0] = "0"; //Abismo
+        abismoEFerramentas[10][1] = "6";  // id Efeitos Secundários
+        abismoEFerramentas[10][2] = "19"; // posição 19 tabuleiro
+        abismoEFerramentas[11][0] = "0"; //Abismo
+        abismoEFerramentas[11][1] = "9";  // id Segmentation Fault
+        abismoEFerramentas[11][2] = "20"; // posição 20 tabuleiro
 
 
-        game.createInitialBoard(listaJogadores,25,abismo);
+        game.createInitialBoard(listaJogadores,25,abismoEFerramentas);
+    }
+
+    @Test
+    public void gameIsOver() { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
+
+    }
+
+    @Test
+    public void moveCurrentPlayerValorNegativoZeroEMaiorQue6() { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
+        adicionarJogadores();
+        boolean obtido1 = game.moveCurrentPlayer(0);
+        assertFalse(obtido1);
+        boolean obtido2 = game.moveCurrentPlayer(-2);
+        assertFalse(obtido2);
+        boolean obtido3 = game.moveCurrentPlayer(7);
+        assertFalse(obtido3);
+    }
+
+    @Test
+    public void getImagePosicaoMaiorQueTabuleiro() {
+        adicionarJogadores();
+        String obtido= game.getImagePng(30);
+        String esperada = null;
+        assertEquals(esperada, obtido);
+    }
+
+    @Test
+    public void getImagePosicaoNegativa() {
+        adicionarJogadores();
+        String obtido= game.getImagePng(-1);
+        String esperada = null;
+        assertEquals(esperada, obtido);
+    }
+
+    @Test
+    public void getTituloPosicaoMaiorQueTabuleiro() {
+        adicionarJogadores();
+        String obtido= game.getTitle(30);
+        String esperada = null;
+        assertEquals(esperada, obtido);
+    }
+    @Test
+    public void getTituloPosicaoNegativa() {
+        adicionarJogadores();
+        String obtido= game.getTitle(-1);
+        String esperada = null;
+        assertEquals(esperada, obtido);
+    }
+
+    @Test
+    public void gameManagerNaoEAbismoNemFerramenta() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "-2"; // abismo
+        abismoEFerramentas[0][1] = "4";  // id Crash
+        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+        abismoEFerramentas[1][0] = "1"; // ferramenta
+        abismoEFerramentas[1][1] = "5";  // id ajuda Professor
+        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerIdFerramentaMaiorQueCinco() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0"; // abismo
+        abismoEFerramentas[0][1] = "4";  // id Crash
+        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+        abismoEFerramentas[1][0] = "1"; // ferramenta
+        abismoEFerramentas[1][1] = "7";  // id ajuda Professor
+        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerIdAbismoNegativo() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0"; // abismo
+        abismoEFerramentas[0][1] = "-2";  // id Crash
+        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+        abismoEFerramentas[1][0] = "1"; // ferramenta
+        abismoEFerramentas[1][1] = "7";  // id ajuda Professor
+        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerNomeAbismoVazio() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0"; // abismo
+        abismoEFerramentas[0][1] = "3";  // id Crash
+        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+        abismoEFerramentas[1][0] = "1"; // ferramenta
+        abismoEFerramentas[1][1] = "7";  // id ajuda Professor
+        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerNomeFerramentaVazio() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        String[][] abismoEFerramentas = new String[2][3];
+        abismoEFerramentas[0][0] = "0"; // abismo
+        abismoEFerramentas[0][1] = "10";  // id Crash
+        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+        abismoEFerramentas[1][0] = "1"; // ferramenta
+        abismoEFerramentas[1][1] = "5";  // id ajuda Professor
+        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManager1Jogador() {
+        String[][] listaJogadores = new String[1][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        boolean jogo = game.createInitialBoard(listaJogadores,10);
+        assertFalse(jogo);
+    }
+    @Test
+    public void gameManagerMaisDe4Jogadores() {
+        String[][] listaJogadores = new String[5][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        listaJogadores[2][0] = "3";
+        listaJogadores[2][1] = "Rodrigo";
+        listaJogadores[2][2] = "java;kotlin";
+        listaJogadores[2][3] = "Purple";
+        listaJogadores[3][0] = "4";
+        listaJogadores[3][1] = "Goncalo";
+        listaJogadores[3][2] = "java;phyton";
+        listaJogadores[3][3] = "Brown";
+        listaJogadores[4][0] = "5";
+        listaJogadores[4][1] = "Goncalo";
+        listaJogadores[4][2] = "java;phyton";
+        listaJogadores[4][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,10);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerTamanhoTabuleiroNulo() {
+         String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,0);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerTamanhoTabuleironegativo() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,-5);
+        assertFalse(jogo);
+    }
+    @Test
+    public void gameManagerIdNegativo() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "-3";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,10);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerNomeVazio() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "3";
+        listaJogadores[0][1] = "";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,10);
+        assertFalse(jogo);
+    }
+
+    @Test
+    public void gameManagerIdRepetido() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "3";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "3";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,10);
+        assertFalse(jogo);
     }
 
     @Test
     public void eSalvoEfeitosSecundarios() { //E Salvo pela Ferramenta Programação Funcional
-        adicionarJogadores(); adicionarJogadores();
+        adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7 Caí no Ciclo Infinito
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(6); //Gonçalo posicao = 7 Caí no Ciclo Infinito

@@ -163,9 +163,10 @@ public class GameManager {
                 }
             } else if (Integer.parseInt(abyssesAndTools[i][0]) == 1) {
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
-                   || abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
+                        || abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..5 e o título não pode ser vazio
                     return false;
                 }
+
                 switch (Integer.parseInt(abyssesAndTools[i][1])){
                     case 0:
                         Heranca ferramenta0= new Heranca(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
@@ -538,8 +539,7 @@ public class GameManager {
     }
 
     public List<String> getGameResults() {
-       // jogadoresEmJogo.removeIf(programmer -> programmer.getEstado().equals("Derrotado"));
-        //ordenar a lista de jogadores por
+        //ordenar a lista de jogadores por nome e posição
         jogadoresEmJogo.sort(Comparator.comparing(Programmer::getName));
         jogadoresEmJogo.sort(Comparator.comparingInt(Programmer::getPosicao).reversed());//ordena por posição
         ArrayList<String> resultados = new ArrayList<>();
