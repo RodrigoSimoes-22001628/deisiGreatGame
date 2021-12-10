@@ -374,6 +374,8 @@ public class TestGameManager {
         game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
         game.moveCurrentPlayer(1); //Rodrigo posicao = 2
         game.reactToAbyssOrTool();
+        game.turnoAtual = 2;
+        game.reactToAbyssOrTool();
         game.moveCurrentPlayer(2); //Gonçalo posicao = 3
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(2);
@@ -524,8 +526,18 @@ public class TestGameManager {
         assertFalse(obtido3);
     }
 
+
     @Test
     public void getImagePosicaoMaiorQueTabuleiro() {
+        Abismo abismo = new Abismo(1,"Erro Lógica",2);
+        abismo.getId();
+        abismo.setId(2);
+        abismo.setPosicao(3);
+        Ferramenta ferramenta = new Ferramenta(2,1,"IDE");
+        ferramenta.getId();
+        ferramenta.setId(2);
+        ferramenta.setPosicao(3);
+        ferramenta.setTitulo("Ajuda Do Professor");
         adicionarJogadores();
         String obtido= game.getImagePng(30);
         String esperada = null;
@@ -775,6 +787,17 @@ public class TestGameManager {
         boolean jogo = game.createInitialBoard(listaJogadores,10);
         assertFalse(jogo);
     }
+    @Test
+    public void gameIsOver1Player() {
+        String[][] listaJogadores = new String[1][4];
+        listaJogadores[0][0] = "3";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        game.gameIsOver();
+        boolean jogo = game.createInitialBoard(listaJogadores,10);
+        assertFalse(jogo);
+    }
 
     @Test
     public void eSalvoEfeitosSecundarios() { //E Salvo pela Ferramenta Programação Funcional
@@ -793,6 +816,7 @@ public class TestGameManager {
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(4); //Rodrigo posicao = 19 Caí no Abismo Efeitos Secundários é salvo pela ferramenta
         game.reactToAbyssOrTool();
+
         List<Programmer> programmers = game.getProgrammers(false);
         String obtido1 = programmers.get(0).toString();
         String esperada1 = "1 | Rodrigo | 19 | No tools | java; kotlin | Em Jogo";
