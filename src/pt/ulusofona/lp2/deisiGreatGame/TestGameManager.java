@@ -99,6 +99,22 @@ public class TestGameManager {
         String esperada4 = "2 | Goncalo | 13 | Tratamento de Excepções;Herança;Programação Funcional | java; phyton | Em Jogo";
         assertEquals(esperada4, obtido4);
     }
+
+    @Test
+    public void gameManageTabuleiroMenorTamahoArrayJogadores() {
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        boolean jogo = game.createInitialBoard(listaJogadores,3);
+        assertFalse(jogo);
+    }
+
     public void adicionarJogadores(){
         game.abismoPorId(10);
         game.ferramentaPorId(6);
