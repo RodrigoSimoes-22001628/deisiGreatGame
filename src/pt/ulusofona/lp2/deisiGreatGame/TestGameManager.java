@@ -90,6 +90,7 @@ public class TestGameManager {
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(1); //Rodrigo posicao = 10 //Caí no Abismo Ciclo Infinito é salvo pela ferramenta Programação funcional
         game.reactToAbyssOrTool();
+        game.getTitle(1);
         List<Programmer> programmers2 = game.getProgrammers(false);
         String obtido3 = programmers2.get(0).toString();
         String esperada3 = "1 | Rodrigo | 10 | No tools | java; kotlin | Em Jogo";
@@ -98,8 +99,9 @@ public class TestGameManager {
         String esperada4 = "2 | Goncalo | 13 | Tratamento de Excepções;Herança;Programação Funcional | java; phyton | Em Jogo";
         assertEquals(esperada4, obtido4);
     }
-
     public void adicionarJogadores(){
+        game.abismoPorId(10);
+        game.ferramentaPorId(6);
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -158,6 +160,55 @@ public class TestGameManager {
         game.createInitialBoard(listaJogadores,25,abismoEFerramentas);
     }
     @Test
+    public void blueScreenTest() {
+        String[][] listaJogadores = new String[3][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+        listaJogadores[2][0] = "3";
+        listaJogadores[2][1] = "Pedro";
+        listaJogadores[2][2] = "java;phyton";
+        listaJogadores[2][3] = "Brown";
+        String[][] abismoEFerramentas = new String[1][3];
+        abismoEFerramentas[0][0] = "0";
+        abismoEFerramentas[0][1] = "7"; //Blue Screen
+        abismoEFerramentas[0][2] = "3";
+        game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
+        game.moveCurrentPlayer(2); //Rodrigo posicao = 2 Caí no Blue screen
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Pedro posicao 3
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1); //Rodrigo Derrotado
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1); //Gonçalo posicao = 5
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1); //Pedro posicao 4
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1);
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(1);
+        game.reactToAbyssOrTool();
+        List<Programmer> programmers = game.getProgrammers(true);
+        String obtido1 = programmers.get(0).toString();
+        String esperada1 = "1 | Rodrigo | 3 | No tools | java; kotlin | Derrotado";
+        assertEquals(esperada1, obtido1);
+        String obtido2 = programmers.get(1).toString();
+        String esperada2 = "2 | Goncalo | 7 | No tools | java; phyton | Em Jogo";
+        assertEquals(esperada2, obtido2);
+        String obtido3 = programmers.get(2).toString();
+        String esperada3 = "3 | Pedro | 6 | No tools | java; phyton | Em Jogo";
+        assertEquals(esperada3, obtido3);
+
+    }
+
+    @Test
     public void getImageFerramentasEAbismos() {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
@@ -189,7 +240,6 @@ public class TestGameManager {
         assertEquals(esperada2, ferramenta);
         assertEquals(esperada3,casaFinal);
     }
-
     @Test
     public void jogo() {
         String[][] listaJogadores = new String[2][4];
@@ -238,6 +288,9 @@ public class TestGameManager {
 
     @Test
     public void gameIsOver() {
+        Abismo abismo = new Abismo();
+        abismo.setTitulo("ola");
+        game.verificaAbismos(abismo);
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";

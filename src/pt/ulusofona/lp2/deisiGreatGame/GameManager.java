@@ -439,10 +439,8 @@ public class GameManager {
                 }
 
             case "Crash (aka Rebentanço)":  //volta à casa de partida
-                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
                     jogadoresEmJogo.get(turnoAtual - 1).setPosicao(1);
                     return "Que azar! Volta à casa de Partida";
-                }
 
             case "Duplicated Code":  //O programador recua até à casa onde estava antes de chegar a esta casa.
                 if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())) {
@@ -485,10 +483,8 @@ public class GameManager {
                 }
 
             case "Segmentation Fault":  // caso existam 2 ou mais jogadores nessa casa todos os jogadores nessa casa recuam 3 casas
-                if (!verificaSeTemFerramenta(abismo.getFerramentasSalvaAbismo())){
                     casaContestada(jogadoresEmJogo.get(turnoAtual - 1).getPosicao());
                     return "Que azar! Tu e o teu adversário  recuam 3 casas";
-                }
         }
         return "";
     }
