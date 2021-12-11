@@ -564,7 +564,6 @@ public class GameManager {
         painelAuthors.add(realizador1);
         painelAuthors.add(realizador2);
         painelAuthors.setSize(new Dimension(300, 300));
-
         return painelAuthors;
     }
 }
