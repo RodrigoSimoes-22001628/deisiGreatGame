@@ -220,6 +220,7 @@ public class TestGameManager {
         String obtido1 = programmers.get(0).toString();
         String esperada1 = "1 | Rodrigo | 3 | No tools | java; kotlin | Derrotado";
         assertEquals(esperada1, obtido1);
+
     }
 
     @Test

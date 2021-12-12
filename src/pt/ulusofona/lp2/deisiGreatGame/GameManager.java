@@ -381,9 +381,9 @@ public class GameManager {
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
             turnoAtual++;
         }
-      /*  if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
-        } */
+        }
 
         if (imprimir.equals("")) {
             return null;
