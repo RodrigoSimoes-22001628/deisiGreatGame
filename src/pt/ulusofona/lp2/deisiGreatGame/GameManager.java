@@ -377,13 +377,13 @@ public class GameManager {
         if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
         }
+
         if (jogadoresEmJogo.get(turnoAtual - 1).getEstado().equals("Derrotado")) {
             turnoAtual++;
         }
-
-        if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
+      /*  if (turnoAtual > jogadoresEmJogo.size()) { // os turnos vão de 1-4
             turnoAtual = 1;
-        }
+        } */
 
         if (imprimir.equals("")) {
             return null;
@@ -516,10 +516,6 @@ public class GameManager {
                     return true;
                 }
             }
-        }
-
-        if (jogadoresEmJogo.size() == 1) { //caso so exista um jogador a jogar
-            return true;
         }
 
         for (Programmer emJogo : jogadoresEmJogo) {

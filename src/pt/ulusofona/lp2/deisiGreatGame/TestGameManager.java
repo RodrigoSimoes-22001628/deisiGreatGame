@@ -177,7 +177,7 @@ public class TestGameManager {
     }
     @Test
     public void blueScreenTest() {
-        String[][] listaJogadores = new String[3][4];
+        String[][] listaJogadores = new String[4][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
         listaJogadores[0][2] = "java;kotlin";
@@ -190,6 +190,11 @@ public class TestGameManager {
         listaJogadores[2][1] = "Pedro";
         listaJogadores[2][2] = "java;phyton";
         listaJogadores[2][3] = "Brown";
+        listaJogadores[3][0] = "4";
+        listaJogadores[3][1] = "Alberto";
+        listaJogadores[3][2] = "java;phyton";
+        listaJogadores[3][3] = "Purple";
+
         String[][] abismoEFerramentas = new String[1][3];
         abismoEFerramentas[0][0] = "0";
         abismoEFerramentas[0][1] = "7"; //Blue Screen
@@ -197,15 +202,15 @@ public class TestGameManager {
         game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
         game.moveCurrentPlayer(2); //Rodrigo posicao = 2 Caí no Blue screen
         game.reactToAbyssOrTool();
-        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.moveCurrentPlayer(2); //Gonçalo posicao = 2 Caí no Blue screen
         game.reactToAbyssOrTool();
-        game.moveCurrentPlayer(3); //Pedro posicao 3
+        game.moveCurrentPlayer(3); //Pedro posicao
         game.reactToAbyssOrTool();
-        game.moveCurrentPlayer(1); //Rodrigo Derrotado
+        game.moveCurrentPlayer(1); //Alberto posicao 2
         game.reactToAbyssOrTool();
-        game.moveCurrentPlayer(1); //Gonçalo posicao = 5
+        game.moveCurrentPlayer(1);
         game.reactToAbyssOrTool();
-        game.moveCurrentPlayer(1); //Pedro posicao 4
+        game.moveCurrentPlayer(1);
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(1);
         game.reactToAbyssOrTool();
@@ -215,13 +220,6 @@ public class TestGameManager {
         String obtido1 = programmers.get(0).toString();
         String esperada1 = "1 | Rodrigo | 3 | No tools | java; kotlin | Derrotado";
         assertEquals(esperada1, obtido1);
-        String obtido2 = programmers.get(1).toString();
-        String esperada2 = "2 | Goncalo | 7 | No tools | java; phyton | Em Jogo";
-        assertEquals(esperada2, obtido2);
-        String obtido3 = programmers.get(2).toString();
-        String esperada3 = "3 | Pedro | 6 | No tools | java; phyton | Em Jogo";
-        assertEquals(esperada3, obtido3);
-
     }
 
     @Test
