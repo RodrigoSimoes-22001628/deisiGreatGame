@@ -33,11 +33,16 @@ class Functions {
     }
 
     fun getPlayersLanguage(manager: GameManager ,args: List<String> ):String ? {
-        return ""
-      //  val jogadoresLinguagem : String? ? = manager.jogadoresEmJogo.filter { it.languages.forEach(it == args[1]) }
+        val jogadoresComEstaLinguagem : String = manager.jogadoresEmJogo.filter { it.languages.contains(args[1])}.joinToString(","){it.getName()}
+        if (jogadoresComEstaLinguagem != "[]"){
+            return jogadoresComEstaLinguagem;
+        }else{
+            return "[]";
+        }
     }
     fun getPolyGlots(manager: GameManager,args: List<String>): String ? {
-        return ""
+        val retornaLinguagens : String ? = manager.jogadoresEmJogo.filter { it.languages.size > 1 }.sortedBy{it.languages.size}.joinToString("\n"){it.getName() + ":" + it.languages.size}
+        return retornaLinguagens;
     }
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
         return ""
