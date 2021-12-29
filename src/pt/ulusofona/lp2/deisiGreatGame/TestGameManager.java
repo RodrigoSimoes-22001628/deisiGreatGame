@@ -11,7 +11,7 @@ public class TestGameManager {
     GameManager game = new GameManager();
     Programmer programmer = new Programmer();
     @Test
-    public void testaJogo() {
+    public void testaJogo() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -101,21 +101,26 @@ public class TestGameManager {
     }
 
     @Test
-    public void gameManageTabuleiroMenorTamahoArrayJogadores() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,3);
-        assertFalse(jogo);
+    public void gameManageTabuleiroMenorTamahoArrayJogadores() throws InvalidInitialBoardException {
+        String menssagem = "Erro : Tabuleiro menor que o dobro do numero de jogadores";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 3);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
-    public void adicionarJogadores(){
+    public void adicionarJogadores() throws InvalidInitialBoardException {
         game.abismoPorId(10);
         game.ferramentaPorId(6);
         String[][] listaJogadores = new String[2][4];
@@ -176,7 +181,7 @@ public class TestGameManager {
         game.createInitialBoard(listaJogadores,25,abismoEFerramentas);
     }
     @Test
-    public void blueScreenTest() {
+    public void blueScreenTest() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[4][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -224,7 +229,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void getImageFerramentasEAbismos() {
+    public void getImageFerramentasEAbismos() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -256,7 +261,7 @@ public class TestGameManager {
         assertEquals(esperada3,casaFinal);
     }
     @Test
-    public void jogo() {
+    public void jogo() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -302,7 +307,7 @@ public class TestGameManager {
     Programmer programmer1 = new Programmer(1,"Rodrigo",languages,ProgrammerColor.GREEN);
 
     @Test
-    public void gameIsOver() {
+    public void gameIsOver() throws InvalidInitialBoardException {
         Abismo abismo = new Abismo();
         abismo.setTitulo("ola");
         game.verificaAbismos(abismo);
@@ -346,7 +351,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void gameIsOverDerrotado() {
+    public void gameIsOverDerrotado() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -369,7 +374,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void apanhaFerramentaRepetida() {
+    public void apanhaFerramentaRepetida() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -405,7 +410,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void getTitle() {
+    public void getTitle() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -432,7 +437,7 @@ public class TestGameManager {
     }
 
    @Test
-    public void getProgrammerInfoImprimir() {
+    public void getProgrammerInfoImprimir() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -456,7 +461,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void getProgrammers() {
+    public void getProgrammers() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -480,7 +485,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void getProgrammersIncludeDefeated() {
+    public void getProgrammersIncludeDefeated() throws InvalidInitialBoardException {
         String[][] listaJogadores = new String[2][4];
         listaJogadores[0][0] = "1";
         listaJogadores[0][1] = "Rodrigo";
@@ -509,29 +514,40 @@ public class TestGameManager {
     @Test
     public void gameManagerCarregarJogadoresComErros() {
         programmer.getColor();
+        String menssagem = "Erro : Id do jogador inválido";
         String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "0";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean carregarJogadores = game.createInitialBoard(listaJogadores, 10);
-        String[][] abismoEFerramentas = new String[2][3];
-        abismoEFerramentas[0][0] = "0";
-        abismoEFerramentas[0][1] = "1";
-        abismoEFerramentas[0][2] = "10";
-        abismoEFerramentas[1][0] = "1";
-        abismoEFerramentas[1][1] = "3";
-        abismoEFerramentas[1][2] = "5";
-        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
-        assertFalse(jogo);
+        try {
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "0";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
+        String menssagem1 = "Erro : Id do jogador inválido";
+        try {
+            String[][] abismoEFerramentas = new String[2][3];
+            abismoEFerramentas[0][0] = "0";
+            abismoEFerramentas[0][1] = "1";
+            abismoEFerramentas[0][2] = "10";
+            abismoEFerramentas[1][0] = "1";
+            abismoEFerramentas[1][1] = "3";
+            abismoEFerramentas[1][2] = "5";
+            game.createInitialBoard(listaJogadores, 10, abismoEFerramentas);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem1, ex.getMessage());
+        }
     }
 
     @Test
-    public void moveCurrentPlayerValorNegativoZeroEMaiorQue6() { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
+    public void moveCurrentPlayerValorNegativoZeroEMaiorQue6() throws InvalidInitialBoardException { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
         adicionarJogadores();
         boolean obtido1 = game.moveCurrentPlayer(0);
         assertFalse(obtido1);
@@ -543,7 +559,7 @@ public class TestGameManager {
 
 
     @Test
-    public void getImagePosicaoMaiorQueTabuleiro() {
+    public void getImagePosicaoMaiorQueTabuleiro() throws InvalidInitialBoardException {
         Abismo abismo = new Abismo(1,"Erro Lógica",2);
         abismo.getId();
         abismo.setId(2);
@@ -560,7 +576,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void getImagePosicaoNegativa() {
+    public void getImagePosicaoNegativa() throws InvalidInitialBoardException {
         adicionarJogadores();
         String obtido= game.getImagePng(-1);
         String esperada = null;
@@ -568,14 +584,14 @@ public class TestGameManager {
     }
 
     @Test
-    public void getTituloPosicaoMaiorQueTabuleiro() {
+    public void getTituloPosicaoMaiorQueTabuleiro() throws InvalidInitialBoardException {
         adicionarJogadores();
         String obtido= game.getTitle(30);
         String esperada = null;
         assertEquals(esperada, obtido);
     }
     @Test
-    public void getTituloPosicaoNegativa() {
+    public void getTituloPosicaoNegativa() throws InvalidInitialBoardException {
         adicionarJogadores();
         String obtido= game.getTitle(-1);
         String esperada = null;
@@ -584,238 +600,306 @@ public class TestGameManager {
 
     @Test
     public void gameManagerNaoEAbismoNemFerramenta() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        String[][] abismoEFerramentas = new String[2][3];
-        abismoEFerramentas[0][0] = "-2"; // abismo
-        abismoEFerramentas[0][1] = "4";  // id Crash
-        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
-        abismoEFerramentas[1][0] = "1"; // ferramenta
-        abismoEFerramentas[1][1] = "5";  // id ajuda Professor
-        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
-        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
-        assertFalse(jogo);
+        String menssagem = "Erro : Foi passado um número diferente de 1 e de 0";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            String[][] abismoEFerramentas = new String[2][3];
+            abismoEFerramentas[0][0] = "-2"; // abismo
+            abismoEFerramentas[0][1] = "4";  // id Crash
+            abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+            abismoEFerramentas[1][0] = "1"; // ferramenta
+            abismoEFerramentas[1][1] = "5";  // id ajuda Professor
+            abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+            game.createInitialBoard(listaJogadores, 10, abismoEFerramentas);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerIdFerramentaMaiorQueCinco() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        String[][] abismoEFerramentas = new String[2][3];
-        abismoEFerramentas[0][0] = "0"; // abismo
-        abismoEFerramentas[0][1] = "4";  // id Crash
-        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
-        abismoEFerramentas[1][0] = "1"; // ferramenta
-        abismoEFerramentas[1][1] = "7";  // id ajuda Professor
-        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
-        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
-        assertFalse(jogo);
+        String menssagem = "Erro : Abismo Invalido7";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            String[][] abismoEFerramentas = new String[2][3];
+            abismoEFerramentas[0][0] = "0"; // abismo
+            abismoEFerramentas[0][1] = "4";  // id Crash
+            abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+            abismoEFerramentas[1][0] = "1"; // ferramenta
+            abismoEFerramentas[1][1] = "7";  // id ajuda Professor
+            abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+            game.createInitialBoard(listaJogadores, 10, abismoEFerramentas);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerIdAbismoNegativo() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        String[][] abismoEFerramentas = new String[2][3];
-        abismoEFerramentas[0][0] = "0"; // abismo
-        abismoEFerramentas[0][1] = "-2";  // id Crash
-        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
-        abismoEFerramentas[1][0] = "1"; // ferramenta
-        abismoEFerramentas[1][1] = "7";  // id ajuda Professor
-        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
-        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
-        assertFalse(jogo);
+        String menssagem = "Erro : Abismo Invalido";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            String[][] abismoEFerramentas = new String[2][3];
+            abismoEFerramentas[0][0] = "0"; // abismo
+            abismoEFerramentas[0][1] = "-2";  // id Crash
+            abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+            abismoEFerramentas[1][0] = "1"; // ferramenta
+            abismoEFerramentas[1][1] = "7";  // id ajuda Professor
+            abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+            game.createInitialBoard(listaJogadores, 10, abismoEFerramentas);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerNomeAbismoVazio() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        String[][] abismoEFerramentas = new String[2][3];
-        abismoEFerramentas[0][0] = "0"; // abismo
-        abismoEFerramentas[0][1] = "3";  // id Crash
-        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
-        abismoEFerramentas[1][0] = "1"; // ferramenta
-        abismoEFerramentas[1][1] = "7";  // id ajuda Professor
-        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
-        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
-        assertFalse(jogo);
+        String menssagem = "Erro : Abismo Invalido7";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            String[][] abismoEFerramentas = new String[2][3];
+            abismoEFerramentas[0][0] = "0"; // abismo
+            abismoEFerramentas[0][1] = "3";  // id Crash
+            abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+            abismoEFerramentas[1][0] = "1"; // ferramenta
+            abismoEFerramentas[1][1] = "7";  // id ajuda Professor
+            abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+            game.createInitialBoard(listaJogadores, 10, abismoEFerramentas);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerNomeFerramentaVazio() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        String[][] abismoEFerramentas = new String[2][3];
-        abismoEFerramentas[0][0] = "0"; // abismo
-        abismoEFerramentas[0][1] = "10";  // id Crash
-        abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
-        abismoEFerramentas[1][0] = "1"; // ferramenta
-        abismoEFerramentas[1][1] = "5";  // id ajuda Professor
-        abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
-        boolean jogo = game.createInitialBoard(listaJogadores,10,abismoEFerramentas);
-        assertFalse(jogo);
+        String menssagem = "Erro : Abismo Invalido";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            String[][] abismoEFerramentas = new String[2][3];
+            abismoEFerramentas[0][0] = "0"; // abismo
+            abismoEFerramentas[0][1] = "10";  // id Crash
+            abismoEFerramentas[0][2] = "10"; // posição 10 tabuleiro
+            abismoEFerramentas[1][0] = "1"; // ferramenta
+            abismoEFerramentas[1][1] = "5";  // id ajuda Professor
+            abismoEFerramentas[1][2] = "5"; //posição 5 tabuleiro
+            game.createInitialBoard(listaJogadores, 10, abismoEFerramentas);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManager1Jogador() {
-        String[][] listaJogadores = new String[1][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        boolean jogo = game.createInitialBoard(listaJogadores,10);
-        assertFalse(jogo);
+        String menssagem = "Erro : Numero de jogadores inválidos";
+        try {
+            String[][] listaJogadores = new String[1][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
+
     @Test
     public void gameManagerMaisDe4Jogadores() {
-        String[][] listaJogadores = new String[5][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        listaJogadores[2][0] = "3";
-        listaJogadores[2][1] = "Rodrigo";
-        listaJogadores[2][2] = "java;kotlin";
-        listaJogadores[2][3] = "Purple";
-        listaJogadores[3][0] = "4";
-        listaJogadores[3][1] = "Goncalo";
-        listaJogadores[3][2] = "java;phyton";
-        listaJogadores[3][3] = "Brown";
-        listaJogadores[4][0] = "5";
-        listaJogadores[4][1] = "Goncalo";
-        listaJogadores[4][2] = "java;phyton";
-        listaJogadores[4][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,10);
-        assertFalse(jogo);
+        String menssagem  = "Erro : Jogadores com cores repetidas";
+        try {
+            String[][] listaJogadores = new String[5][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            listaJogadores[2][0] = "3";
+            listaJogadores[2][1] = "Rodrigo";
+            listaJogadores[2][2] = "java;kotlin";
+            listaJogadores[2][3] = "Purple";
+            listaJogadores[3][0] = "4";
+            listaJogadores[3][1] = "Goncalo";
+            listaJogadores[3][2] = "java;phyton";
+            listaJogadores[3][3] = "Brown";
+            listaJogadores[4][0] = "5";
+            listaJogadores[4][1] = "Goncalo";
+            listaJogadores[4][2] = "java;phyton";
+            listaJogadores[4][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerTamanhoTabuleiroNulo() {
-         String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,0);
-        assertFalse(jogo);
+        String menssagem = "Erro : Tabuleiro com posições inválidas";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 0);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerTamanhoTabuleironegativo() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,-5);
-        assertFalse(jogo);
+        String menssagem =  "Erro : Tabuleiro com posições inválidas";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "1";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, -5);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
     @Test
-    public void gameManagerIdNegativo() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "-3";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,10);
-        assertFalse(jogo);
+    public void gameManagerIdNegativo() throws InvalidInitialBoardException {
+        String menssagem = "Erro : Id do jogador inválido";
+        try {
+
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "-3";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
     public void gameManagerNomeVazio() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "3";
-        listaJogadores[0][1] = "";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,10);
-        assertFalse(jogo);
+        String menssagem = "Erro : Nome do jogador inválido";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "3";
+            listaJogadores[0][1] = "";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "2";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
-    public void gameManagerIdRepetido() {
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "3";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "3";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-        boolean jogo = game.createInitialBoard(listaJogadores,10);
-        assertFalse(jogo);
-    }
-    @Test
-    public void gameIsOver1Player() {
-        String[][] listaJogadores = new String[1][4];
-        listaJogadores[0][0] = "3";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        game.gameIsOver();
-        boolean jogo = game.createInitialBoard(listaJogadores,10);
-        assertFalse(jogo);
+    public void gameManagerIdRepetido() throws InvalidInitialBoardException {
+        String menssagem = "Erro : Id do jogador inválido";
+        try {
+            String[][] listaJogadores = new String[2][4];
+            listaJogadores[0][0] = "3";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            listaJogadores[1][0] = "3";
+            listaJogadores[1][1] = "Goncalo";
+            listaJogadores[1][2] = "java;phyton";
+            listaJogadores[1][3] = "Blue";
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
     }
 
     @Test
-    public void eSalvoEfeitosSecundarios() { //E Salvo pela Ferramenta Programação Funcional
+    public void gameIsOver1Player() throws InvalidInitialBoardException {
+        String menssagem = "Erro : Numero de jogadores inválidos";
+        try {
+            String[][] listaJogadores = new String[1][4];
+            listaJogadores[0][0] = "3";
+            listaJogadores[0][1] = "Rodrigo";
+            listaJogadores[0][2] = "java;kotlin";
+            listaJogadores[0][3] = "Green";
+            game.gameIsOver();
+            game.createInitialBoard(listaJogadores, 10);
+        }
+        catch (Exception ex) {
+            assertEquals(menssagem, ex.getMessage());
+        }
+    }
+
+    @Test
+    public void eSalvoEfeitosSecundarios() throws InvalidInitialBoardException { //E Salvo pela Ferramenta Programação Funcional
         adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7 Caí no Ciclo Infinito
         game.reactToAbyssOrTool();
@@ -842,7 +926,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiNoAbismoSegmentationFault() { //Caí no Abismo Segmentation Fault tu e o teu adversário recuam 3 casas
+    public void caiNoAbismoSegmentationFault() throws InvalidInitialBoardException { //Caí no Abismo Segmentation Fault tu e o teu adversário recuam 3 casas
         adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7
         game.reactToAbyssOrTool();
@@ -872,7 +956,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiNoAbismoEfeitosSecundarios() { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
+    public void caiNoAbismoEfeitosSecundarios() throws InvalidInitialBoardException { //Caí no Abismo Efeitos Secundários Recua 2 jogadas
         adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7
         game.reactToAbyssOrTool();
@@ -895,7 +979,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiNoAbismoCicloInfinito() { //Caí no Ciclo Infinito
+    public void caiNoAbismoCicloInfinito() throws InvalidInitialBoardException { //Caí no Ciclo Infinito
         adicionarJogadores();
         game.moveCurrentPlayer(1); //Rodrigo posicao = 2 Caí no Ciclo Infinito
         game.reactToAbyssOrTool();
@@ -910,8 +994,8 @@ public class TestGameManager {
     }
 
     @Test
-    public void eSalvoCicloInfinito() { //E salvo pelo adversario
-        adicionarJogadores(); adicionarJogadores();
+    public void eSalvoCicloInfinito() throws InvalidInitialBoardException { //E salvo pelo adversario
+        adicionarJogadores();
         game.moveCurrentPlayer(1); //Rodrigo posicao = 2 Caí no Ciclo Infinito
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(1); //Gonçalo posicao = 2 Caí no Ciclo Infinito
@@ -930,7 +1014,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiNoAbismoCrash() { //Caí no Crash
+    public void caiNoAbismoCrash() throws InvalidInitialBoardException { //Caí no Crash
         adicionarJogadores();
         game.moveCurrentPlayer(4); //Rodrigo posicao = 5
         game.reactToAbyssOrTool();
@@ -951,7 +1035,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void defendeDoAbismoErroSintaxe() { //defende do erro Sintaxe
+    public void defendeDoAbismoErroSintaxe() throws InvalidInitialBoardException { //defende do erro Sintaxe
         adicionarJogadores();
         game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha Ajuda Do Professor
         game.reactToAbyssOrTool();
@@ -969,7 +1053,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiNoAbismoException() { //caí no Abismo Exception
+    public void caiNoAbismoException() throws InvalidInitialBoardException { //caí no Abismo Exception
         adicionarJogadores();
         game.moveCurrentPlayer(2); //Rodrigo posicao = 3
         game.reactToAbyssOrTool();
@@ -980,7 +1064,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiNoAbismoBlueScreen() { //Caí no Blue Screen
+    public void caiNoAbismoBlueScreen() throws InvalidInitialBoardException { //Caí no Blue Screen
         adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7
         game.reactToAbyssOrTool();
@@ -995,7 +1079,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void caiAbismoDuplicatedCode() { //Caí no Abismo Duplicated Code
+    public void caiAbismoDuplicatedCode() throws InvalidInitialBoardException { //Caí no Abismo Duplicated Code
         adicionarJogadores();
         game.moveCurrentPlayer(6); //Rodrigo posicao = 7
         game.reactToAbyssOrTool();
@@ -1010,7 +1094,7 @@ public class TestGameManager {
     }
 
     @Test
-    public void testApanhaFerramentas() { //Apanha todas a ferramentas Ajuda Do Professor;Programação Funcional;Testes unitários;IDE
+    public void testApanhaFerramentas() throws InvalidInitialBoardException { //Apanha todas a ferramentas Ajuda Do Professor;Programação Funcional;Testes unitários;IDE
         adicionarJogadores();
         game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
         game.reactToAbyssOrTool();

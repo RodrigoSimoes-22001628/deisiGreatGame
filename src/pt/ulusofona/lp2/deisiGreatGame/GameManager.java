@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.util.List;
 
@@ -14,11 +15,9 @@ public class GameManager {
     int valorDado = 0;
 
     public GameManager() {
-
     }
 
-    // Falta verificar as ferramentas
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
+    boolean createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
         //reset às variáveis
         jogadoresEmJogo.clear();
         turnoAtual = 1;
@@ -26,7 +25,7 @@ public class GameManager {
         tamanhoTabuleiro = worldSize;
 
         if (tamanhoTabuleiro <= 1) {
-            return false;
+            throw new InvalidInitialBoardException("Erro : Tabuleiro com posições inválidas");
         }
 
         HashSet<Integer> idRepetidos = new HashSet<>();
@@ -39,7 +38,7 @@ public class GameManager {
                 switch (j) {
                     case 0:
                         if (Integer.parseInt(playerInfo[i][j]) < 1 || idRepetidos.contains((Integer.parseInt(playerInfo[i][j])))) {
-                            return false;
+                            throw new InvalidInitialBoardException("Erro : Id do jogador inválido");
                         } else {
                             programador.setID(Integer.parseInt(playerInfo[i][j]));
                             //adiciono no Hashset para evitar repetidos
@@ -48,7 +47,7 @@ public class GameManager {
                         break;
                     case 1:
                         if (playerInfo[i][j] == null || playerInfo[i][j].equals("")) {
-                            return false;
+                            throw new InvalidInitialBoardException("Erro : Nome do jogador inválido");
                         } else {
                             programador.setName(playerInfo[i][j]);
                         }
@@ -59,7 +58,7 @@ public class GameManager {
                         break;
                     case 3:
                         if (corRepetida.contains(playerInfo[i][j])) {
-                            return false;
+                            throw new InvalidInitialBoardException("Erro : Jogadores com cores repetidas");
                         } else {
                             if (playerInfo[i][j].equals("Purple")) {
                                 programador.setColorAvatar(ProgrammerColor.PURPLE);
@@ -80,7 +79,7 @@ public class GameManager {
 
         //total de jogadores não pode haver menos de 2 jogadores nem mais de 4
         if (jogadoresEmJogo.size() < 2 || jogadoresEmJogo.size() > 4) {
-            return false;
+            throw new InvalidInitialBoardException("Erro : Numero de jogadores inválidos");
         }
 
         //ordenar a lista de jogadores por id
@@ -88,27 +87,23 @@ public class GameManager {
 
         //O tabuleiro tem de ter, pelo menos duas posições por cada jogador que esteja em jogo.
         if (worldSize < 2 * jogadoresEmJogo.size()) {
-            return false;
+            throw new InvalidInitialBoardException("Erro : Tabuleiro menor que o dobro do numero de jogadores");
         }
-        return true;
+        return false;
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+    void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
         createInitialBoard(playerInfo, worldSize);
         ferramentas.clear();
         abismos.clear();
 
-        if (!createInitialBoard(playerInfo, worldSize)) {
-            return false;
-        }
-
         for (int i = 0; i < abyssesAndTools.length; i++) {
-            Ferramenta ferramenta = new Ferramenta();
-
             if (Integer.parseInt(abyssesAndTools[i][0]) == 0) {
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
-                        || abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..9 e o título não pode ser vazio
-                    return false;
+                        || abyssesAndTools[i][2].equals("") ||Integer.parseInt(abyssesAndTools[i][2]) > worldSize
+                        || Integer.parseInt(abyssesAndTools[i][2]) < 1 ) {
+                    //o id tem de ser entre 0..9 e o título não pode ser vazio e a posição tem de ser válida
+                    throw new InvalidInitialBoardException("Erro : Abismo Invalido");
                 }
             switch (Integer.parseInt(abyssesAndTools[i][1])){
                     case 0:
@@ -163,10 +158,11 @@ public class GameManager {
                 }
             } else if (Integer.parseInt(abyssesAndTools[i][0]) == 1) {
                 if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
-                        || abyssesAndTools[i][2].equals("")) { //o  id tem de ser entre 0..5 e o título não pode ser vazio
-                    return false;
+                   || abyssesAndTools[i][2].equals("") ||Integer.parseInt(abyssesAndTools[i][2]) > worldSize
+                   || Integer.parseInt(abyssesAndTools[i][2]) < 1 ) {
+                    //o  id tem de ser entre 0..5 e o título não pode ser vazio e a posicao tem de ser válida
+                    throw new InvalidInitialBoardException("Erro : Abismo Invalido" + String.valueOf(abyssesAndTools[i][1]));
                 }
-
                 switch (Integer.parseInt(abyssesAndTools[i][1])){
                     case 0:
                         Heranca ferramenta0= new Heranca(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
@@ -199,12 +195,11 @@ public class GameManager {
                         break;
                 }
             } else {
-                return false;
+                throw new InvalidInitialBoardException("Erro : Foi passado um número diferente de 1 e de 0");
             }
         }
         ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
         abismos.sort(Comparator.comparingInt(Abismo::getId));
-        return true;
     }
 
     String abismoPorId(int id) {
@@ -561,5 +556,11 @@ public class GameManager {
         painelAuthors.add(realizador2);
         painelAuthors.setSize(new Dimension(300, 300));
         return painelAuthors;
+    }
+    public boolean saveGame(File file){
+        return false;
+    }
+    public boolean loadGame(File file){
+        return false;
     }
 }
