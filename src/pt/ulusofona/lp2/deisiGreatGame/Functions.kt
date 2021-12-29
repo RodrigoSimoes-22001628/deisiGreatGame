@@ -1,29 +1,54 @@
 package pt.ulusofona.lp2.deisiGreatGame
 
 class Functions {
-    enum class CommandType{
-        GET,
-        POST
+    enum class CommandType( var comando : String) {
+        GET_PLAYER("getPlayer"),
+        GET_PLAYERS_BY_LANGUAGE("getPlayersLanguage"),
+        GET_POLYGLOTS("getPolyGlots"),
+        GET_MOST_USED_POSITIONS("getMostUsedPositions"),
+        GET_MOST_USED_ABYSSES("getMostUsedAbysses"),
+        POST_MOVE("postMOVE"),
+        POST_ABYSS("postABYSS")
     }
-    fun getPlayer(manager: GameManager, args: String): String{
+
+    fun router(comando: CommandType) : ((GameManager, List<String>) -> String?)? {
+        return when(comando.toString()){
+            "getPlayer" -> ::getPlayer
+            "getPlayersLanguage" -> ::getPlayersLanguage
+            "getPolyGlots" -> ::getPolyGlots
+            "getMostUsedPositions" -> ::getMostUsedPositions
+            "getMostUsedAbysses" -> ::getMostUsedAbysses
+            "postMOVE" -> ::postMOVE
+            "postMove" -> ::postABYSS
+            else ->  null
+        }
+    }
+
+    fun getPlayer(manager: GameManager, args: List<String>): String ? {
+        val jogador : String ? = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}.toString()
+        if (jogador != "[]"){ //Se a lista não for vazia
+            return jogador;
+        }
+        return "Inexistent player";
+    }
+
+    fun getPlayersLanguage(manager: GameManager ,args: List<String> ):String ? {
+        return ""
+      //  val jogadoresLinguagem : String? ? = manager.jogadoresEmJogo.filter { it.languages.forEach(it == args[1]) }
+    }
+    fun getPolyGlots(manager: GameManager,args: List<String>): String ? {
         return ""
     }
-    fun getPlayersLanguage(manager: GameManager ,args: String ): String {
+    fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
         return ""
     }
-    fun getPolyGlots(manager: GameManager): String {
+    fun getMostUsedAbysses(manager: GameManager , args: List<String> ): String ? {
         return ""
     }
-    fun getMostUsedPositions(manager: GameManager , args: Int ): String {
+    fun postMOVE(manager: GameManager , args: List<String> ) : String ?{
         return ""
     }
-    fun getMostUsedAbysses(manager: GameManager , args: Int ): String {
-        return ""
-    }
-    fun postMOVE(manager: GameManager , args: Int ) : String {
-        return ""
-    }
-    fun postABYSS(manager: GameManager, args1: Int , args2 : Int) : String {
+    fun postABYSS(manager: GameManager, args1: List<String>) : String ?{
         return ""
     }
 }
