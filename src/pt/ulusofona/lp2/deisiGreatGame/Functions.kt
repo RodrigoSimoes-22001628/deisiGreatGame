@@ -34,26 +34,37 @@ class Functions {
 
     fun getPlayersLanguage(manager: GameManager ,args: List<String> ):String ? {
         val jogadoresComEstaLinguagem : String = manager.jogadoresEmJogo.filter { it.languages.contains(args[1])}.joinToString(","){it.getName()}
-        if (jogadoresComEstaLinguagem != "[]"){
-            return jogadoresComEstaLinguagem;
+        return if (jogadoresComEstaLinguagem != "[]"){
+            jogadoresComEstaLinguagem;
         }else{
-            return "[]";
+            "[]";
         }
     }
+
     fun getPolyGlots(manager: GameManager,args: List<String>): String ? {
         val retornaLinguagens : String ? = manager.jogadoresEmJogo.filter { it.languages.size > 1 }.sortedBy{it.languages.size}.joinToString("\n"){it.getName() + ":" + it.languages.size}
         return retornaLinguagens;
     }
+
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
         return ""
     }
+
     fun getMostUsedAbysses(manager: GameManager , args: List<String> ): String ? {
         return ""
     }
+
     fun postMOVE(manager: GameManager , args: List<String> ) : String ?{
-        return ""
+        var moveJogador = manager.jogadoresEmJogo[manager.turnoAtual-1].incrementaPosicao(args[1].toInt(), manager.tamanhoTabuleiro)
+       // moveJogador = manager.jogadoresEmJogo.get(manager.turnoAtual-1).getPosicao()
+        return "";
     }
     fun postABYSS(manager: GameManager, args1: List<String>) : String ?{
-        return ""
+        var adicionaAbismo = manager.abismos.filter {(it.posicao == args1[2].toInt())}.joinToString { "Position is occupied" }
+        if (adicionaAbismo == "Position is occupied"){
+            return adicionaAbismo
+        }else{
+            return "OK"
+        }
     }
 }
