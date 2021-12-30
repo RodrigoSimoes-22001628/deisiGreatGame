@@ -60,11 +60,11 @@ class Functions {
         return "";
     }
     fun postABYSS(manager: GameManager, args1: List<String>) : String ?{
-        var adicionaAbismo = manager.abismos.filter {(it.posicao == args1[2].toInt())}.joinToString { "Position is occupied" }
-        if (adicionaAbismo == "Position is occupied"){
-            return adicionaAbismo
+        val adicionaAbismo = manager.abismos.filter {(it.posicao == args1[2].toInt())}.joinToString { "Position is occupied" }
+        return if (adicionaAbismo == "Position is occupied"){
+            adicionaAbismo
         }else{
-            return "OK"
+            "OK"
         }
     }
 }
