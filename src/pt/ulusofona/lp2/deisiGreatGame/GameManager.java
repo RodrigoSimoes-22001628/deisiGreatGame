@@ -17,7 +17,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    boolean createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
+    public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
         //reset às variáveis
         jogadoresEmJogo.clear();
         turnoAtual = 1;
@@ -89,10 +89,10 @@ public class GameManager {
         if (worldSize < 2 * jogadoresEmJogo.size()) {
             throw new InvalidInitialBoardException("Erro : Tabuleiro menor que o dobro do numero de jogadores");
         }
-        return false;
+        //return false;
     }
 
-    void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
+    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) throws InvalidInitialBoardException {
         createInitialBoard(playerInfo, worldSize);
         ferramentas.clear();
         abismos.clear();

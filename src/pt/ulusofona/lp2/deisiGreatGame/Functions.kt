@@ -1,31 +1,41 @@
 package pt.ulusofona.lp2.deisiGreatGame
-
-class Functions {
-    enum class CommandType( var comando : String) {
-        GET_PLAYER("getPlayer"),
-        GET_PLAYERS_BY_LANGUAGE("getPlayersLanguage"),
-        GET_POLYGLOTS("getPolyGlots"),
-        GET_MOST_USED_POSITIONS("getMostUsedPositions"),
-        GET_MOST_USED_ABYSSES("getMostUsedAbysses"),
-        POST_MOVE("postMOVE"),
-        POST_ABYSS("postABYSS")
+    enum class CommandType {
+        GET,
+        POST
     }
 
-    fun router(comando: CommandType) : ((GameManager, List<String>) -> String?)? {
-        return when(comando.toString()){
-            "getPlayer" -> ::getPlayer
-            "getPlayersLanguage" -> ::getPlayersLanguage
-            "getPolyGlots" -> ::getPolyGlots
-            "getMostUsedPositions" -> ::getMostUsedPositions
-            "getMostUsedAbysses" -> ::getMostUsedAbysses
-            "postMOVE" -> ::postMOVE
-            "postMove" -> ::postABYSS
-            else ->  null
+    fun router() : (CommandType) -> (GameManager,List<String>) -> String? {
+        return { commandType -> comandos(commandType)}
+    }
+
+     fun comandos(comando : CommandType) : (GameManager, List<String>) -> String? {
+         when(comando){
+             CommandType.GET-> return {i1,i2 -> getFunctions(i1,i2) }
+             CommandType.POST -> return {i1,i2 -> postFunctions(i1,i2) }
         }
     }
 
-    fun getPlayer(manager: GameManager, args: List<String>): String ? {
-        val jogador : String ? = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}.toString()
+     fun getFunctions(jogo : GameManager, lista : List<String>): String?{
+         return when(lista[0]){
+            "PLAYER" -> getPlayer(jogo, lista)
+            "PLAYERS_BY_LANGUAGE" -> getPlayersLanguage(jogo, lista)
+            "POLYGLOTS" -> getPolyGlots(jogo, lista)
+            "MOST_USED_POSITIONS" -> getMostUsedPositions(jogo, lista)
+            "MOST_USED_ABYSSES" -> getMostUsedAbysses(jogo, lista)
+             else -> null
+         }
+    }
+
+     fun postFunctions(jogo : GameManager, lista : List<String>): String?{
+       return when(lista[0]){
+            "ABYSS" -> postABYSS(jogo, lista)
+            "MOVE" -> postMOVE(jogo, lista)
+           else -> null
+       }
+    }
+
+    fun getPlayer(manager: GameManager, args: List<String>): String  {
+        val jogador : String  = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}.toString()
         if (jogador != "[]"){ //Se a lista não for vazia
             return jogador;
         }
@@ -55,16 +65,26 @@ class Functions {
     }
 
     fun postMOVE(manager: GameManager , args: List<String> ) : String ?{
-        var moveJogador = manager.jogadoresEmJogo[manager.turnoAtual-1].incrementaPosicao(args[1].toInt(), manager.tamanhoTabuleiro)
-       // moveJogador = manager.jogadoresEmJogo.get(manager.turnoAtual-1).getPosicao()
-        return "";
-    }
-    fun postABYSS(manager: GameManager, args1: List<String>) : String ?{
-        val adicionaAbismo = manager.abismos.filter {(it.posicao == args1[2].toInt())}.joinToString { "Position is occupied" }
-        return if (adicionaAbismo == "Position is occupied"){
-            adicionaAbismo
+        manager.jogadoresEmJogo[manager.turnoAtual-1].incrementaPosicao(args[1].toInt(), manager.tamanhoTabuleiro)
+        val mensagemRetornada = manager.reactToAbyssOrTool()
+        return if (mensagemRetornada != null){
+            "POST MOVE "+args[1]+"\n"+mensagemRetornada
         }else{
-            "OK"
+            "POST MOVE "+args[1]+"\n"+"OK"
         }
     }
-}
+
+    fun postABYSS(manager: GameManager, args1: List<String>) : String ? {
+        val adicionaAbismo = manager.abismos.filter { (it.posicao == args1[2].toInt()) }
+        val adicionaFerramenta = manager.ferramentas.filter { (it.posicao == args1[2].toInt()) }
+        if (adicionaAbismo.size >= 1 || adicionaFerramenta.size >= 1) {
+            return "Position is occupied"
+        } else {
+            val adicionaAbismo = Abismo()
+            adicionaAbismo.setTitulo(manager.abismoPorId(args1[1].toInt()))
+            adicionaAbismo.setId(args1[1].toInt())
+            adicionaAbismo.setPosicao(args1[2].toInt())
+            manager.abismos.add(adicionaAbismo)
+            return "OK"
+        }
+    }
