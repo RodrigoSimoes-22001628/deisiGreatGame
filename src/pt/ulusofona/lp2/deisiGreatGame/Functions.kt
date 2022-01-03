@@ -35,9 +35,9 @@ package pt.ulusofona.lp2.deisiGreatGame
     }
 
     fun getPlayer(manager: GameManager, args: List<String>): String  {
-        val jogador : String  = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}.toString()
-        if (jogador != "[]"){ //Se a lista não for vazia
-            return jogador;
+        val jogador = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}
+        if (jogador.toString() != "[]"){ //Se a lista não for vazia
+            return jogador[0].toString();
         }
         return "Inexistent player";
     }
@@ -67,12 +67,13 @@ package pt.ulusofona.lp2.deisiGreatGame
     fun postMOVE(manager: GameManager , args: List<String> ) : String ?{
         manager.jogadoresEmJogo[manager.turnoAtual-1].incrementaPosicao(args[1].toInt(), manager.tamanhoTabuleiro)
         val mensagemRetornada = manager.reactToAbyssOrTool()
-        return if (mensagemRetornada != null){
-            "POST MOVE "+args[1]+"\n"+mensagemRetornada
-        }else{
-            "POST MOVE "+args[1]+"\n"+"OK"
+        return if (mensagemRetornada != null) {
+            mensagemRetornada
+        } else {
+            "OK"
         }
     }
+
 
     fun postABYSS(manager: GameManager, args1: List<String>) : String ? {
         val adicionaAbismo = manager.abismos.filter { (it.posicao == args1[2].toInt()) }
