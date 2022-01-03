@@ -9,5 +9,4 @@ public enum ProgrammerColor {
     ProgrammerColor(String nome) {
         this.nome = nome;
     }
-
 }

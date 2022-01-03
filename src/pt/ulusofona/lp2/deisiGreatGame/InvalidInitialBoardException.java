@@ -14,7 +14,7 @@ public class InvalidInitialBoardException  extends  Exception {
     public boolean isInvalidTool() {
         return this.messagem.contains("Erro : Ferramenta Inválida");
     }
-    public int getTypeId(){
-        return Integer.parseInt(messagem.substring(messagem.length()-1));
+    public String getTypeId(){
+        return messagem.substring(messagem.length()-1);
     }
 }

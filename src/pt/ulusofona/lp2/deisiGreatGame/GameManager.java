@@ -2,6 +2,9 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import java.util.List;
 
@@ -557,9 +560,21 @@ public class GameManager {
         painelAuthors.setSize(new Dimension(300, 300));
         return painelAuthors;
     }
-    public boolean saveGame(File file){
+
+    public boolean saveGame(File file) throws IOException {
+        Scanner ler = new Scanner(System.in);
+        int i, n;
+        n = ler.nextInt();
+
+        FileWriter arq = new FileWriter("game.txt");
+        PrintWriter gravarArq = new PrintWriter(arq);
+        for (i=1; i<=10; i++) {
+            gravarArq.printf("| %2d X %d = %2d |%n", i, n, (i*n));
+        }
+        arq.close();
         return false;
     }
+
     public boolean loadGame(File file){
         return false;
     }
