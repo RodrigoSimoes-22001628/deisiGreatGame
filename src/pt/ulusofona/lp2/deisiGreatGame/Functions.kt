@@ -58,8 +58,14 @@ package pt.ulusofona.lp2.deisiGreatGame
 
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
         val hashMap:HashMap<Int,Int> = HashMap<Int,Int>()
-        manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes
-        return ""
+        for(i in manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes)
+            if(hashMap.contains(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i))){
+                hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i), (hashMap.get(i))!! +1)
+            } else {
+                hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual - 1].gravadorDePosicoes.get(i), 1)
+            }
+
+        return "POSICAO:" + hashMap.get(4)
     }
 
     fun getMostUsedAbysses(manager: GameManager , args: List<String> ): String ? {
@@ -83,10 +89,7 @@ package pt.ulusofona.lp2.deisiGreatGame
         if (adicionaAbismo.size >= 1 || adicionaFerramenta.size >= 1) {
             return "Position is occupied"
         } else {
-            val adicionaAbismo = Abismo()
-            adicionaAbismo.setTitulo(manager.abismoPorId(args1[1].toInt()))
-            adicionaAbismo.setId(args1[1].toInt())
-            adicionaAbismo.setPosicao(args1[2].toInt())
+            val adicionaAbismo = Abismo(args1[1].toInt(), manager.abismoPorId(args1[1].toInt()),args1[2].toInt())
             manager.abismos.add(adicionaAbismo)
             return "OK"
         }

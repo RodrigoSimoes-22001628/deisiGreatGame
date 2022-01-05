@@ -582,13 +582,13 @@ public class GameManager implements Serializable {
         try {
                 FileInputStream ficheiro = new FileInputStream(file);
                 ObjectInputStream objInput = new ObjectInputStream(ficheiro);
-                jogadoresEmJogo = (ArrayList<Programmer>)objInput.readObject();
-                ferramentas = (ArrayList<Ferramenta>)objInput.readObject();
-                abismos = (ArrayList<Abismo>)objInput.readObject();
                 turnoAtual = objInput.readInt();
                 tamanhoTabuleiro = objInput.readInt();
                 nrTotalJogadas = objInput.readInt();
                 valorDado = objInput.readInt();
+                jogadoresEmJogo = (ArrayList<Programmer>)objInput.readObject();
+                ferramentas = (ArrayList<Ferramenta>)objInput.readObject();
+                abismos = (ArrayList<Abismo>)objInput.readObject();
                 objInput.close();
                 ficheiro.close();
         } catch(Exception erro) {
