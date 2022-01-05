@@ -4,6 +4,7 @@ package pt.ulusofona.lp2.deisiGreatGame
         POST
     }
 
+
     fun router() : (CommandType) -> (GameManager,List<String>) -> String? {
         return { commandType -> comandos(commandType)}
     }
@@ -14,6 +15,7 @@ package pt.ulusofona.lp2.deisiGreatGame
              CommandType.POST -> return {i1,i2 -> postFunctions(i1,i2) }
         }
     }
+
 
      fun getFunctions(jogo : GameManager, lista : List<String>): String?{
          return when(lista[0]){
@@ -37,23 +39,22 @@ package pt.ulusofona.lp2.deisiGreatGame
     fun getPlayer(manager: GameManager, args: List<String>): String  {
         val jogador = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}
         if (jogador.toString() != "[]"){ //Se a lista não for vazia
-            return jogador[0].toString();
+            return jogador[0].toString()
         }
-        return "Inexistent player";
+        return "Inexistent player"
     }
 
     fun getPlayersLanguage(manager: GameManager ,args: List<String> ):String ? {
         val jogadoresComEstaLinguagem : String = manager.jogadoresEmJogo.filter { it.languages.contains(args[1])}.joinToString(","){it.getName()}
         return if (jogadoresComEstaLinguagem != "[]"){
-            jogadoresComEstaLinguagem;
+            jogadoresComEstaLinguagem
         }else{
-            "[]";
+            "[]"
         }
     }
 
     fun getPolyGlots(manager: GameManager,args: List<String>): String ? {
-        val retornaLinguagens : String ? = manager.jogadoresEmJogo.filter { it.languages.size > 1 }.sortedBy{it.languages.size}.joinToString("\n"){it.getName() + ":" + it.languages.size}
-        return retornaLinguagens;
+        return manager.jogadoresEmJogo.filter { it.languages.size > 1 }.sortedBy{it.languages.size}.joinToString("\n"){it.getName() + ":" + it.languages.size}
     }
 
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {

@@ -485,7 +485,7 @@ public class GameManager implements Serializable {
         return "";
     }
 
-    public void removeTools(int id) { //remove a ferramenta utilizada
+    public void removeTools(int id) {
         //remove a ferramenta utilizada
         jogadoresEmJogo.get(turnoAtual - 1).getFerramentas().removeIf(ferramenta -> ferramenta.getId() == id);
     }
@@ -563,13 +563,13 @@ public class GameManager implements Serializable {
             try {
                 FileOutputStream ficheiro = new FileOutputStream(file);
                 ObjectOutputStream obj = new ObjectOutputStream(ficheiro);
-                obj.writeObject(jogadoresEmJogo);
-                obj.writeObject(ferramentas);
-                obj.writeObject(abismos);
                 obj.writeInt(turnoAtual);
                 obj.writeInt(tamanhoTabuleiro);
                 obj.writeInt(nrTotalJogadas);
                 obj.writeInt(valorDado);
+                obj.writeObject(jogadoresEmJogo);
+                obj.writeObject(ferramentas);
+                obj.writeObject(abismos);
                 obj.close();
                 ficheiro.close();
             } catch (Exception erro) {
