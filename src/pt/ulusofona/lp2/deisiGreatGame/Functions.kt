@@ -37,11 +37,10 @@ package pt.ulusofona.lp2.deisiGreatGame
     }
 
     fun getPlayer(manager: GameManager, args: List<String>): String  {
-        val jogador = manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}
-        if (jogador.toString() != "[]"){ //Se a lista não for vazia
-            return jogador[0].toString()
+        if (manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1]}.toString() != "[]") {
+            return manager.jogadoresEmJogo.filter { it.getName().split(" ")[0] == args[1] }[0].toString()
         }
-        return "Inexistent player"
+        return "Inexistent player";
     }
 
     fun getPlayersLanguage(manager: GameManager ,args: List<String> ):String ? {
@@ -58,6 +57,8 @@ package pt.ulusofona.lp2.deisiGreatGame
     }
 
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
+        val hashMap:HashMap<Int,Int> = HashMap<Int,Int>()
+        manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes
         return ""
     }
 
