@@ -76,7 +76,7 @@ package pt.ulusofona.lp2.deisiGreatGame
 
 
     fun postABYSS(manager: GameManager, args1: List<String>) : String ? {
-        val adicionaAbismo = manager.abismos.filter { (it.posicao == args1[2].toInt()) }
+        val adicionaAbismo = manager.abismos.filter { (it.posicao == args1[2].toInt())}
         val adicionaFerramenta = manager.ferramentas.filter { (it.posicao == args1[2].toInt()) }
         if (adicionaAbismo.size >= 1 || adicionaFerramenta.size >= 1) {
             return "Position is occupied"

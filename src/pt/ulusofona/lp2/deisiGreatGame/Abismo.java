@@ -1,9 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class Abismo {
+public class Abismo implements Serializable {
     int id;
     String titulo;
     int posicao;

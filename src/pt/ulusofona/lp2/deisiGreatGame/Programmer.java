@@ -1,9 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-public class Programmer {
+public class Programmer implements Serializable {
     String name = "";
     ArrayList<String> languages;
     int id;
@@ -17,7 +18,6 @@ public class Programmer {
     ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
 
     public Programmer() {
-
     }
 
     public Programmer(int id ,String nome, ArrayList<String> languages, ProgrammerColor colorAvatar) {

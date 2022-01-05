@@ -1,11 +1,11 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
-public class GameManager {
+public class GameManager implements Serializable {
     ArrayList<Programmer> jogadoresEmJogo = new ArrayList<>(); //jogadores em jogo;
     ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     ArrayList<Abismo> abismos = new ArrayList<>();
@@ -96,110 +96,111 @@ public class GameManager {
         createInitialBoard(playerInfo, worldSize);
         ferramentas.clear();
         abismos.clear();
+        if (abyssesAndTools != null) {
+            for (int i = 0; i < abyssesAndTools.length; i++) {
+                if (Integer.parseInt(abyssesAndTools[i][0]) == 0) {
+                    if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
+                            || abyssesAndTools[i][2].equals("") || Integer.parseInt(abyssesAndTools[i][2]) > worldSize
+                            || Integer.parseInt(abyssesAndTools[i][2]) < 1) {
+                        //o id tem de ser entre 0..9 e o título não pode ser vazio e a posição tem de ser válida
+                        throw new InvalidInitialBoardException("Erro : Abismo Invalido");
+                    }
+                    switch (Integer.parseInt(abyssesAndTools[i][1])) {
+                        case 0:
+                            SintaxeError abismo0 = new SintaxeError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo0); //adicionar na lista
+                            break;
 
-        for (int i = 0; i < abyssesAndTools.length; i++) {
-            if (Integer.parseInt(abyssesAndTools[i][0]) == 0) {
-                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 9
-                        || abyssesAndTools[i][2].equals("") ||Integer.parseInt(abyssesAndTools[i][2]) > worldSize
-                        || Integer.parseInt(abyssesAndTools[i][2]) < 1 ) {
-                    //o id tem de ser entre 0..9 e o título não pode ser vazio e a posição tem de ser válida
-                    throw new InvalidInitialBoardException("Erro : Abismo Invalido");
+                        case 1:
+                            LogicError abismo1 = new LogicError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo1); //adicionar na lista
+                            break;
+
+                        case 2:
+                            ExceptionError abismo2 = new ExceptionError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo2);
+                            break;
+
+                        case 3:
+                            FileNotFoundExceptionError abismo3 = new FileNotFoundExceptionError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo3);
+                            break;
+
+                        case 4:
+                            CrashError abismo4 = new CrashError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo4);
+                            break;
+
+                        case 5:
+                            DuplicatedCodeError abismo5 = new DuplicatedCodeError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo5);
+                            break;
+
+                        case 6:
+                            EfeitosSecundariosError abismo6 = new EfeitosSecundariosError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo6);
+                            break;
+
+                        case 7:
+                            BlueScreenOfDeathError abismo7 = new BlueScreenOfDeathError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo7);
+                            break;
+
+                        case 8:
+                            InfiniteCicleError abismo8 = new InfiniteCicleError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo8);
+                            break;
+
+                        case 9:
+                            SegmentationFaultError abismo9 = new SegmentationFaultError(Integer.parseInt(abyssesAndTools[i][1]), abismoPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            abismos.add(abismo9);
+                            break;
+                    }
+                } else if (Integer.parseInt(abyssesAndTools[i][0]) == 1) {
+                    if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
+                            || abyssesAndTools[i][2].equals("") || Integer.parseInt(abyssesAndTools[i][2]) > worldSize
+                            || Integer.parseInt(abyssesAndTools[i][2]) < 1) {
+                        //o  id tem de ser entre 0..5 e o título não pode ser vazio e a posicao tem de ser válida
+                        throw new InvalidInitialBoardException("Erro : Abismo Invalido" + String.valueOf(abyssesAndTools[i][1]));
+                    }
+                    switch (Integer.parseInt(abyssesAndTools[i][1])) {
+                        case 0:
+                            Heranca ferramenta0 = new Heranca(Integer.parseInt(abyssesAndTools[i][1]), ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            ferramentas.add(ferramenta0); //adicionar na lista
+                            break;
+
+                        case 1:
+                            ProgramacaoFuncional ferramenta1 = new ProgramacaoFuncional(Integer.parseInt(abyssesAndTools[i][1]), ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            ferramentas.add(ferramenta1); //adicionar na lista
+                            break;
+
+                        case 2:
+                            TestesUnitarios ferramenta2 = new TestesUnitarios(Integer.parseInt(abyssesAndTools[i][1]), ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            ferramentas.add(ferramenta2);
+                            break;
+
+                        case 3:
+                            TratamentoExcepcoes ferramenta3 = new TratamentoExcepcoes(Integer.parseInt(abyssesAndTools[i][1]), ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            ferramentas.add(ferramenta3);
+                            break;
+
+                        case 4:
+                            IDE ferramenta4 = new IDE(Integer.parseInt(abyssesAndTools[i][1]), ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            ferramentas.add(ferramenta4);
+                            break;
+
+                        case 5:
+                            AjudaDoProfessor ferramenta5 = new AjudaDoProfessor(Integer.parseInt(abyssesAndTools[i][1]), ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])), Integer.parseInt(abyssesAndTools[i][2]));
+                            ferramentas.add(ferramenta5);
+                            break;
+                    }
+                } else {
+                    throw new InvalidInitialBoardException("Erro : Foi passado um número diferente de 1 e de 0");
                 }
-            switch (Integer.parseInt(abyssesAndTools[i][1])){
-                    case 0:
-                        SintaxeError abismo0= new SintaxeError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo0); //adicionar na lista
-                        break;
-
-                    case 1:
-                        LogicError abismo1 = new LogicError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo1); //adicionar na lista
-                        break;
-
-                    case 2:
-                        ExceptionError abismo2 = new ExceptionError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo2);
-                        break;
-
-                    case 3:
-                        FileNotFoundExceptionError abismo3 = new FileNotFoundExceptionError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo3);
-                        break;
-
-                    case 4:
-                        CrashError abismo4 = new CrashError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo4);
-                        break;
-
-                    case 5:
-                        DuplicatedCodeError abismo5 = new DuplicatedCodeError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo5);
-                        break;
-
-                    case 6:
-                        EfeitosSecundariosError abismo6 = new EfeitosSecundariosError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo6);
-                        break;
-
-                    case 7:
-                        BlueScreenOfDeathError abismo7 = new BlueScreenOfDeathError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo7);
-                        break;
-
-                    case 8:
-                        InfiniteCicleError abismo8 =new InfiniteCicleError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo8);
-                        break;
-
-                    case 9:
-                        SegmentationFaultError abismo9 = new SegmentationFaultError(Integer.parseInt(abyssesAndTools[i][1]),abismoPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        abismos.add(abismo9);
-                        break;
-                }
-            } else if (Integer.parseInt(abyssesAndTools[i][0]) == 1) {
-                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 || Integer.parseInt(abyssesAndTools[i][1]) > 5
-                   || abyssesAndTools[i][2].equals("") ||Integer.parseInt(abyssesAndTools[i][2]) > worldSize
-                   || Integer.parseInt(abyssesAndTools[i][2]) < 1 ) {
-                    //o  id tem de ser entre 0..5 e o título não pode ser vazio e a posicao tem de ser válida
-                    throw new InvalidInitialBoardException("Erro : Abismo Invalido" + String.valueOf(abyssesAndTools[i][1]));
-                }
-                switch (Integer.parseInt(abyssesAndTools[i][1])){
-                    case 0:
-                        Heranca ferramenta0= new Heranca(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        ferramentas.add(ferramenta0); //adicionar na lista
-                        break;
-
-                    case 1:
-                        ProgramacaoFuncional ferramenta1 = new ProgramacaoFuncional(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        ferramentas.add(ferramenta1); //adicionar na lista
-                        break;
-
-                    case 2:
-                        TestesUnitarios ferramenta2 = new TestesUnitarios(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        ferramentas.add(ferramenta2);
-                        break;
-
-                    case 3:
-                        TratamentoExcepcoes ferramenta3 = new TratamentoExcepcoes(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        ferramentas.add(ferramenta3);
-                        break;
-
-                    case 4:
-                        IDE ferramenta4 = new IDE(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        ferramentas.add(ferramenta4);
-                        break;
-
-                    case 5:
-                        AjudaDoProfessor ferramenta5 = new AjudaDoProfessor(Integer.parseInt(abyssesAndTools[i][1]),ferramentaPorId(Integer.parseInt(abyssesAndTools[i][1])),Integer.parseInt(abyssesAndTools[i][2]));
-                        ferramentas.add(ferramenta5);
-                        break;
-                }
-            } else {
-                throw new InvalidInitialBoardException("Erro : Foi passado um número diferente de 1 e de 0");
             }
+            ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
+            abismos.sort(Comparator.comparingInt(Abismo::getId));
         }
-        ferramentas.sort(Comparator.comparingInt(Ferramenta::getId));
-        abismos.sort(Comparator.comparingInt(Abismo::getId));
     }
 
     String abismoPorId(int id) {
@@ -559,10 +560,40 @@ public class GameManager {
     }
 
     public boolean saveGame(File file){
-        return false;
+            try {
+                FileOutputStream ficheiro = new FileOutputStream(file);
+                ObjectOutputStream obj = new ObjectOutputStream(ficheiro);
+                obj.writeObject(jogadoresEmJogo);
+                obj.writeObject(ferramentas);
+                obj.writeObject(abismos);
+                obj.writeInt(turnoAtual);
+                obj.writeInt(tamanhoTabuleiro);
+                obj.writeInt(nrTotalJogadas);
+                obj.writeInt(valorDado);
+                obj.close();
+                ficheiro.close();
+            } catch (Exception erro) {
+                return false;
+            }
+        return true;
     }
 
     public boolean loadGame(File file){
-        return false;
+        try {
+                FileInputStream ficheiro = new FileInputStream(file);
+                ObjectInputStream objInput = new ObjectInputStream(ficheiro);
+                jogadoresEmJogo = (ArrayList<Programmer>)objInput.readObject();
+                ferramentas = (ArrayList<Ferramenta>)objInput.readObject();
+                abismos = (ArrayList<Abismo>)objInput.readObject();
+                turnoAtual = objInput.readInt();
+                tamanhoTabuleiro = objInput.readInt();
+                nrTotalJogadas = objInput.readInt();
+                valorDado = objInput.readInt();
+                objInput.close();
+                ficheiro.close();
+        } catch(Exception erro) {
+            return false;
+        }
+        return true;
     }
 }

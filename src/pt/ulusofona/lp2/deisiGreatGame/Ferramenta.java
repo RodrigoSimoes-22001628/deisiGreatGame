@@ -1,6 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class Ferramenta {
+import java.io.Serializable;
+
+public class Ferramenta implements Serializable {
    protected int posicao;
    protected int id;
     String titulo;
