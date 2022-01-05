@@ -558,7 +558,6 @@ public class GameManager implements Serializable {
         painelAuthors.setSize(new Dimension(300, 300));
         return painelAuthors;
     }
-    //ola
 
     public boolean saveGame(File file){
             try {
