@@ -1118,4 +1118,46 @@ public class TestGameManager {
         String esperada3="Rodrigo : Ajuda Do Professor;Programação Funcional;Testes unitários;IDE | Goncalo : Programação Funcional" ;
         assertEquals(esperada3, obtido3);
     }
+
+    @Test
+    public void getPlayer() throws InvalidInitialBoardException{
+        /*
+        String[][] listaJogadores = new String[2][4];
+        listaJogadores[0][0] = "1";
+        listaJogadores[0][1] = "Rodrigo";
+        listaJogadores[0][2] = "java;kotlin";
+        listaJogadores[0][3] = "Green";
+        listaJogadores[1][0] = "2";
+        listaJogadores[1][1] = "Goncalo";
+        listaJogadores[1][2] = "java;phyton";
+        listaJogadores[1][3] = "Blue";
+
+         */
+         adicionarJogadores();
+      //  game.createInitialBoard(listaJogadores,15);
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        List<String> comandos = new ArrayList<>();
+        comandos.add("GET PLAYER Rodrigo");
+        String obtido = FunctionsKt.getPlayer(game,comandos);
+        String esperada1 = "1 | Rodrigo | 16 | Ajuda Do Professor;Programação Funcional;Testes unitários;IDE | java; kotlin | Em Jogo";
+        assertEquals(esperada1, obtido);
+    }
+
+    @Test
+    public void getPolyglots() throws InvalidInitialBoardException{
+        adicionarJogadores();
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        List<String> comandos = new ArrayList<>();
+        comandos.add("GET POLYGLOTS");
+        String obtido = FunctionsKt.getPolyGlots(game,comandos);
+        String esperada1 = "Rodrigo:2\n" + "Goncalo:2";
+        assertEquals(esperada1, obtido);
+    }
+
 }
