@@ -1196,4 +1196,26 @@ public class TestGameManager {
         assertEquals(esperada1, obtido1);
     }
 
+    @Test
+    public void postAbyss() throws InvalidInitialBoardException{
+        adicionarJogadores();
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        List<String> comandos = new ArrayList<>();
+        comandos.add("POST ABYSS");
+        comandos.add("2");
+        comandos.add("49");
+        String obtido = FunctionsKt.postABYSS(game,comandos);
+        String esperada = "OK";
+        assertEquals(esperada, obtido);
+        List<String> comandos1 = new ArrayList<>();
+        comandos1.add("POST ABYSS");
+        comandos1.add("8");
+        comandos1.add("49");
+        String obtido1 = FunctionsKt.postABYSS(game,comandos1);
+        String esperada1 = "Position is occupied";
+        assertEquals(esperada1, obtido1);
+    }
 }
