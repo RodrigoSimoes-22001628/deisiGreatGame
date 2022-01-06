@@ -60,7 +60,7 @@ package pt.ulusofona.lp2.deisiGreatGame
         val hashMap:HashMap<Int,Int> = HashMap<Int,Int>()
         for(i in manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes)
             if(hashMap.contains(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i))){
-                hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i), (hashMap.get(i))!! +1)
+                hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i), (hashMap.get(i))!! +1) // ver melhor pq que nao funciona
             } else {
                 hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual - 1].gravadorDePosicoes.get(i), 1)
             }
