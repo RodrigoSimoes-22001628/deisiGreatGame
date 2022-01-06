@@ -1121,29 +1121,23 @@ public class TestGameManager {
 
     @Test
     public void getPlayer() throws InvalidInitialBoardException{
-        /*
-        String[][] listaJogadores = new String[2][4];
-        listaJogadores[0][0] = "1";
-        listaJogadores[0][1] = "Rodrigo";
-        listaJogadores[0][2] = "java;kotlin";
-        listaJogadores[0][3] = "Green";
-        listaJogadores[1][0] = "2";
-        listaJogadores[1][1] = "Goncalo";
-        listaJogadores[1][2] = "java;phyton";
-        listaJogadores[1][3] = "Blue";
-
-         */
-         adicionarJogadores();
-      //  game.createInitialBoard(listaJogadores,15);
+        adicionarJogadores();
         game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
         game.reactToAbyssOrTool();
         game.moveCurrentPlayer(3); //Gonçalo posicao = 4
         game.reactToAbyssOrTool();
         List<String> comandos = new ArrayList<>();
-        comandos.add("GET PLAYER Rodrigo");
+        comandos.add("GET PLAYER");
+        comandos.add("Rodrigo");
         String obtido = FunctionsKt.getPlayer(game,comandos);
-        String esperada1 = "1 | Rodrigo | 16 | Ajuda Do Professor;Programação Funcional;Testes unitários;IDE | java; kotlin | Em Jogo";
+        String esperada1 = "1 | Rodrigo | 5 | Ajuda Do Professor | java; kotlin | Em Jogo";
         assertEquals(esperada1, obtido);
+        List<String> comandos2 = new ArrayList<>();
+        comandos2.add("GET PLAYER");
+        comandos2.add("Paulo");
+        String obtido2 = FunctionsKt.getPlayer(game,comandos2);
+        String esperada = "Inexistent player";
+        assertEquals(esperada, obtido2);
     }
 
     @Test
@@ -1156,8 +1150,50 @@ public class TestGameManager {
         List<String> comandos = new ArrayList<>();
         comandos.add("GET POLYGLOTS");
         String obtido = FunctionsKt.getPolyGlots(game,comandos);
-        String esperada1 = "Rodrigo:2\n" + "Goncalo:2";
-        assertEquals(esperada1, obtido);
+        String esperada = "Rodrigo:2\n" + "Goncalo:2";
+        assertEquals(esperada, obtido);
+    }
+
+    @Test
+    public void getPlayersByLangues() throws InvalidInitialBoardException{
+        adicionarJogadores();
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        List<String> comandos = new ArrayList<>();
+        comandos.add("GET PLAYERS_BY_LANGUAGE");
+        comandos.add("java");
+        String obtido = FunctionsKt.getPlayersLanguage(game,comandos);
+        String esperada = "Rodrigo,Goncalo";
+        assertEquals(esperada, obtido);
+        List<String> comandos1 = new ArrayList<>();
+        comandos1.add("GET PLAYERS_BY_LANGUAGE");
+        comandos1.add("");
+        String obtido1 = FunctionsKt.getPlayersLanguage(game,comandos1);
+        String esperada1 = "";   // falta ver uma excessao
+        assertEquals(esperada1, obtido1);
+    }
+
+    @Test
+    public void postMove() throws InvalidInitialBoardException{
+        adicionarJogadores();
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        List<String> comandos = new ArrayList<>();
+        comandos.add("POST MOVE");
+        comandos.add("3");
+        String obtido = FunctionsKt.postMOVE(game,comandos);
+        String esperada = "OK";
+        assertEquals(esperada, obtido);
+        List<String> comandos1 = new ArrayList<>();
+        comandos1.add("POST MOVE");
+        comandos1.add("5");
+        String obtido1 = FunctionsKt.postMOVE(game,comandos1);
+        String esperada1 = "Apanhaste a Ferramenta Programação Funcional";
+        assertEquals(esperada1, obtido1);
     }
 
 }
