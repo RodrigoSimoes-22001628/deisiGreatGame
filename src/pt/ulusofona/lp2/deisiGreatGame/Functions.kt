@@ -4,7 +4,6 @@ package pt.ulusofona.lp2.deisiGreatGame
         POST
     }
 
-
     fun router() : (CommandType) -> (GameManager,List<String>) -> String? {
         return { commandType -> comandos(commandType)}
     }
@@ -15,7 +14,6 @@ package pt.ulusofona.lp2.deisiGreatGame
              CommandType.POST -> return {i1,i2 -> postFunctions(i1,i2) }
         }
     }
-
 
      fun getFunctions(jogo : GameManager, lista : List<String>): String?{
          return when(lista[0]){
