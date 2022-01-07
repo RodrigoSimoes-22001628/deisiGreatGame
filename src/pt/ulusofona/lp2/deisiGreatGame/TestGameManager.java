@@ -1219,6 +1219,20 @@ public class TestGameManager {
         assertEquals(esperada1, obtido1);
     }
 
+    @Test
+    public void getMostUsed() throws InvalidInitialBoardException {
+        adicionarJogadores();
+        game.moveCurrentPlayer(4); //Rodrigo posicao = 5 Apanha a ferramenta Ajuda Do Professor
+        game.reactToAbyssOrTool();
+        game.moveCurrentPlayer(3); //Gonçalo posicao = 4
+        game.reactToAbyssOrTool();
+        List<String> comandos = new ArrayList<>();
+        comandos.add("GET MOST_USED_POSITIONS\n");
+        comandos.add("2");
+        String obtido = FunctionsKt.getMostUsedPositions(game, comandos);
+        String esperada = "3:1\n" + "4:1";
+        assertEquals(esperada, obtido);
+    }
    /* @Test
     public void getMostUsed() throws InvalidInitialBoardException {
         adicionarJogadores();
