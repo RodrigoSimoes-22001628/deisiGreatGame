@@ -65,7 +65,7 @@ package pt.ulusofona.lp2.deisiGreatGame
                 hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual - 1].gravadorDePosicoes.get(i), 1)
             }
 
-        return "POSICAO:" + hashMap.get(4)
+        return ""
     }
 
     fun getMostUsedAbysses(manager: GameManager , args: List<String> ): String ? {
