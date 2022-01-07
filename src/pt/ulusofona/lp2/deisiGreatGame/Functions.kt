@@ -55,14 +55,7 @@ package pt.ulusofona.lp2.deisiGreatGame
     }
 
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
-        val hashMap:HashMap<Int,Int> = HashMap<Int,Int>()
-        for(i in manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes)
-            if(hashMap.contains(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i))){
-                hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual-1].gravadorDePosicoes.get(i), (hashMap.get(i))!! +1) // ver melhor pq que nao funciona
-            } else {
-                hashMap.put(manager.jogadoresEmJogo[manager.turnoAtual - 1].gravadorDePosicoes.get(i), 1)
-            }
-
+        val listaPosicoes:ArrayList<Int> = ArrayList()
         return ""
     }
 
@@ -79,7 +72,6 @@ package pt.ulusofona.lp2.deisiGreatGame
             "OK"
         }
     }
-
 
     fun postABYSS(manager: GameManager, args1: List<String>) : String ? {
         val adicionaAbismo = manager.abismos.filter { (it.posicao == args1[2].toInt())}
