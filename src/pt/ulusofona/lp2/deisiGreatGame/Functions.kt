@@ -60,7 +60,7 @@ enum class CommandType {
 
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
         val listaPosicoes:ArrayList<Int> = ArrayList()
-        val lista = manager.getProgrammers(true).map{it.gravadorDePosicoes}.forEach{it.forEach{listaPosicoes.add(it)}}
+        val lista = manager.jogadoresEmJogo.map{it.gravadorDePosicoes}.forEach{it.forEach{listaPosicoes.add(it)}}
         listaPosicoes.removeIf{it == 1} //lista final de pisadas
         return listaPosicoes.sortedWith{i1,i2 -> Collections.frequency(listaPosicoes,i1) - Collections.frequency(listaPosicoes,i2)}.reversed().distinct().take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(listaPosicoes,it)}
     }
