@@ -59,14 +59,17 @@ enum class CommandType {
     }
 
     fun getMostUsedPositions(manager: GameManager , args: List<String> ): String ? {
-        val listaPosicoes:ArrayList<Int> = ArrayList()
-        val lista = manager.jogadoresEmJogo.map{it.gravadorDePosicoes}.forEach{it.forEach{listaPosicoes.add(it)}}
-        listaPosicoes.removeIf{it == 1} //lista final de pisadas
-        return listaPosicoes.sortedWith{i1,i2 -> Collections.frequency(listaPosicoes,i1) - Collections.frequency(listaPosicoes,i2)}.reversed().distinct().take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(listaPosicoes,it)}
+        val casasMaisPisadas:ArrayList<Int> = ArrayList()
+        val lista = manager.jogadoresEmJogo.map{it.casasPisadas}.forEach{it.forEach{casasMaisPisadas.add(it)}}
+        return casasMaisPisadas.sortedWith{i1,i2 -> Collections.frequency(casasMaisPisadas,i1) -
+        Collections.frequency(casasMaisPisadas,i2)}.reversed().distinct().take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(casasMaisPisadas,it)}
     }
 
     fun getMostUsedAbysses(manager: GameManager , args: List<String> ): String ? {
-        return ""
+        val abismos:ArrayList<String> = ArrayList()
+        val abismosPisados = manager.jogadoresEmJogo.map{it.abismosPisados}.forEach{it.forEach{abismos.add(it)}}
+        return abismos.sortedWith{i1,i2 -> Collections.frequency(abismos,i1) -
+        Collections.frequency(abismos,i2)}.reversed().distinct().take(args[1].toInt()).joinToString("\n"){it.toString() + ":" + Collections.frequency(abismos,it)}
     }
 
     fun postMOVE(manager: GameManager , args: List<String> ) : String ?{

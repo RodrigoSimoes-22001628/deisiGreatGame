@@ -16,6 +16,9 @@ public class Programmer implements Serializable {
     ArrayList<Ferramenta> ferramentas = new ArrayList<>();
     HashSet<String> ferramentasRepetidas = new HashSet<>();
     ArrayList<Integer> gravadorDePosicoes = new ArrayList<>();
+    ArrayList<Integer> casasPisadas = new ArrayList<>();
+    ArrayList<String> abismosPisados = new ArrayList<>();
+
 
     public Programmer() {
     }
@@ -100,10 +103,12 @@ public class Programmer implements Serializable {
             int conta = (tamanhoTabuleiro - this.posicao);
             conta = posicao - conta;
             this.posicao = tamanhoTabuleiro - conta;
-            gravadorDePosicoes.add(posicao); //gravar a posição para usar no abismo Efeitos secundários
+            gravadorDePosicoes.add(posicao);//gravar a posição para usar no abismo Efeitos secundários
+            casasPisadas.add(this.posicao);
         }else {
             this.posicao += posicao;
             gravadorDePosicoes.add(posicao); //gravar a posição para usar no abismo Efeitos secundários
+            casasPisadas.add(this.posicao);
         }
     }
 

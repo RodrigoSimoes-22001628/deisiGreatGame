@@ -346,6 +346,7 @@ public class GameManager implements Serializable {
         for (Abismo abismo : abismos) { //verifica se é um abismo
             if (abismo.getPosicao() == jogadoresEmJogo.get(turnoAtual - 1).getPosicao()) {
                 imprimir = verificaAbismos(abismo);
+                jogadoresEmJogo.get(turnoAtual-1).abismosPisados.add(abismo.getTitulo());
             }
         }
 
