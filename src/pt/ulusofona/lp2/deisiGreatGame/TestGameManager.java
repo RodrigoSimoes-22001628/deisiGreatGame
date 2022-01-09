@@ -1230,7 +1230,7 @@ public class TestGameManager {
         comandos.add("GET MOST_USED_POSITIONS\n");
         comandos.add("2");
         String obtido = FunctionsKt.getMostUsedPositions(game, comandos);
-        String esperada = "3:1\n" + "4:1";
+        String esperada = "4:1\n" + "5:1";
         assertEquals(esperada, obtido);
     }
    /* @Test
