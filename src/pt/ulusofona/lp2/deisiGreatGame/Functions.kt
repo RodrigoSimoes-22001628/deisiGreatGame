@@ -68,7 +68,7 @@ enum class CommandType {
     fun getMostUsedAbysses(manager: GameManager , args: List<String> ): String ? {
         val  totalAbismos: ArrayList<String> = ArrayList()
         val abismos:ArrayList<String> = ArrayList()
-        manager.abismos.forEach{totalAbismos.add(it.titulo)}
+        val abismosTabuleiro = manager.abismos.forEach{totalAbismos.add(it.titulo)}
         val adicionaAbismos = manager.jogadoresEmJogo.map{it.abismosPisados}.forEach{it.forEach{abismos.add(it)}}
         return totalAbismos.sortedWith{ s1, s2 -> Collections.frequency(abismos,s1) - Collections.frequency(abismos,s2)}.reversed().distinct().take(args[1].toInt()).joinToString("\n"){it + ":" + Collections.frequency(abismos,it)}
     }
